@@ -1,20 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 *********************************************************************
-NATO UNCLASSIFIED
+                         NATO UNCLASSIFIED
+
 XML Schema for capturing the Confidentiality Label specification for
 confidentiality labels and their succession history.
- I
- / \
+    I
+   / \
  -< + >-
- \ /
- I NCI AGENCY
- ## # #### # P.O. box 174
- ## # # # # 2501 CD The Hague
- # # # # #
- # # # # # # Core Enterprise Services
- # ## #### #
- A G E N C Y
+   \ /
+    I               NCI AGENCY
+ ##   #   ####   #  P.O. box 174
+ ##   #  #    #  #  2501 CD The Hague
+ # #  #  #       #
+ #  # #  #    #  #  Core Enterprise Services
+ #   ##   ####   #
+    A G E N C Y
 *********************************************************************
 -->
 <xs:schema

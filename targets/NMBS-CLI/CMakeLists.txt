@@ -1,32 +1,39 @@
-add_executable(NMBS-CLI)
+add_executable(NMBS-CONFIDENTIALITY-LABEL)
 
-target_sources(NMBS-CLI
+target_sources(NMBS-CONFIDENTIALITY-LABEL
         PRIVATE
         src/nmbs-confidentiality-label.cpp
 )
 
-include_directories(${Boost_INCLUDE_DIRS})
-
-set_target_properties(NMBS-CLI PROPERTIES
-        LINKER_LANGUAGE CXX
-        CXX_STANDARD 20
-        CXX_STANDARD_REQUIRED ON
-        CXX_EXTENSIONS OFF
-        POSITION_INDEPENDENT_CODE 1
+set_target_properties(NMBS-CONFIDENTIALITY-LABEL PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION ${PROJECT_VERSION_MAJOR}
         OUTPUT_NAME nmbs-confidentiality-label
 )
 
-target_include_directories(NMBS-CLI
-        PUBLIC
-        "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
-        "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+target_link_libraries(NMBS-CONFIDENTIALITY-LABEL
         PRIVATE
-        src
+        NMBS-LIB
 )
 
-target_link_libraries(NMBS-CLI
+##
+##
+##
+
+add_executable(NMBS-CANONICALIZE)
+
+target_sources(NMBS-CANONICALIZE
         PRIVATE
-        Exiv2::exiv2lib
+        src/nmbs-canonicalize.cpp
+)
+
+set_target_properties(NMBS-CANONICALIZE PROPERTIES
+        VERSION ${PROJECT_VERSION}
+        SOVERSION ${PROJECT_VERSION_MAJOR}
+        OUTPUT_NAME nmbs-canonicalize
+)
+
+target_link_libraries(NMBS-CANONICALIZE
+        PRIVATE
+        NMBS-LIB
 )
