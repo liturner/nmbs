@@ -1,6 +1,4 @@
-# TODO: Move this to the testing target later
-configure_file(test.jpg test.jpg)
-configure_file(test2.jpg test2.jpg)
+configure_file(test.jpg test.jpg COPYONLY)
 
 add_executable(NMBS-CONFIDENTIALITY-LABEL)
 

@@ -69,12 +69,17 @@ namespace nmbs
     {
         try
         {
+            const std::string a4778ns("urn:nato:stanag:4778:bindinginformation:1:0:xmp#");
+            const std::string a4778prefix("mbxmp");
+
             auto image = Exiv2::ImageFactory::open(path.string());
             if (image.get() == nullptr) return 1;
-
             image->readMetadata();
             Exiv2::XmpData& xmpData = image->xmpData();
-            xmpData["bindingInformation"] = payload;
+            Exiv2::XmpProperties::registerNs(a4778ns, a4778prefix);
+            Exiv2::XmpKey slabKey(a4778prefix, "bindingInformation");
+            Exiv2::XmpTextValue slabValue(payload);
+            xmpData.add(slabKey, &slabValue);
             image->writeMetadata();
         }
         catch (const Exiv2::Error& e) {
