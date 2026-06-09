@@ -1,0 +1,13 @@
+//
+// Created by luke on 6/6/26.
+//
+
+#ifndef TT_NMBS_VERSION_H
+#define TT_NMBS_VERSION_H
+
+namespace nmbs
+{
+    inline constexpr std::string projectVersion{"@PROJECT_VERSION@"};
+}
+
+#endif //TT_NMBS_VERSION_H

@@ -8,7 +8,7 @@ The project is aimed as a Debian Linux project only. The intention is to produce
 
 - ADatP-4774 (Ed.A V.1 12.2017) CONFIDENTIALITY METADATA LABEL SYNTAX
 - ADatP-4778 (Ed.A V.1 10.2018) METADATA BINDING MECHANISM
-- ADatP-5636 (Ed.A V.1 )
+- ADatP-5636 (Ed.A V.1 11.2022) NATO CORE METADATA SPECIFICATION(NCMS)
 
 # Dependencies
 
@@ -20,7 +20,7 @@ nmbs-* - depends nmbs-lib
 ## Product
 
 - Exiv2 - C++ Lib for writing metadata to numerous formats, in particular images (dev: libexiv2-dev (static linking))
-- Boost - C++ Lib for reading and writing XML (dev: libboost-all-dev (static linking))
+- argparse - C++17 Headers for parsing CLI options (dev: libargparse-dev (header only))
 
 ## Build
 
@@ -38,4 +38,5 @@ exiv2 (CLI tools for exiv2)
 
 - nl-cl.xsd [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN)
 - nl-mb.xsd [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN)
-
+- 20140916_PU_PUBLIC Security Policy-v1.spif [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) This contains a list of the standard classifications used. It is not normative, but till now is the best I have found.
+- 20210506_PU_NATO Security Policy-v88.spif [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) This contains a list of the standard classifications used.  It is not normative, but till now is the best I have found.

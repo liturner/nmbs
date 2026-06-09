@@ -2,6 +2,7 @@
 // Created by luke on 6/6/26.
 //
 #include <nmbs/nmbs.h>
+#include <nmbs/version.h>
 
 #include <exiv2/exiv2.hpp>
 #include <chrono>
@@ -9,6 +10,11 @@
 
 namespace nmbs
 {
+    std::string getProjectVersion()
+    {
+        return projectVersion;
+    }
+
     std::string confidentiality_label(const std::string_view policyIdentifier, const std::string_view classification)
     {
         const auto now = std::chrono::floor<std::chrono::seconds>(std::chrono::utc_clock::now());

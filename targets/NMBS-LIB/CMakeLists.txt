@@ -1,5 +1,7 @@
 add_library(NMBS-LIB SHARED)
 
+configure_file(src/version.h.in src/nmbs/version.h @ONLY)
+
 target_sources(NMBS-LIB
         PUBLIC
         FILE_SET nmbs_headers
@@ -23,6 +25,7 @@ target_include_directories(NMBS-LIB
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
         PRIVATE
         src
+        ${CMAKE_CURRENT_BINARY_DIR}/src
 )
 
 target_link_libraries(NMBS-LIB

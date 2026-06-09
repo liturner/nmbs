@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.23)
 project(
         TT-NMBS
         LANGUAGES CXX
-        VERSION 1.0.0
+        VERSION 1.1.0
 )
 
 set(CPACK_GENERATOR "TGZ")
@@ -20,10 +20,8 @@ include(GoogleTest)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-set(Boost_USE_STATIC_LIBS ON)
-
 find_package(exiv2 "0.28.5" REQUIRED CONFIG)                      # libexiv2-dev
-find_package(Boost "1.83.0" REQUIRED CONFIG)                      # libboost-all-dev
+find_package(argparse "3.2.0" REQUIRED CONFIG)                    # libargparse-dev
 find_package(GTest "1.15.0" REQUIRED CONFIG)                      # libgtest-dev
 find_package(Doxygen "1.9.8" OPTIONAL_COMPONENTS dot mscgen dia)  # doxygen
 

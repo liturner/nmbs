@@ -45,6 +45,8 @@ namespace nmbs
     /// prefix or prefixes used (yes, there can be multiple!).
     inline constexpr std::string_view s4778key("bindingInformation");
 
+    std::string getProjectVersion();
+
     std::string confidentiality_label(std::string_view policyIdentifier, std::string_view classification);
 
     /// Wraps the provided confidentialityLabel in a BindingInformation element. This implementation assumes that the
