@@ -8,6 +8,7 @@ The project is aimed as a Debian Linux project only. The intention is to produce
 
 - ADatP-4774 (Ed.A V.1 12.2017) CONFIDENTIALITY METADATA LABEL SYNTAX
 - ADatP-4778 (Ed.A V.1 10.2018) METADATA BINDING MECHANISM
+- ADatP-5636 (Ed.A V.1 )
 
 # Dependencies
 

@@ -22,28 +22,6 @@ target_link_libraries(NMBS-CONFIDENTIALITY-LABEL
 ##
 ##
 
-add_executable(NMBS-CANONICALIZE)
-
-target_sources(NMBS-CANONICALIZE
-        PRIVATE
-        src/nmbs-canonicalize.cpp
-)
-
-set_target_properties(NMBS-CANONICALIZE PROPERTIES
-        VERSION ${PROJECT_VERSION}
-        SOVERSION ${PROJECT_VERSION_MAJOR}
-        OUTPUT_NAME nmbs-canonicalize
-)
-
-target_link_libraries(NMBS-CANONICALIZE
-        PRIVATE
-        NMBS-LIB
-)
-
-##
-##
-##
-
 add_executable(NMBS-XMP)
 
 target_sources(NMBS-XMP

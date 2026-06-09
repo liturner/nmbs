@@ -9,7 +9,7 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::cout << nmbs::nmbs_confidentiality_label(argv[1], argv[2]);
+    std::cout << nmbs::confidentiality_label(argv[1], argv[2]);
 
     return 0;
 }

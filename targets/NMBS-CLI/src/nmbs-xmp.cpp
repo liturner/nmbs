@@ -12,10 +12,10 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    const std::string tag = nmbs::nmbs_confidentiality_label("TT", "Dummy");
-    const std::string canonicalizedTag = nmbs::canonicalize(tag);
-    const std::string rdpTag = nmbs::rdp(canonicalizedTag);
-    nmbs::write_xmp("test.jpg", rdpTag);
+    const std::string confidentialityLabel = nmbs::confidentiality_label("TT", "Dummy");
+    const std::string bindingInformation = nmbs::binding_information(confidentialityLabel);
+    std::cout << bindingInformation;
+    nmbs::write_xmp("test.jpg", bindingInformation);
 
     return 0;
 }
