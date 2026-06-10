@@ -2,6 +2,8 @@
   <dictionary name="project">
     <words>
       <w>bindinginformation</w>
+      <w>confidentialitymetadatalabel</w>
+      <w>mbxmp</w>
       <w>soversion</w>
       <w>stanag</w>
     </words>

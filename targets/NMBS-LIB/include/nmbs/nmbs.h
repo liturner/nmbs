@@ -8,54 +8,150 @@
 #include <string>
 #include <filesystem>
 
+/// Lightweight helpers for generating NATO confidentiality metadata.
+///
+/// This namespace contains a compact set of utilities implementing the essential parts of the ADatP‑4774, ADatP‑4778,
+/// and STANAG 5636 specifications. The functions focus on producing valid confidentiality labels and binding
+/// information for files that are known to be *not* highly sensitive, enabling consistent tagging without the overhead
+/// of a full‑scale DLP or metadata processing framework.
+///
+/// The goal of this library is to provide a minimal, dependency‑free toolkit that makes it easy to attach correct,
+/// standards‑compliant metadata to low‑sensitivity artifacts—an important step in reducing the scope of data requiring
+/// strict handling in cybersecurity workflows.
 namespace nmbs
 {
-    /// The XML namespace urn as defined by ADatP-4774 Ed.A V.1.
-    inline constexpr std::string_view s4774namespace("urn:nato:stanag:4774:confidentialitymetadatalabel:1:0");
-
-    /// The XML prefix to be used for s4774namespace. Note, that this is defined in the ADatP-5636 Ed.A V.1 standard.
-    /// There is potentially a second alias in use within other software, namely "slab". This is incorrect. "slab" was
-    /// used in the ADatP-4774 Ed.A V.1 examples and xsd, but ADatP-5636 provides the normative definition. It is to be
-    /// expected that the next releases of ADatP-4774 will update the prefix in future releases.
+    /// @brief XML namespace defined by ADatP‑4774 Ed. A, Ver. 1.
     ///
-    /// Technically speaking, this should be irrelevant as software *should* be using the namespaces for identification,
-    /// and not the prefixes. This is however often not the case.
-    inline constexpr std::string_view s4774prefix("s4774");
+    /// This constant identifies the official URN for the Confidentiality Metadata
+    /// Label schema as specified in ADatP‑4774. It is used when generating
+    /// standards‑compliant confidentiality labels and related metadata structures.
+    /// @see nmbs::s4774_prefix
+    inline constexpr std::string_view s4774_namespace = "urn:nato:stanag:4774:confidentialitymetadatalabel:1:0";
 
-    /// The XML namespace urn as defined by ADatP-4778 Ed.A V.1.
-    inline constexpr std::string_view s4778namespace("urn:nato:stanag:4778:bindinginformation:1:0");
-
-
-    inline constexpr std::string_view s4778prefix("s4778");
-
-    inline constexpr std::string_view s4778xmpNamespace("urn:nato:stanag:4778:bindinginformation:1:0:xmp#");
-
-    /// The XML namespace for the XMP packet as defined in ADatP-4778.2 Ed.A V.1. It should be noted that this namespace
-    /// prefix only appears in examples, and is neither in ADatP-4778, nor ADatP-5636 normatively referenced.
+    /// @brief Preferred XML prefix for the ADatP‑4774 namespace.
     ///
-    /// The final key for the XMP property will then be
-    /// "Xmp.[s4778xmpPrefix].[s4778key]". It is however *critical* to note that the value of s4778xmpPrefix is only
-    /// for human readability. Programs trying to access the value must use the s4778xmpNamespace to first identify the
-    /// prefix or prefixes used (yes, there can be multiple!).
-    inline constexpr std::string_view s4778xmpPrefix("mbxmp");
+    /// This prefix is the normative identifier defined in ADatP‑5636 Ed. A, Ver. 1
+    /// for the ADatP‑4774 Confidentiality Metadata Label schema. Earlier materials,
+    /// including examples and XSD fragments in ADatP‑4774 Ed. A, Ver. 1, used the
+    /// alias "slab"; however, this is not the authoritative definition. Future
+    /// revisions of ADatP‑4774 are expected to align with the ADatP‑5636 prefix.
+    ///
+    /// Although XML processors should rely on namespace URIs rather than prefixes
+    /// for identification, many software systems still treat prefixes as
+    /// significant. Using the standardized prefix improves interoperability with
+    /// tools that do not fully respect namespace semantics.
+    /// @see nmbs::s4774_namespace
+    inline constexpr std::string_view s4774_prefix = "s4774";
 
-    /// The key value as to be used in an XMP property. The final key for the XMP property will then be
-    /// "Xmp.[s4778xmpPrefix].[s4778key]". It is however *critical* to note that the value of s4778xmpPrefix is only
-    /// for human readability. Programs trying to access the value must use the s4778xmpNamespace to first identify the
-    /// prefix or prefixes used (yes, there can be multiple!).
-    inline constexpr std::string_view s4778key("bindingInformation");
+    /// @brief XML namespace defined by ADatP‑4778 Ed. A, Ver. 1.
+    ///
+    /// This constant identifies the official URN for the Binding Information schema
+    /// specified in ADatP‑4778. It is used when generating standards‑compliant
+    /// binding information elements that accompany confidentiality labels and other
+    /// metadata structures defined across the ADatP‑4774/4778/5636 family.
+    /// @see nmbs::s4778_prefix
+    inline constexpr std::string_view s4778_namespace = "urn:nato:stanag:4778:bindinginformation:1:0";
 
-    std::string getProjectVersion();
+    /// @brief Preferred XML prefix for the ADatP‑4778 namespace.
+    ///
+    /// This prefix is the normative identifier associated with the Binding
+    /// Information schema defined in ADatP‑4778 Ed. A, Ver. 1. While XML processors
+    /// should rely on namespace URIs rather than prefixes for schema identification,
+    /// many software systems still treat prefixes as significant. Using the
+    /// standardized prefix improves interoperability with tools that do not fully
+    /// respect namespace semantics.
+    /// @see nmbs::s4778_namespace
+    inline constexpr std::string_view s4778_prefix = "s4778";
 
-    std::string confidentiality_label(std::string_view policyIdentifier, std::string_view classification);
+    /// @brief XMP namespace defined for ADatP‑4778 binding information.
+    ///
+    /// This constant identifies the URN used by the XMP representation of the
+    /// ADatP‑4778 Binding Information schema, as specified in ADatP‑4778.2 Ed. A,
+    /// Ver. 1. Although this namespace does not appear in any XML generated by this
+    /// library, it is required when interacting with XMP metadata—particularly when
+    /// locating or interpreting existing binding‑information tags embedded in image
+    /// files or other media.
+    ///
+    /// @see nmbs::s4778_xmp_prefix
+    inline constexpr std::string_view s4778_xmp_namespace = "urn:nato:stanag:4778:bindinginformation:1:0:xmp#";
 
-    /// Wraps the provided confidentialityLabel in a BindingInformation element. This implementation assumes that the
-    /// resulting BindingInformation will be embedded in another data object. As such, there are no xml version tags,
-    /// and the DataReference is set to an empty string.
-    /// @param confidentialityLabel the XML confidentiality label to be used in the binding.
-    /// @return an XML string whose root element is a BindingInformation element.
-    std::string binding_information(std::string_view confidentialityLabel);
+    /// @brief Preferred XML prefix for the ADatP‑4778 XMP namespace.
+    ///
+    /// This prefix appears in example material associated with ADatP‑4778.2 Ed. A,
+    /// Ver. 1, but it is not normatively defined in either ADatP‑4778 or
+    /// ADatP‑5636. It is provided here solely for human readability and for
+    /// constructing conventional XMP property names of the form:
+    ///
+    ///     Xmp.[nmbs::s4778_xmp_prefix].[nmbs::s4778_key]
+    ///
+    /// Software must not rely on this prefix for identification. When reading XMP
+    /// metadata, programs must instead use the namespace URI
+    /// (`nmbs::s4778_xmp_namespace`) to determine which prefix or prefixes are in
+    /// use, as multiple aliases may legitimately appear in existing files.
+    /// @see nmbs::s4778_xmp_namespace
+    inline constexpr std::string_view s4778_xmp_prefix = "mbxmp";
 
+    /// @brief Local name used for the ADatP‑4778 XMP property.
+    ///
+    /// This constant defines the key component of the XMP property associated with
+    /// ADatP‑4778 binding information. The resulting XMP property name follows the
+    /// conventional structure:
+    ///
+    ///     Xmp.[nmbs::s4778_xmp_prefix].[nmbs::s4778_key]
+    ///
+    /// The value of `s4778_xmp_prefix` is provided only for human readability and
+    /// for constructing familiar XMP property strings. Software must not rely on
+    /// this prefix for identification. When reading XMP metadata, programs must use
+    /// the namespace URI (`nmbs::s4778_xmp_namespace`) to determine which prefix or
+    /// prefixes are actually in use, as multiple aliases may legitimately appear in
+    /// existing files.
+    inline constexpr std::string_view s4778_key = "bindingInformation";
+
+    /// @brief Returns the semantic version of the library.
+    ///
+    /// Provides the version identifier for this binary build using standard
+    /// semantic‑versioning format (`MAJOR.MINOR.PATCH`), for example `1.0.0`.
+    ///
+    /// @return The semantic version string for the current build.
+    constexpr std::string version();
+
+    /// @brief Generates a basic ADatP‑4774 confidentiality label.
+    ///
+    /// Constructs a minimal confidentiality label using the provided policy
+    /// identifier and classification value, producing a standards‑compliant
+    /// ADatP‑4774 label suitable for embedding in metadata structures or
+    /// BindingInformation elements.
+    ///
+    /// @param policy_identifier  The policy identifier to include in the label.
+    /// @param classification     The classification value defined by the policy.
+    /// @return An XML string representing a basic ADatP‑4774 confidentiality label.
+    std::string confidentiality_label(std::string_view policy_identifier, std::string_view classification);
+
+    /// @brief Wraps a confidentiality label in an ADatP‑4778 BindingInformation element.
+    ///
+    /// Generates a BindingInformation element containing the provided
+    /// confidentiality label. This function assumes that the resulting element will
+    /// be embedded within a larger data structure; therefore, no XML declaration is
+    /// included, and the `DataReference` field is set to an empty string as
+    /// permitted by the ADatP‑4778 schema.
+    ///
+    /// @param confidentiality_label The XML confidentiality label to embed within
+    ///        the BindingInformation element.
+    /// @return An XML string whose root element is a standards‑compliant
+    ///         BindingInformation element.
+    std::string binding_information(std::string_view confidentiality_label);
+
+    /// @brief Writes ADatP‑4778 binding information into an image's XMP metadata.
+    ///
+    /// Embeds the provided payload into the XMP metadata of the specified image
+    /// using the standardized ADatP‑4778 XMP property key. The payload must be a
+    /// valid `BindingInformation` element as produced by
+    /// `nmbs::binding_information()`. Existing XMP metadata in the file is preserved
+    /// unless overwritten by this operation.
+    ///
+    /// @param path     Path to the image file to modify.
+    /// @param payload  A standards‑compliant ADatP‑4778 BindingInformation element.
+    /// @return Zero on success; a non‑zero error code if the write operation fails.
     int write_xmp(const std::filesystem::path& path, std::string_view payload);
 }
 

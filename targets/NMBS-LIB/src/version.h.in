@@ -7,7 +7,7 @@
 
 namespace nmbs
 {
-    inline constexpr std::string projectVersion{"@PROJECT_VERSION@"};
+    inline constexpr std::string project_version = "@PROJECT_VERSION@";
 }
 
 #endif //TT_NMBS_VERSION_H
