@@ -6,7 +6,7 @@ add_subdirectory(NMBS-Tests)
 add_dependencies(NMBS-Tests NMBS-XMP)
 
 #
-# Doxygen
+# Doxygen, man pages etc.
 #
 
 if (DOXYGEN_FOUND)
@@ -14,7 +14,7 @@ if (DOXYGEN_FOUND)
     set(DOXYGEN_GENERATE_MAN YES)
     set(DOXYGEN_MACRO_EXPANSION YES)
     set(DOXYGEN_EXCLUDE_SYMBOLS std::*)
-    doxygen_add_docs(doxygen
+    doxygen_add_docs(doxygen ALL
             NMBS-LIB/include
             NMBS-LIB/src
     )
@@ -24,6 +24,36 @@ if (DOXYGEN_FOUND)
             TYPE MAN
     )
 endif ()
+
+# Generate the man1 page from the executables --help command.
+find_program(HELP2MAN_EXECUTABLE help2man)
+if(HELP2MAN_EXECUTABLE)
+    message(STATUS "Found help2man: ${HELP2MAN_EXECUTABLE}")
+
+    set(MAN_PAGE "${CMAKE_CURRENT_BINARY_DIR}/nmbs-xmp.1")
+
+    # 3. Create the rule to generate the man page
+    add_custom_command(
+            OUTPUT ${MAN_PAGE}
+            # help2man executes the target binary directly from the build directory
+            COMMAND ${HELP2MAN_EXECUTABLE}
+            --no-discard-stderr
+            --name="A brief one-line description of what mytool does"
+            --output=${MAN_PAGE}
+            $<TARGET_FILE:NMBS-XMP>
+            DEPENDS NMBS-XMP
+            COMMENT "Generating man page using help2man"
+            VERBATIM
+    )
+
+    # Tie the custom command to a target so it actually runs during 'make'.
+    add_custom_target(manpages ALL DEPENDS ${MAN_PAGE})
+
+    # 5. Install the generated man page to the standard location
+    install(FILES ${MAN_PAGE} DESTINATION ${CMAKE_INSTALL_MANDIR}/man1)
+else()
+    message(WARNING "help2man not found. Man pages will not be generated.")
+endif()
 
 #
 # Resources, Files etc.

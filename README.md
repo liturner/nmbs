@@ -28,6 +28,7 @@ build-essential
 libgtest-dev
 doxygen
 ninja-build
+help2man
 
 ## Recomended
 

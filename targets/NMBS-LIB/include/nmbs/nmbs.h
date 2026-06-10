@@ -113,7 +113,7 @@ namespace nmbs
     /// semantic‑versioning format (`MAJOR.MINOR.PATCH`), for example `1.0.0`.
     ///
     /// @return The semantic version string for the current build.
-    constexpr std::string version();
+    [[nodiscard]] std::string version();
 
     /// @brief Generates a basic ADatP‑4774 confidentiality label.
     ///
@@ -125,7 +125,7 @@ namespace nmbs
     /// @param policy_identifier  The policy identifier to include in the label.
     /// @param classification     The classification value defined by the policy.
     /// @return An XML string representing a basic ADatP‑4774 confidentiality label.
-    std::string confidentiality_label(std::string_view policy_identifier, std::string_view classification);
+    [[nodiscard]] std::string confidentiality_label(std::string_view policy_identifier, std::string_view classification);
 
     /// @brief Wraps a confidentiality label in an ADatP‑4778 BindingInformation element.
     ///
@@ -139,7 +139,7 @@ namespace nmbs
     ///        the BindingInformation element.
     /// @return An XML string whose root element is a standards‑compliant
     ///         BindingInformation element.
-    std::string binding_information(std::string_view confidentiality_label);
+    [[nodiscard]] std::string binding_information(std::string_view confidentiality_label);
 
     /// @brief Writes ADatP‑4778 binding information into an image's XMP metadata.
     ///

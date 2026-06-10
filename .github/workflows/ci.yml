@@ -11,16 +11,12 @@ jobs:
         run: sudo apt install libgtest-dev ninja-build doxygen libargparse-dev libexiv2-dev
       - name: cmake configure debug
         run: cmake --preset debug
-      - name: cmake --build debug code
-        run: cmake --build --preset debug --target NMBS-Tests
-      - name: cmake --build debug doxygen
-        run: cmake --build --preset debug --target doxygen
+      - name: cmake --build debug
+        run: cmake --build --preset debug
       - name: cmake configure release
         run: cmake --preset release
-      - name: cmake --build release code
-        run: cmake --build --preset release --target NMBS-Tests
-      - name: cmake --build release doxygen
-        run: cmake --build --preset release --target doxygen
+      - name: cmake --build release
+        run: cmake --build --preset release
       - name: cpack
         run: cpack -B build
       - name: ctest debug

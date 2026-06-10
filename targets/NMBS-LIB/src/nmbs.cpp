@@ -10,7 +10,7 @@
 
 namespace nmbs
 {
-    constexpr std::string version()
+    std::string version()
     {
         return project_version;
     }
