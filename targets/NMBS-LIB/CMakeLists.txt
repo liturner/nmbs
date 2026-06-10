@@ -30,5 +30,5 @@ target_include_directories(NMBS-LIB
 
 target_link_libraries(NMBS-LIB
         PRIVATE
-        Exiv2::exiv2lib
+        exiv2lib
 )
