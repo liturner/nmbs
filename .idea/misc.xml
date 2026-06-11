@@ -4,4 +4,8 @@
     <option name="pythonIntegrationState" value="YES" />
   </component>
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
+  <component name="ProjectResources">
+    <resource url="urn:nato:stanag:4774:confidentialitymetadatalabel:1:0" location="$PROJECT_DIR$/targets/NMBS-Library/resources/nl-cl.xsd" />
+    <resource url="urn:nato:stanag:4778:bindinginformation:1:0" location="$PROJECT_DIR$/targets/NMBS-Library/resources/nl-mb.xsd" />
+  </component>
 </project>

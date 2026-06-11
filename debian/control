@@ -1,0 +1,33 @@
+Source: tt-nmbs
+Section: utils
+Priority: optional
+Maintainer: Luke Ian Turner <turnertech@outlook.de>
+Standards-Version: 4.6.0
+Build-Depends: debhelper-compat (= 13), libexiv2-dev, libargparse-dev, build-essential, libgtest-dev, doxygen, help2man
+
+# --- Package 1: The CLI Tool ---
+Package: nmbs
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}, libnmbs1 (= ${binary:Version})
+Recommends: exiv2
+Description: TurnerTech - NATO Metadata Binding Service
+ A set of tools for working with ADatP-4774 and ADatP-4778
+ confidentiality labels
+
+# --- Package 2: The Runtime Shared Library ---
+Package: libnmbs1
+Section: libs
+Architecture: amd64
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Runtime shared library for nmbs
+ This package contains the runtime shared library target (libnmbs.so.*).
+ It is required by the CLI tool and other applications to execute.
+
+# --- Package 3: The Development Headers ---
+Package: libnmbs-dev
+Section: libdevel
+Architecture: any
+Depends: libnmbs1 (= ${binary:Version}), ${misc:Depends}
+Description: Development headers and tracking links for nmbs
+ This package contains the C++ header files if you want to compile
+ external code against libnmbs.

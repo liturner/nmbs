@@ -1,0 +1,3 @@
+usr/include/*
+usr/lib/*/libnmbs.so
+usr/lib/*/cmake/*

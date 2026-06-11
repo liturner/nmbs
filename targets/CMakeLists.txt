@@ -11,17 +11,17 @@ add_dependencies(NMBS-Tests NMBS-Set-XMP)
 
 if (DOXYGEN_FOUND)
     set(DOXYGEN_GENERATE_HTML YES)
-    set(DOXYGEN_GENERATE_MAN YES)
+    set(DOXYGEN_GENERATE_MAN NO)
     set(DOXYGEN_MACRO_EXPANSION YES)
     set(DOXYGEN_EXCLUDE_SYMBOLS std::*)
     doxygen_add_docs(doxygen ALL
             NMBS-Library/include
     )
 
-    install(DIRECTORY
-            ${CMAKE_CURRENT_BINARY_DIR}/man/
-            TYPE MAN
-    )
+    #install(DIRECTORY
+    #        ${CMAKE_CURRENT_BINARY_DIR}/man/
+    #        TYPE MAN
+    #)
 endif ()
 
 # Generate the man1 page from the executables --help command.
@@ -36,8 +36,9 @@ if(HELP2MAN_EXECUTABLE)
             OUTPUT ${MAN_PAGE}
             # help2man executes the target binary directly from the build directory
             COMMAND ${HELP2MAN_EXECUTABLE}
+            --no-info
             --no-discard-stderr
-            --name="A brief one-line description of what mytool does"
+            --name="Binds ADatP-4774 Confidentiality Labels to files supporting XMP"
             --output=${MAN_PAGE}
             $<TARGET_FILE:NMBS-Set-XMP>
             DEPENDS NMBS-Set-XMP
@@ -61,7 +62,8 @@ endif()
 install(FILES
         NMBS-Library/resources/nl-cl.xsd
         NMBS-Library/resources/nl-mb.xsd
-        DESTINATION share/xml/schema
+        NMBS-Library/resources/xmlspif.xsd
+        DESTINATION share/xml/schema/libnmbs
 )
 
 #

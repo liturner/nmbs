@@ -2,17 +2,26 @@
   <dictionary name="project">
     <words>
       <w>bindinginformation</w>
+      <w>bodytext</w>
       <w>confidentialitymetadatalabel</w>
+      <w>debemail</w>
+      <w>debfullname</w>
       <w>doxygen</w>
+      <w>installxmlcatalogs</w>
       <w>libargparse</w>
+      <w>libdevel</w>
       <w>libexiv</w>
       <w>libgtest</w>
       <w>libnmbs</w>
+      <w>lintian</w>
+      <w>manpages</w>
       <w>mbxmp</w>
       <w>nmbs</w>
       <w>soversion</w>
       <w>stanag</w>
       <w>turnertech</w>
+      <w>xmlcore</w>
+      <w>xmlspif</w>
     </words>
   </dictionary>
 </component>

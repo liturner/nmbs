@@ -20,16 +20,37 @@ Install the package to your system using apt.
 apt install nmbs
 ```
 
-The documentation for the CLI and API are packaged with the tool itself.
+The documentation for the CLI is packaged with the tool itself. Doxygen is otherwise available for the code
 
 ```shell
 # For the CLI, use the supplied man page, or the --help argument
 man nmbs-set-xmp
 nmbs-set-xmp --help
-
-# Or the API man page for the library
-man 3 nmbs
 ```
+
+# Building
+
+There are a few methods for building this project. The primary focus is ensuring that the debian package is clean and
+stable. This is done as follows (assuming current dir is the project root).
+
+```shell
+# Use the gpg fingerprint for the -k field. e.g.
+dpkg-buildpackage -kB6B00085FA5CADF5EA06188D11846BA6C8BEAD9A
+lintian ../tt-nmbs_1.0_all.deb
+
+# To update the changelog use dch. In particular, the commands --append, --increment, --edit, --release and --newversion
+# Note that debhelper decides e.g. if to sign the build based on the status in the changelog. Its an important file!!!
+dch -m
+
+# To tidy up after, use
+dh clean
+```
+
+Alternatively, the commands in the .github folder show how the CI packages the project. Note that this is a different
+build chain (e.g. with ninja) but should still build. The debhelper chain takes precedence!
+
+Finally, this is a CLion project. The project settings include a "package" target, and just using the GUI will work for
+the CMake Targets.
 
 # Standards
 
@@ -52,15 +73,23 @@ the libs via APT on a Developer Machine, and APT Dependencies in release.
 |          | Build      | doxygen         |                                                                        |
 |          | Build      | ninja-build     |                                                                        |
 |          | Build      | help2man        |                                                                        |
+|          | Build      | debhelper       | Toolset for building .deb files                                        |
+|          | Build      | lintian         | Tool for verifying quality of .deb packages                            |
+|          | Build      | devscripts      | Scripts containing dch used for the debian changelog                   |
 |          | Recomended | exiv2           | CLI tools for Exiv2. Usefull for debugging                             |
 
 ## External Resources
 
-This project ships with a small number of external resources. Their original sources are as follows.
+This project ships with a small number of external resources. Many of these were shipped with the NATO Standards. 
+Important to note is that only PUBLIC UNMARKED resources have been included. Unfortunately several XSD resources are
+still marked NATO UNCLASSIFIED. It will take some time to write "clean room" implementations from the standards to ship.
+
+Their original sources are as follows.
 
 | File                                       | Source                                                                                     | Description                                                                                                            |
 |--------------------------------------------|--------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
 | nl-cl.xsd                                  | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | XSD for ConfidentialityLabel                                                                                           |
 | nl-mb.xsd                                  | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | XSD for BindingInformation                                                                                             |
+| xmlspif.xsd                                | [xmlspif.org](http://www.xmlspif.org/schema/xmlspif.xsd)                                   | XSD for the "Security Policy Information File" format used to describe available classifications.                      |
 | 20140916_PU_PUBLIC Security Policy-v1.spif | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | This contains a list of the standard classifications used. It is not normative, but till now is the best I have found. |
 | 20210506_PU_NATO Security Policy-v88.spif  | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | This contains a list of the standard classifications used. It is not normative, but till now is the best I have found. |

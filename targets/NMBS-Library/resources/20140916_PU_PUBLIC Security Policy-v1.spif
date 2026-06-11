@@ -3,7 +3,6 @@
 <spif:SPIF
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:spif="http://www.xmlspif.org/spif"
-	xsi:schemaLocation="http://www.xmlspif.org/spif ../base-xsd/external/other/spif-21.xsd"
 	schemaVersion="1.0"
 	version="1"
 	creationDate="20140916090512Z"

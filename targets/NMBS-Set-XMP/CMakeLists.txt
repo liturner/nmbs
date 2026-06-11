@@ -6,8 +6,6 @@ target_sources(NMBS-Set-XMP
 )
 
 set_target_properties(NMBS-Set-XMP PROPERTIES
-        VERSION ${PROJECT_VERSION}
-        SOVERSION ${PROJECT_VERSION_MAJOR}
         OUTPUT_NAME nmbs-set-xmp
 )
 

@@ -1,0 +1,5 @@
+TODO: This is apparently how to install and register the xmlns to an xsd on the system.
+
+Used by: dh_installxmlcatalogs
+
+This file apparently just takes lines of text and handles the rest for us.
