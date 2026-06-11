@@ -4,6 +4,7 @@
 #include <nmbs/nmbs.h>
 #include <argparse/argparse.hpp>
 #include <iostream>
+#include <filesystem>
 
 int main(const int argc, char* argv[]) {
 
@@ -13,7 +14,7 @@ int main(const int argc, char* argv[]) {
     program.add_argument("file").help("the file to apply the classification label to");
     program.add_argument("policy").help("the policy identifier (e.g. NATO, ITAR)");
     program.add_argument("classification").help(R"(the policy classification (e.g. UNCLASSIFIED, RESTRICTED, CONFIDENTIAL, SECRET, "TOP SECRET" (not the need for parenthesis with spaces!))");
-    program.add_argument("-a", "--additive").help("add the classification to the existing label instead of overwriting it").flag();
+    program.add_argument("-v", "--verbose").help("print the label written to the file on stdout").flag();
 
     try {
         program.parse_args(argc, argv);
@@ -21,18 +22,39 @@ int main(const int argc, char* argv[]) {
     catch (const std::exception& err) {
         std::cerr << err.what() << std::endl;
         std::cerr << program;
-        return 1;
+        return nmbs::exit_code::invalid_arguments;
     }
 
     // Argument Validation
-    auto file = program.get<std::string>("file");
-    auto policy = program.get<std::string>("policy");
-    auto classification = program.get<std::string>("classification");
+    nmbs::originator_confidentiality_label label;
+    const std::filesystem::path file = program.get<std::string>("file");
+    label.information.policy_identifier = program.get<std::string>("policy");
+    label.information.classification = program.get<std::string>("classification");
+
+    if (!(std::filesystem::exists(file) && std::filesystem::is_regular_file(file))) {
+        std::cerr << "file not found" << std::endl;
+        return nmbs::exit_code::file_not_found;
+    }
 
     // Program Logic
-    const std::string confidentialityLabel = nmbs::confidentiality_label(policy, classification);
-    const std::string bindingInformation = nmbs::binding_information(confidentialityLabel);
-    nmbs::write_xmp(file, bindingInformation);
+    try
+    {
+        const std::string output = nmbs::write_xmp(file, label);
+        if (program["--verbose"] == true) {
+            std::cout << "  Key: Xmp." << nmbs::s4778_xmp_prefix << "." << nmbs::s4778_key << std::endl
+            << "Value: " << output << std::endl;
+        }
+    }
+    catch (const nmbs::exception& e)
+    {
+        std::cerr << e.what() << std::endl;
+        return e.code();
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "std::exception: " << e.what() << std::endl;
+        return nmbs::exit_code::unknown_error;
+    }
 
-    return 0;
+    return nmbs::exit_code::success;
 }

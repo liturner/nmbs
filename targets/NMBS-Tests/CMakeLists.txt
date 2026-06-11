@@ -11,11 +11,11 @@ set_target_properties(NMBS-Tests PROPERTIES
 
 target_include_directories(NMBS-Tests PRIVATE
         src
-        ../NMBS-LIB/src
+        ../NMBS-Library/src
 )
 
 target_link_libraries(NMBS-Tests
-        NMBS-LIB
+        NMBS-Library
         GTest::gtest_main
 )
 

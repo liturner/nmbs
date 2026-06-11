@@ -3,9 +3,16 @@
     <words>
       <w>bindinginformation</w>
       <w>confidentialitymetadatalabel</w>
+      <w>doxygen</w>
+      <w>libargparse</w>
+      <w>libexiv</w>
+      <w>libgtest</w>
+      <w>libnmbs</w>
       <w>mbxmp</w>
+      <w>nmbs</w>
       <w>soversion</w>
       <w>stanag</w>
+      <w>turnertech</w>
     </words>
   </dictionary>
 </component>

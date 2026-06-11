@@ -7,7 +7,7 @@ project(
 
 set(CPACK_GENERATOR "TGZ")
 set(CPACK_PACKAGE_VENDOR "TurnerTech")
-set(CPACK_PACKAGE_CONTACT "luke.ian.turner@outlook.de")
+set(CPACK_PACKAGE_CONTACT "turnertech@outlook.de")
 
 set(CMAKE_POSITION_INDEPENDENT_CODE 1)
 set(CMAKE_CXX_STANDARD 20)
@@ -20,7 +20,7 @@ include(GoogleTest)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-# Versions are between Ubuntu 24.04 and Debian 13
+# Versions are between Ubuntu 24.04 (Github agent) and Debian 13 (target system)
 find_package(exiv2 REQUIRED CONFIG)                               # libexiv2-dev (Debian 13: 0.28.5, Ubuntu 24.04: 0.27.6)
 find_package(argparse "3.0.0...3.2.0" REQUIRED CONFIG)            # libargparse-dev
 find_package(GTest "1.14.0...1.15.0" REQUIRED CONFIG)             # libgtest-dev

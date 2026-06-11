@@ -1,9 +1,9 @@
-add_subdirectory(NMBS-LIB)
-add_subdirectory(NMBS-CLI)
+add_subdirectory(NMBS-Library)
+add_subdirectory(NMBS-Set-XMP)
 add_subdirectory(NMBS-Tests)
 
 # Add this to force the cli executables to be available for GTest
-add_dependencies(NMBS-Tests NMBS-XMP)
+add_dependencies(NMBS-Tests NMBS-Set-XMP)
 
 #
 # Doxygen, man pages etc.
@@ -15,8 +15,7 @@ if (DOXYGEN_FOUND)
     set(DOXYGEN_MACRO_EXPANSION YES)
     set(DOXYGEN_EXCLUDE_SYMBOLS std::*)
     doxygen_add_docs(doxygen ALL
-            NMBS-LIB/include
-            NMBS-LIB/src
+            NMBS-Library/include
     )
 
     install(DIRECTORY
@@ -30,7 +29,7 @@ find_program(HELP2MAN_EXECUTABLE help2man)
 if(HELP2MAN_EXECUTABLE)
     message(STATUS "Found help2man: ${HELP2MAN_EXECUTABLE}")
 
-    set(MAN_PAGE "${CMAKE_CURRENT_BINARY_DIR}/nmbs-xmp.1")
+    set(MAN_PAGE "${CMAKE_CURRENT_BINARY_DIR}/nmbs-set-xmp.1")
 
     # 3. Create the rule to generate the man page
     add_custom_command(
@@ -40,8 +39,8 @@ if(HELP2MAN_EXECUTABLE)
             --no-discard-stderr
             --name="A brief one-line description of what mytool does"
             --output=${MAN_PAGE}
-            $<TARGET_FILE:NMBS-XMP>
-            DEPENDS NMBS-XMP
+            $<TARGET_FILE:NMBS-Set-XMP>
+            DEPENDS NMBS-Set-XMP
             COMMENT "Generating man page using help2man"
             VERBATIM
     )
@@ -60,8 +59,8 @@ endif()
 #
 
 install(FILES
-        NMBS-CLI/resources/nl-cl.xsd
-        NMBS-CLI/resources/nl-mb.xsd
+        NMBS-Library/resources/nl-cl.xsd
+        NMBS-Library/resources/nl-mb.xsd
         DESTINATION share/xml/schema
 )
 
@@ -69,7 +68,7 @@ install(FILES
 # Targets and *Targets.cmake
 #
 
-install(TARGETS NMBS-LIB NMBS-XMP
+install(TARGETS NMBS-Library NMBS-Set-XMP
         EXPORT ${PROJECT_NAME}Targets
         FILE_SET nmbs_headers
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
