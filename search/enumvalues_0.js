@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['file_5fnot_5ffound_0',['file_not_found',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca490cfde16569fdd8a00baf79666248b6',1,'nmbs']]]
+  ['alternative_0',['alternative',['../structnmbs_1_1confidentiality__label.html#a0e1a396a8e0eb34f40b03a1c10261144a716092b0742e0f8a36f07ca91e33fb0c',1,'nmbs::confidentiality_label']]]
 ];

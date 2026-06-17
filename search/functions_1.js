@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exception_0',['exception',['../classnmbs_1_1exception.html#aebc6d951aa17c28d624ff6e3178a9cfb',1,'nmbs::exception']]]
+  ['exception_0',['exception',['../classnmbs_1_1exception.html#af0eb99d060a7c7561a9abaade52298b0',1,'nmbs::exception']]]
 ];

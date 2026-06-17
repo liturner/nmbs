@@ -70,6 +70,7 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a> &#124;
@@ -78,6 +79,12 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
+Namespaces</h2></td></tr>
+<tr class="memitem:namespacenmbs_1_1exceptions" id="r_namespacenmbs_1_1exceptions"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1exceptions.html">exceptions</a></td></tr>
+<tr class="memdesc:namespacenmbs_1_1exceptions"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classnmbs_1_1exception.html" title="generic base exception for the nmbs namespace">nmbs::exception</a> specialisations. <br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1confidentiality__information__type.html">confidentiality_information_type</a></td></tr>
@@ -116,11 +123,9 @@ Functions</h2></td></tr>
 <tr class="memitem:acf645b0b25b99c50f6382855d5776a44" id="r_acf645b0b25b99c50f6382855d5776a44"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#acf645b0b25b99c50f6382855d5776a44">write_xmp</a> (const std::filesystem::path &amp;path, const <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &amp;<a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a>)</td></tr>
 <tr class="memdesc:acf645b0b25b99c50f6382855d5776a44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes ADatP‑4778 binding information into an image's XMP metadata.  <br /></td></tr>
 <tr class="separator:acf645b0b25b99c50f6382855d5776a44"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac84bd2d34e5725144735df4dc7e1dfa6" id="r_ac84bd2d34e5725144735df4dc7e1dfa6"><td class="memItemLeft" align="right" valign="top"><a id="ac84bd2d34e5725144735df4dc7e1dfa6" name="ac84bd2d34e5725144735df4dc7e1dfa6"></a>
-std::vector&lt; <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>read_xmp</b> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="memitem:ac84bd2d34e5725144735df4dc7e1dfa6" id="r_ac84bd2d34e5725144735df4dc7e1dfa6"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#ac84bd2d34e5725144735df4dc7e1dfa6">read_xmp</a> (const std::filesystem::path &amp;path)</td></tr>
 <tr class="separator:ac84bd2d34e5725144735df4dc7e1dfa6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ee408a07115de11298b6505493377c2" id="r_a7ee408a07115de11298b6505493377c2"><td class="memItemLeft" align="right" valign="top"><a id="a7ee408a07115de11298b6505493377c2" name="a7ee408a07115de11298b6505493377c2"></a>
-std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>read_xmp_xml</b> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="memitem:a7ee408a07115de11298b6505493377c2" id="r_a7ee408a07115de11298b6505493377c2"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a7ee408a07115de11298b6505493377c2">read_xmp_xml</a> (const std::filesystem::path &amp;path)</td></tr>
 <tr class="separator:a7ee408a07115de11298b6505493377c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
@@ -188,6 +193,42 @@ Variables</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a id="ac84bd2d34e5725144735df4dc7e1dfa6" name="ac84bd2d34e5725144735df4dc7e1dfa6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac84bd2d34e5725144735df4dc7e1dfa6">&#9670;&#160;</a></span>read_xmp()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::vector&lt; <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &gt; nmbs::read_xmp </td>
+          <td>(</td>
+          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a7ee408a07115de11298b6505493377c2" name="a7ee408a07115de11298b6505493377c2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ee408a07115de11298b6505493377c2">&#9670;&#160;</a></span>read_xmp_xml()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::optional&lt; std::string &gt; nmbs::read_xmp_xml </td>
+          <td>(</td>
+          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <a id="ae2dc3062a8b4f7fe4e3500bd08f675c3" name="ae2dc3062a8b4f7fe4e3500bd08f675c3"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae2dc3062a8b4f7fe4e3500bd08f675c3">&#9670;&#160;</a></span>version()</h2>
 

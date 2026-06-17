@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['nmbs_0',['nmbs',['../namespacenmbs.html',1,'']]],
-  ['nmbs_2eh_1',['nmbs.h',['../nmbs_8h.html',1,'']]],
-  ['no_5flabel_5fpresent_2',['no_label_present',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca330361a8781281964074838818889c01',1,'nmbs']]]
+  ['label_5ftype_0',['label_type',['../structnmbs_1_1confidentiality__label.html#adb069670b85d3a5e986e9946ee63fd3b',1,'nmbs::confidentiality_label']]]
 ];
