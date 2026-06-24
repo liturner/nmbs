@@ -1,8 +1,10 @@
-tt-nmbs (1.0.0~alpha2) UNRELEASED; urgency=medium
+tt-nmbs (1.0.0~alpha2) trixie; urgency=medium
 
-  * 
+  * Remove binding profile from public API
+  * Add C API for use in e.g. Nautilus extensions
+  * Add Nautilus extension to nmbs package
 
- -- Luke Ian Turner <turnertech@outlook.de>  Wed, 17 Jun 2026 10:27:54 +0200
+ -- Luke Ian Turner <turnertech@outlook.de>  Wed, 24 Jun 2026 22:19:31 +0200
 
 tt-nmbs (1.0.0~alpha1) trixie; urgency=low
 
