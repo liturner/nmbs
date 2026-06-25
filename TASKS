@@ -1,9 +1,13 @@
 v1.0.0~alpha3
 TODO: Add sidecar files
+TODO: Register .bdo mime types and file type in Debian system
+TODO: "has_label" should be a nautilus property. Currently we chack sidecar and xmp, this is too many calls and does not scale well
+TODO: Binding Information serialisation and deserialisation is very sloppy. We lose all data. Add full (de)serialise functions. We want a Binding Object too....
 
 v1.0.0~alpha4
 TODO: Add SPIF support
 TODO: Add data driven right click context menu
+TODO: Equality operator for all confidentiality label structs
 
 api
 

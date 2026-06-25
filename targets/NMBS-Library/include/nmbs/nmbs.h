@@ -1,5 +1,3 @@
-#pragma once
-
 /// @file nmbs.h
 /// @brief The intended "include all" header file for libnmbs
 /// @details This file will include all the available nmbs namespace. Use it as
@@ -27,9 +25,11 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
+#pragma once
+
 #include "confidentiality_label.h"
 #include "exceptions.h"
-#include "constants.h"
+
 #include <string>
 #include <filesystem>
 

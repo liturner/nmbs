@@ -6,6 +6,7 @@ add_subdirectory(NMBS-Tests)
 
 # Add this to force the cli executables to be available for GTest
 add_dependencies(NMBS-Tests NMBS-Set-XMP NMBS-Get-XMP)
+add_dependencies(NMBS-Library doxygen)
 
 #
 # *Targets.cmake and *Config.cmake

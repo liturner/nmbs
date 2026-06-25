@@ -108,3 +108,7 @@ Their original sources are as follows.
 | xmlspif.xsd                                | [xmlspif.org](http://www.xmlspif.org/schema/xmlspif.xsd)                                   | XSD for the "Security Policy Information File" format used to describe available classifications.                      |
 | 20140916_PU_PUBLIC Security Policy-v1.spif | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | This contains a list of the standard classifications used. It is not normative, but till now is the best I have found. |
 | 20210506_PU_NATO Security Policy-v88.spif  | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | This contains a list of the standard classifications used. It is not normative, but till now is the best I have found. |
+
+# Standards Conformance
+
+4778.2 Ed.A V.1 CHAPTER 7: urn:nato:stanag:4778:profile:rest:1:2, Supports. We have no server, but provide functions to support sonsuming programs.

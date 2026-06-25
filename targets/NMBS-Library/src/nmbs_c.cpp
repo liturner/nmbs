@@ -30,12 +30,9 @@
 #include <chrono>
 #include <cstring>
 #include <string>
-#include <libxml/parser.h>
-#include <libxml/tree.h>
-#include <libxml/xpath.h>
-#include <libxml/xpathInternals.h>
 
 #include "nmbs_private.h"
+#include "nmbs/binding.h"
 #include "nmbs/c/nmbs.h"
 
 nmbs_confidentiality_labels nmbs_read_labels(const char* file) noexcept
@@ -46,7 +43,7 @@ nmbs_confidentiality_labels nmbs_read_labels(const char* file) noexcept
 
     try
     {
-        const auto labels = nmbs::read_xmp(std::filesystem::path(std::string(file)));
+        const auto labels = nmbs::read_labels(std::filesystem::path(std::string(file)));
         if (labels.empty())
         {
             return return_labels;
@@ -69,12 +66,12 @@ nmbs_confidentiality_labels nmbs_read_labels(const char* file) noexcept
     }
     catch (const std::exception& e) {
         // Log the error inside C++ so you know what went wrong
-        std::cerr << "C++ Exception caught in nmbs_read_xmp: " << e.what() << std::endl;
+        std::cerr << "C++ Exception caught in nmbs_read_labels: " << e.what() << std::endl;
         return return_labels;
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in nmbs_read_xmp" << std::endl;
+        std::cerr << "C++ Exception caught in nmbs_read_labels" << std::endl;
         return return_labels;
     }
 }
@@ -92,20 +89,20 @@ int nmbs_write_labels(const char* file, const nmbs_confidentiality_labels* label
             cpp_labels[i].confidentiality_information.classification = labels->label[i].classification;
         }
 
-        nmbs::write_xmp(std::filesystem::path(std::string(file)), cpp_labels[0]);
+        nmbs::write_labels(std::filesystem::path(std::string(file)), cpp_labels);
         return nmbs::success;
     }
     catch (const nmbs::exception& e) {
-        std::cerr << "C++ Exception caught in nmbs_write_xmp: " << e.what() << std::endl;
+        std::cerr << "C++ Exception caught in nmbs_write_labels: " << e.what() << std::endl;
         return e.code();
     }
     catch (const std::exception& e) {
-        std::cerr << "C++ Exception caught in nmbs_write_xmp: " << e.what() << std::endl;
+        std::cerr << "C++ Exception caught in nmbs_write_labels: " << e.what() << std::endl;
         return nmbs::unknown_error;
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in nmbs_write_xmp" << std::endl;
+        std::cerr << "C++ Exception caught in nmbs_write_labels" << std::endl;
         return nmbs::unknown_error;
     }
 }
@@ -165,144 +162,3 @@ void nmbs_free_confidentiality_labels(nmbs_confidentiality_labels* labels) noexc
     }
 }
 
-namespace nmbs::xml
-{
-    // 2. RAII Custom Deleters
-    struct XmlDocDeleter { void operator()(xmlDoc* d) const { xmlFreeDoc(d); } };
-    struct XmlCharDeleter { void operator()(xmlChar* s) const { xmlFree(s); } };
-    struct XmlXPathCtxDeleter { void operator()(xmlXPathContext* c) const { xmlXPathFreeContext(c); } };
-    struct XmlXPathObjDeleter { void operator()(xmlXPathObject* o) const { xmlXPathFreeObject(o); } };
-
-    /// Helper for relative XPath queries. In particular, this helper will return only the string value of the
-    /// searched node. It is useful for cases where exactly one node, with no attributes or children are expected.
-    /// @param context_node
-    /// @param ctx
-    /// @param xpath_expr
-    /// @return
-    [[nodiscard]] std::optional<std::string> get_relative_xpath_node_value(xmlNode* context_node, xmlXPathContext* ctx, const std::string& xpath_expr) {
-        std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter> obj(
-            xmlXPathNodeEval(context_node, reinterpret_cast<const xmlChar*>(xpath_expr.c_str()), ctx)
-        );
-
-        if (obj && !xmlXPathNodeSetIsEmpty(obj->nodesetval)) {
-            const xmlNode* node = obj->nodesetval->nodeTab[0];
-            const std::unique_ptr<xmlChar, XmlCharDeleter> content(xmlNodeGetContent(node));
-            if (content) {
-                return std::string(reinterpret_cast<const char*>(content.get()));
-            }
-        }
-        return std::nullopt;
-    }
-
-
-    std::string to_xml(const nmbs::confidentiality_label& label)
-    {
-        return "";
-    }
-
-    std::vector<confidentiality_label> from_xml(const std::string& xml)
-    {
-        std::vector<confidentiality_label> results;
-
-        const std::unique_ptr<xmlDoc, XmlDocDeleter> xml_doc(
-            xmlReadMemory(xml.c_str(), static_cast<int>(xml.length()), nullptr, nullptr, 0)
-        );
-        if (!xml_doc) {
-            throw exceptions::xml_could_not_parse_exception();
-        }
-
-        const std::unique_ptr<xmlXPathContext, XmlXPathCtxDeleter> xpath_ctx(xmlXPathNewContext(xml_doc.get()));
-        if (!xpath_ctx)
-        {
-            throw exceptions::xml_could_not_create_xpath_context_exception();
-        }
-
-        // Here we go to string as the string_view handles null termination differently. The tiny overhead is not a
-        // concern!
-        // ReSharper disable CppVariableCanBeMadeConstexpr
-        const std::string s4778_prefix(nmbs::constants::s4778_prefix);
-        const std::string s4778_namespace(nmbs::constants::s4778_namespace);
-        const std::string s4774_prefix(nmbs::constants::s4774_prefix);
-        const std::string s4774_namespace(nmbs::constants::s4774_namespace);
-        // ReSharper restore CppVariableCanBeMadeConstexpr
-
-        xmlXPathRegisterNs(xpath_ctx.get(), reinterpret_cast<const xmlChar*>(s4778_prefix.c_str()), reinterpret_cast<const xmlChar*>(s4778_namespace.c_str()));
-        xmlXPathRegisterNs(xpath_ctx.get(), reinterpret_cast<const xmlChar*>(s4774_prefix.c_str()), reinterpret_cast<const xmlChar*>(s4774_namespace.c_str()));
-
-        const std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter> confidentiality_label_collections[3]
-        {
-            std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//s4774:originatorConfidentialityLabel"), xpath_ctx.get())),
-            std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//s4774:alternativeConfidentialityLabel"), xpath_ctx.get())),
-            std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//s4774:metadataConfidentialityLabel"), xpath_ctx.get()))
-        };
-
-        for (const auto & confidentiality_label_collection : confidentiality_label_collections)
-        {
-            if (!confidentiality_label_collection || xmlXPathNodeSetIsEmpty(confidentiality_label_collection->nodesetval)) {
-                continue;
-            }
-
-            xmlNodeSetPtr confidentiality_label_nodes = confidentiality_label_collection->nodesetval;
-
-            for (int i = 0; i < confidentiality_label_nodes->nodeNr; ++i) {
-                xmlNode* binding_node = confidentiality_label_nodes->nodeTab[i];
-                nmbs::confidentiality_label current_label;
-
-                const std::string current_node_name(reinterpret_cast<const char*>(binding_node->name));
-                if (current_node_name == "originatorConfidentialityLabel") {
-                    current_label.label_type = confidentiality_label::originator;
-                } else if (current_node_name == "alternativeConfidentialityLabel") {
-                    current_label.label_type = confidentiality_label::alternative;
-                } else if (current_node_name == "metadataConfidentialityLabel") {
-                    current_label.label_type = confidentiality_label::successor;
-                } else {
-                    // TODO: Possibly cerr a warning here? At this point it is wierd if there is anything other than the three cases, but I dont think its worth killing the function? Consider in depth.
-                    continue;
-                }
-
-                // The './/' means "search anywhere inside the current node".
-                auto node_value = get_relative_xpath_node_value(
-                    binding_node, xpath_ctx.get(), ".//s4774:PolicyIdentifier"
-                );
-                if (!node_value)
-                {
-                    throw exceptions::xml_could_not_parse_exception("Could not parse ConfidentialityInformation element. No PolicyIdentifier, although it is a mandatory element.");
-                }
-                current_label.confidentiality_information.policy_identifier = node_value.value();
-
-
-                node_value = get_relative_xpath_node_value(
-                    binding_node, xpath_ctx.get(), ".//s4774:Classification"
-                );
-                if (!node_value)
-                {
-                    throw exceptions::xml_could_not_parse_exception("Could not parse ConfidentialityInformation element. No Classification, although it is a mandatory element.");
-                }
-                current_label.confidentiality_information.classification = node_value.value();
-
-
-                node_value = get_relative_xpath_node_value(
-                    binding_node, xpath_ctx.get(), ".//s4774:CreationDateTime"
-                );
-                if (!node_value)
-                {
-                    throw exceptions::xml_could_not_parse_exception("Could not parse *ConfidentialityLabel element. No CreationDateTime, although it is a mandatory element.");
-                }
-
-                std::istringstream in_stream{node_value.value()};
-                const std::string in_format{"%FT%T%Ez"};
-                in_stream >> std::chrono::parse(in_format, current_label.creation_date_time);
-
-                //current_label.data_ref_uri = get_relative_xpath(
-                //  binding_node, xpath_ctx.get(), ".//s4778:DataReference/@URI"
-                //);
-
-                results.push_back(current_label);
-            }
-
-            return results;
-        }
-        return results;
-    }
-
-}

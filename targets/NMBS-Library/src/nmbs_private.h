@@ -26,73 +26,38 @@
 #pragma once
 
 #include "nmbs/nmbs.h"
-#include "binding.h"
+#include "nmbs/binding.h"
+
 #include <string>
 
 namespace nmbs
 {
-    /// @brief Writes ADatP‑4778 binding information into an image's XMP metadata.
-    /// @brief Embeds the provided payload into the XMP metadata of the specified image
-    /// using the standardized ADatP‑4778 XMP property key. This overload of the
-    /// function is a convenience overload. In a future version a more complete
-    /// function will be provided taking in a vector of labels to write.
-    /// @param path     Path to the image file to modify.
-    /// @param confidentiality_label  A standards‑compliant ADatP‑4778 BindingInformation element.
-    /// @return The label written to the file.
-    /// @throws nmbs::file_not_found_exception failed to locate the provided path
-    std::string write_xmp(const std::filesystem::path& path, const confidentiality_label& confidentiality_label);
+    [[nodiscard]] std::string write_xmp(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels);
 
-    /// @brief Reads the ADatP-4774 labels from the XMP of a file
-    /// @details and returns them in a deserialised form. The deserialization
-    /// is quite tolerant, and will favour returning incomplete data, rather
-    /// than erroring out. This design choice is to ensure interoperability
-    /// with other less strict implementations.
-    /// @param path to the file
-    /// @return a collection of all labels applied to the file
-    /// @throws nmbs::exceptions::file_not_found_exception failed to locate the provided path
-    /// @throws nmbs::exception for all unexpected errors
-    /// @see nmbs::write_xmp
-    /// @see nmbs::read_xmp_xml
+    [[nodiscard]] std::string write_sidecar(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels);
+
     [[nodiscard]] std::vector<confidentiality_label> read_xmp(const std::filesystem::path& path);
 
-    /// @brief Reads the ADatP-4774 labels from the XMP of a file
-    /// @details and returns them in their raw XML form
-    /// @param path to the file
-    /// @return the raw XML of the stored labels
-    /// @throws nmbs::exceptions::file_not_found_exception failed to locate the provided path
-    /// @throws nmbs::exception for all unexpected errors
-    /// @see nmbs::write_xmp
-    /// @see nmbs::read_xmp
     [[nodiscard]] std::optional<std::string> read_xmp_xml(const std::filesystem::path& path);
 
-    /// @brief Generates a basic ADatP‑4774 confidentiality label.
-    ///
-    /// Constructs a minimal confidentiality label using the provided policy
-    /// identifier and classification value, producing a standards‑compliant
-    /// ADatP‑4774 label suitable for embedding in metadata structures or
-    /// BindingInformation elements.
-    ///
-    /// @param confidentiality_label  The label to serialise.
-    /// @return An XML string representing a basic ADatP‑4774 confidentiality label.
-    [[nodiscard]] std::string serialise_confidentiality_label(const confidentiality_label& confidentiality_label);
+    [[nodiscard]] std::vector<confidentiality_label> read_sidecar(const std::filesystem::path& path);
 
-    /// @brief Wraps a confidentiality label in an ADatP‑4778 BindingInformation element.
-    ///
-    /// Generates a BindingInformation element containing the provided
-    /// confidentiality label. This function assumes that the resulting element will
-    /// be embedded within a larger data structure; therefore, no XML declaration is
-    /// included, and the `DataReference` field is set to an empty string as
-    /// permitted by the ADatP‑4778 schema.
-    ///
-    /// @param confidentiality_label The XML confidentiality label to embed within
-    ///        the BindingInformation element.
-    /// @return An XML string whose root element is a standards‑compliant
-    ///         BindingInformation element.
-    [[nodiscard]] std::string binding_information(std::string_view confidentiality_label);
+    [[nodiscard]] std::optional<std::string> read_sidecar_xml(const std::filesystem::path& path);
 
     namespace xml
     {
-        [[nodiscard]] std::vector<confidentiality_label> from_xml(const std::string& xml);
+        [[nodiscard]] binding::binding_information deserialise_binding_information(const std::string& xml);
+
+        [[nodiscard]] std::string encode_base64(const std::string& input);
+
+        [[nodiscard]] std::string decode_base64(std::string_view input);
+
+        [[nodiscard]] std::string serialise_binding_information(const binding::binding_information& binding_information);
+
+        [[nodiscard]] std::string serialise_confidentiality_labels(const std::vector<confidentiality_label>& confidentiality_labels);
+
+        [[nodiscard]] std::string serialise_confidentiality_label(const confidentiality_label& confidentiality_label);
+
     }
 
 }

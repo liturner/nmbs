@@ -5,7 +5,7 @@ Maintainer: Luke Ian Turner <turnertech@outlook.de>
 Standards-Version: 4.6.0
 Build-Depends: debhelper-compat (= 13), libexiv2-dev, libargparse-dev, libxml2-dev (>= 2.12.7), libgtest-dev, doxygen, help2man
 
-# --- Package 1: The CLI Tool ---
+# --- Package 1: The User Binaries ---
 Package: nmbs
 Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, libnmbs1 (= ${binary:Version})
@@ -19,7 +19,6 @@ Package: libnmbs1
 Section: libs
 Architecture: amd64
 Depends: ${shlibs:Depends}, ${misc:Depends}, libxml2 (>= 2.12.7)
-Recommends: dochelp
 Description: Runtime shared library for nmbs
  This package contains the runtime shared library target (libnmbs.so.*).
  It is required by the CLI tool and other applications to execute.
@@ -29,6 +28,7 @@ Package: libnmbs-dev
 Section: libdevel
 Architecture: any
 Depends: libnmbs1 (= ${binary:Version}), ${misc:Depends}
+Recommends: dochelp
 Description: Development headers and tracking links for nmbs
  This package contains the C++ header files if you want to compile
  external code against libnmbs.

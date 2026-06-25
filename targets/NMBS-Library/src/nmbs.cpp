@@ -24,6 +24,8 @@
 /// SOFTWARE.
 
 #include "nmbs/nmbs.h"
+#include "nmbs/binding.h"
+#include "nmbs/constants.h"
 #include "nmbs/version.h"
 #include "nmbs_private.h"
 
@@ -31,38 +33,14 @@
 #include <chrono>
 #include <ranges>
 #include <iostream>
+#include <fstream>
+#include <filesystem>
 
 namespace nmbs
 {
     std::string version()
     {
         return project_version;
-    }
-
-    std::string serialise_confidentiality_label(const confidentiality_label& confidentiality_label)
-    {
-        const std::string creation_time_string = std::format("{:%FT%TZ}", confidentiality_label.creation_date_time);
-
-        // Leaving this just flexible enough to make it easy to add loops for more complex labels later.
-        std::string xml;
-        xml.reserve(1024);
-        xml.append(std::format(R"(<{0}:originatorConfidentialityLabel xmlns:{0}="{1}"><{0}:ConfidentialityInformation>)", constants::s4774_prefix, constants::s4774_namespace));
-        xml.append(std::format("<{0}:PolicyIdentifier>{1}</{0}:PolicyIdentifier>", constants::s4774_prefix, confidentiality_label.confidentiality_information.policy_identifier));
-        xml.append(std::format("<{0}:Classification>{1}</{0}:Classification></{0}:ConfidentialityInformation>", constants::s4774_prefix, confidentiality_label.confidentiality_information.classification));
-        if (confidentiality_label.originator_id.has_value())
-        {
-            xml.append(std::format(R"(<{0}:OriginatorID IDType="{1}">{2}</{0}:OriginatorID>)", constants::s4774_prefix, confidentiality_label.originator_id.value().id_type_string(), confidentiality_label.originator_id.value().value));
-        }
-        xml.append(std::format("<{0}:CreationDateTime>{1}</{0}:CreationDateTime>", constants::s4774_prefix, creation_time_string));
-        xml.append(std::format("</{0}:originatorConfidentialityLabel>", constants::s4774_prefix));
-
-
-        return xml;
-    }
-
-    std::string binding_information(const std::string_view confidentiality_label)
-    {
-        return std::format(R"(<{0}:BindingInformation xmlns:{0}="{1}"><{0}:MetadataBindingContainer><{0}:MetadataBinding><{0}:Metadata>{2}</{0}:Metadata><{0}:DataReference URI="" /></{0}:MetadataBinding></{0}:MetadataBindingContainer></{0}:BindingInformation>)", constants::s4778_prefix, constants::s4778_namespace, confidentiality_label);
     }
 
     std::string write_labels(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels)
@@ -76,8 +54,12 @@ namespace nmbs
 
         if (binding::supports_xmp(binding_support))
         {
-            // TODO: Make the XMP function support multiple labels
-            return write_xmp(path, confidentiality_labels[0]);
+            return write_xmp(path, confidentiality_labels);
+        }
+
+        if (binding::supports_sidecar(binding_support))
+        {
+            return write_sidecar(path, confidentiality_labels);
         }
 
         // TODO: Throw no supported label type
@@ -101,8 +83,14 @@ namespace nmbs
 
         if (binding::has_xmp(binding_support))
         {
-            const auto xmp_labels = read_xmp(path);
-            return_labels.insert(return_labels.end(), xmp_labels.begin(), xmp_labels.end());
+            const auto labels = read_xmp(path);
+            return_labels.insert(return_labels.end(), labels.begin(), labels.end());
+        }
+
+        if (binding::has_sidecar(binding_support))
+        {
+            const auto labels = read_sidecar(path);
+            return_labels.insert(return_labels.end(), labels.begin(), labels.end());
         }
 
         return return_labels;
@@ -126,12 +114,13 @@ namespace nmbs
 
 
 
-    std::string write_xmp(const std::filesystem::path& path, const confidentiality_label& confidentiality_label)
+    std::string write_xmp(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels)
     {
         try
         {
-            std::string payload = binding_information(serialise_confidentiality_label(
-                confidentiality_label));
+            binding::binding_information bdo;
+            bdo.labels = confidentiality_labels;
+            std::string payload = xml::serialise_binding_information(bdo);
             const auto image = Exiv2::ImageFactory::open(path.string());
             if (image.get() == nullptr)
             {
@@ -148,6 +137,37 @@ namespace nmbs
         }
         catch (const Exiv2::Error& e) {
             throw nmbs::exception(exit_code::unknown_error, "Exiv2::Error: " + std::string(e.what()));
+        }
+    }
+
+    std::string write_sidecar(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels)
+    {
+        try
+        {
+            if (!std::filesystem::exists(path)) [[unlikely]]
+            {
+                throw exceptions::file_not_found_exception();
+            }
+
+            std::filesystem::path bdo_path{path};
+            bdo_path += ".bdo";
+            const std::filesystem::path bdo_uri = "./" / bdo_path.filename();
+
+            binding::binding_information bdo;
+            bdo.reference.uri = bdo_uri.string();
+            bdo.labels = confidentiality_labels;
+
+            const std::string payload = xml::serialise_binding_information(bdo);
+
+            if (std::ofstream bdo_file(bdo_path); bdo_file.is_open()) {
+                bdo_file << R"(<?xml version="1.0" encoding="UTF-8"?>)";
+                bdo_file << payload;
+            }
+
+            return payload;
+        }
+        catch (const std::exception& e) {
+            throw nmbs::exception(exit_code::unknown_error, "std::exception: " + std::string(e.what()));
         }
     }
 
@@ -189,11 +209,45 @@ namespace nmbs
         }
     }
 
-    std::vector<nmbs::confidentiality_label> read_xmp(const std::filesystem::path& path)
+    std::vector<confidentiality_label> read_xmp(const std::filesystem::path& path)
     {
         if (const auto label_xml{read_xmp_xml(path)}; label_xml.has_value())
         {
-            return xml::from_xml(label_xml.value());
+            return xml::deserialise_binding_information(label_xml.value()).labels;
+        }
+        return {};
+    }
+
+    [[nodiscard]] std::optional<std::string> read_sidecar_xml(const std::filesystem::path& path)
+    {
+        try
+        {
+            std::filesystem::path bdo_path = path;
+            bdo_path += ".bdo";
+            if (!std::filesystem::exists(path) || !std::filesystem::exists(bdo_path)) [[unlikely]]
+            {
+                throw exceptions::file_not_found_exception();
+            }
+
+            if (std::ifstream bdo_file(bdo_path); bdo_file.is_open())
+            {
+                std::stringstream buffer;
+                buffer << bdo_file.rdbuf();
+                return buffer.str();
+            }
+            return std::nullopt;
+        }
+        catch (const Exiv2::Error& e)
+        {
+            throw nmbs::exception(exit_code::unknown_error, "Exiv2::Error: " + std::string(e.what()));
+        }
+    }
+
+    [[nodiscard]] std::vector<confidentiality_label> read_sidecar(const std::filesystem::path& path)
+    {
+        if (const auto label_xml{read_sidecar_xml(path)}; label_xml.has_value())
+        {
+            return xml::deserialise_binding_information(label_xml.value()).labels;
         }
         return {};
     }
@@ -233,14 +287,14 @@ namespace nmbs
                 result_flags |= flags::has_sidecar;
 
                 const std::filesystem::perms bdo_perms = std::filesystem::status(bdo_path).permissions();
-                if ((bdo_perms & std::filesystem::perms::owner_write) == std::filesystem::perms::none && (bdo_perms & std::filesystem::perms::group_write) == std::filesystem::perms::none)
-                {
-                    result_flags |= flags::supports_sidecar;
-                }
-                else [[unlikely]]
+                if ((bdo_perms & std::filesystem::perms::owner_write) == std::filesystem::perms::none && (bdo_perms & std::filesystem::perms::group_write) == std::filesystem::perms::none) [[unlikely]]
                 {
                     // Rare case. A read only sidecar exists.
                     result_flags &= ~flags::supports_sidecar;
+                }
+                else
+                {
+                    result_flags |= flags::supports_sidecar;
                 }
             }
 
@@ -280,6 +334,53 @@ namespace nmbs
 
             return result_flags;
         }
+
+        namespace http
+        {
+            [[nodiscard]] std::string serialise_labels(const std::vector<confidentiality_label>& confidentiality_labels)
+            {
+                binding_information bdo;
+                bdo.labels = confidentiality_labels;
+                const std::string binding_xml = xml::serialise_binding_information(bdo);
+                const std::string base64_xml = xml::encode_base64(binding_xml);
+                return std::format(
+                    R"(binding-type="urn:nato:stanag:4778:bindinginformation:1:0 binding-data-object="{}")",
+                    base64_xml);
+            }
+
+            [[nodiscard]] std::vector<confidentiality_label> deserialise_labels(std::string_view binding_data)
+            {
+                std::vector<confidentiality_label> labels;
+                if (binding_data.empty())
+                {
+                    return labels;
+                }
+
+                // 1. Define what we are looking for
+                constexpr std::string_view key = R"(binding-data-object=")";
+
+                // 2. Find the start of the key
+                size_t start_pos = binding_data.find(key);
+                if (start_pos == std::string_view::npos) {
+                    return labels; // Key not found!
+                }
+
+                // 3. Move the start pointer to the actual Base64 payload
+                start_pos += key.length();
+
+                // 4. Find the closing quote
+                size_t end_pos = binding_data.find('"', start_pos);
+                if (end_pos == std::string_view::npos) {
+                    return labels; // Malformed string, missing closing quote!
+                }
+
+                std::string_view base64_xml = binding_data.substr(start_pos, end_pos - start_pos);
+                std::string xml = xml::decode_base64(base64_xml);
+                return xml::deserialise_binding_information(xml).labels;
+            }
+
+        }
+
     }
 
 }

@@ -26,11 +26,26 @@
 #pragma once
 
 #include <filesystem>
+#include <optional>
 
 /// @brief ADatP-4778 oriented namespace, focusing on binding the ADatP-4774 labels to files.
 ///
 namespace nmbs::binding
 {
+    ///
+    /// @brief <xs:complexType name="dataReferenceType" id="dataReferenceType">
+    struct data_reference
+    {
+        std::string uri;
+        std::optional<std::string> content_type;
+    };
+
+    struct binding_information
+    {
+        std::vector<confidentiality_label> labels;
+        data_reference reference;
+    };
+
     ///
     /// @brief Flags detailing various binding support for specific files.
     enum class flags : std::uint32_t
@@ -145,4 +160,34 @@ namespace nmbs::binding
     /// @param path to analyse
     /// @return nmbs::binding::flags containing all information about the path parameter
     [[nodiscard]] flags support(const std::filesystem::path& path);
+
+}
+
+/// @brief ADatP-4778.2 Representational State Transfer (REST) Binding Profile
+///
+namespace nmbs::binding::http
+{
+    inline constexpr std::string_view profile_canonical_identifier = "urn:nato:stanag:4778:profile:rest";
+
+    inline constexpr std::string_view profile_version_identifier = "urn:nato:stanag:4778:profile:rest:1:2";
+
+    inline constexpr std::string_view header_key = "Binding-Data";
+
+    /// @brief Creates a data_reference with the standard content type for the
+    /// REST binding profile.
+    /// This factory function handles the creation and initial configuration of a
+    /// data_reference structure, ensuring the default content type is properly assigned.
+    /// @return A fully initialized binding::data_reference object.
+    [[nodiscard]] constexpr data_reference create_data_reference()
+    {
+        data_reference reference;
+        reference.content_type = "message/http";
+        return reference;
+    }
+
+    [[nodiscard]] std::string serialise_labels(const std::vector<confidentiality_label>& confidentiality_labels);
+
+    // Expects full header string!
+    [[nodiscard]] std::vector<confidentiality_label> deserialise_labels(std::string_view binding_data);
+
 }

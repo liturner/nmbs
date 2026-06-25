@@ -6,6 +6,8 @@
       <w>confidentialitymetadatalabel</w>
       <w>debemail</w>
       <w>debfullname</w>
+      <w>deserialise</w>
+      <w>deserialised</w>
       <w>dochelp</w>
       <w>dockerignore</w>
       <w>doxygen</w>
@@ -25,6 +27,7 @@
       <w>soversion</w>
       <w>stanag</w>
       <w>turnertech</w>
+      <w>xmime</w>
       <w>xmlcore</w>
       <w>xmlspif</w>
     </words>

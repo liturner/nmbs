@@ -1,5 +1,3 @@
-#pragma once
-
 /// @file confidentiality_label.h
 /// @brief Object representation of a Confidentiality Label as per ADatP-4774
 ///
@@ -24,6 +22,8 @@
 /// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
+
+#pragma once
 
 #include <chrono>
 #include <string>
@@ -88,73 +88,18 @@ namespace nmbs
 
         struct originator_id
         {
-            enum originator_id_type
-            {
-                /// @brief An Internet electronic mail address.
-                /// @details john.doe@ncia.nato.int
-                rfc822_name,
+            static constexpr std::string_view rfc822_name = "rfc822Name";
+            static constexpr std::string_view dns_name = "dNSName";
+            static constexpr std::string_view directory_name = "directoryName";
+            static constexpr std::string_view uniform_resource_identifier = "uniformResourceIdentifie";
+            static constexpr std::string_view ip_address = "iPAddress";
+            static constexpr std::string_view x400_address = "x400Address";
+            static constexpr std::string_view jid = "jID";
+            static constexpr std::string_view user_principal_name = "userPrincipalName";
 
-                /// @brief An Internet domain name.
-                /// @details ncia.nato.int
-                dns_name,
-
-                /// @brief A distinguished name encoded as a string
-                /// @details cn=John Doe, ou=NCIA, o=NATO
-                directory_name,
-
-                /// @brief A Uniform Resource Identifier (URI) for the World Wide Web.
-                /// @details http://www.ncia.nato.int/
-                uniform_resource_identifier,
-
-                /// @brief An Internet Protocol address.
-                /// @details 192.168.0.1
-                ip_address,
-
-                /// @brief An O/R address encoded as a string.
-                /// @details /cn=John Doe
-                /// /OU=NCIA
-                /// /O=NATO
-                /// /PRMD=NMS
-                /// /C=OO/
-                x400_address,
-
-                /// @brief An XMPP address.
-                /// @details doe@ncia.nato.int/mobile
-                jid,
-
-                /// @brief An Internet-style username format defined by Microsoft.
-                /// @details john.doe@nr.ncia.nato.int
-                user_principal_name
-            };
-
-            originator_id_type id_type;
+            std::string id_type;
 
             std::string value;
-
-            [[nodiscard]] std::string id_type_string() const
-            {
-                switch (this->id_type)
-                {
-                case rfc822_name:
-                    return "rfc822Name";
-                case dns_name:
-                    return "dNSName";
-                case directory_name:
-                    return "directoryName";
-                case uniform_resource_identifier:
-                    return "uniformResourceIdentifier";
-                case ip_address:
-                    return "iPAddress";
-                case x400_address:
-                    return "x400Address";
-                case jid:
-                    return "jID";
-                case user_principal_name:
-                    return "userPrincipalName";
-                default:
-                    throw nmbs::exception(nmbs::exit_code::unknown_error, "Invalid state. An unknown originator_id_type was provided. This should not be po");
-                }
-            }
         };
 
         /// Overloaded constructor taking the label type as a parameter.
