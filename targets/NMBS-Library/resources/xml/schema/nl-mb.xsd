@@ -17,16 +17,15 @@ binding metadata to data objects.
 *********************************************************************
 -->
 <xs:schema
-	xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
-	xmlns:mb="urn:nato:stanag:4778:bindinginformation:1:0"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-Instance"
-	xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
-	xmlns:xml="http://www.w3.org/XML/1998/namespace"
-	targetNamespace="urn:nato:stanag:4778:bindinginformation:1:0"
-	elementFormDefault="qualified"
-	attributeFormDefault="unqualified"
-	version="1.4">
+        xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+        xmlns:mb="urn:nato:stanag:4778:bindinginformation:1:0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema"
+        xmlns:xmime="http://www.w3.org/2005/05/xmlmime"
+        xmlns:xml="http://www.w3.org/XML/1998/namespace"
+        targetNamespace="urn:nato:stanag:4778:bindinginformation:1:0"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified"
+        version="1.4">
 	<xs:annotation>
 		<xs:documentation>STANAG 4778 Binding Information</xs:documentation>
 		<xs:appinfo>

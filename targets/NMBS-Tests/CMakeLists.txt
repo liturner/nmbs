@@ -1,10 +1,13 @@
 configure_file(resources/test-has-label.jpg resources/test-has-label.jpg COPYONLY)
 configure_file(resources/test-no-xmp.jpg resources/test-no-xmp.jpg COPYONLY)
 configure_file(resources/test-public-unmarked.jpg resources/test-public-unmarked.jpg COPYONLY)
+configure_file(resources/spif/NATO.spif resources/spif/NATO.spif COPYONLY)
+configure_file(resources/spif/PUBLIC.spif resources/spif/PUBLIC.spif COPYONLY)
 
 add_executable(NMBS-Tests
         src/nmbs/basic.tests.cpp
         src/nmbs/http.tests.cpp
+        src/nmbs/spif.tests.cpp
         src/nmbs/xml.tests.cpp
         src/nmbs/test.h
 )

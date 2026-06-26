@@ -1,6 +1,11 @@
 tt-nmbs (1.0.0~alpha3) UNRELEASED; urgency=medium
 
-  * Add REST Binding Profile of ADatP-4778.2 Ed.A V.1 Chapter 7
+  * Add REST Binding Profile of ADatP-4778.2 Ed.A V.1
+  * Add Sidecar Binding Profile of ADatP-4778.2 Ed.A V.1
+  * Add Partial SPIF Support
+  * Add packaged spif files (/usr/share/xml/nmbs/spif)
+  * Add MIME Info for .bdo and .spif
+  * Refactor C API
 
  -- Luke Ian Turner <turnertech@outlook.de>  Fri, 26 Jun 2026 10:47:28 +0200
 

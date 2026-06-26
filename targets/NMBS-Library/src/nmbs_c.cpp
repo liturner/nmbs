@@ -27,56 +27,84 @@
 
 #include <iostream>
 #include <sstream>
-#include <chrono>
 #include <cstring>
 #include <string>
 
 #include "nmbs_private.h"
 #include "nmbs/binding.h"
+#include "nmbs/spif.h"
 #include "nmbs/c/nmbs.h"
 
-nmbs_confidentiality_labels nmbs_read_labels(const char* file) noexcept
+[[nodiscard]] nmbs_security_policies* nmbs_security_policies_new() noexcept
 {
-    nmbs_confidentiality_labels return_labels;
-    return_labels.size = 0;
-    return_labels.label = nullptr;
+    auto return_policies = new nmbs_security_policies;
+    return_policies->size = 0;
+    return_policies->policy = nullptr;
+    return return_policies;
+}
 
+
+void nmbs_security_policies_read_installed(nmbs_security_policies* policies_out) noexcept
+{
+    auto& policies_cpp = nmbs::spif::get_security_policies();
+    if (policies_cpp.empty())
+    {
+        return;
+    }
+
+    policies_out->policy = new nmbs_security_policy[policies_cpp.size()];
+    policies_out->size = policies_cpp.size();
+
+    for (int i = 0; i < policies_cpp.size(); ++i)
+    {
+        policies_out->policy[i].name = new char[policies_cpp[i].name.length() + 1];
+        std::memcpy(policies_out->policy[i].name, policies_cpp[i].name.c_str(), policies_cpp[i].name.length() + 1);
+        policies_out->policy[i].security_classifications = new nmbs_security_classification[policies_cpp[i].security_classifications.size()];
+        policies_out->policy[i].classification_count = policies_cpp[i].security_classifications.size();
+        for (int j = 0; j < policies_cpp[i].security_classifications.size(); ++j)
+        {
+            policies_out->policy[i].security_classifications[j].name = new char[policies_cpp[i].security_classifications[j].name.length() + 1];
+            std::memcpy(policies_out->policy[i].security_classifications[j].name,
+                policies_cpp[i].security_classifications[j].name.c_str(),
+                policies_cpp[i].security_classifications[j].name.length() + 1);
+        }
+    }
+}
+
+void nmbs_confidentiality_labels_read_labels(nmbs_confidentiality_labels* labels_out, const char* file) noexcept
+{
     try
     {
         const auto labels = nmbs::read_labels(std::filesystem::path(std::string(file)));
         if (labels.empty())
         {
-            return return_labels;
+            return;
         }
-
-        return_labels.label = static_cast<nmbs_confidentiality_label*>(std::malloc(labels.size() * sizeof(nmbs_confidentiality_label)));
-        if (!return_labels.label)
-        {
-            nmbs_free_confidentiality_labels(&return_labels);
-            return return_labels;
-        }
-
+        labels_out->label = new nmbs_confidentiality_label[labels.size()];
+        labels_out->size = labels.size();
         for (int i = 0; i < labels.size(); ++i)
         {
-            return_labels.label[i].policy_identifier = strdup(labels[i].confidentiality_information.policy_identifier.c_str());
-            return_labels.label[i].classification = strdup(labels[i].confidentiality_information.classification.c_str());
-            ++return_labels.size;
+            labels_out->label[i].policy_identifier = new char[labels[i].confidentiality_information.policy_identifier.size() + 1];
+            memcpy(labels_out->label[i].policy_identifier,
+                labels[i].confidentiality_information.policy_identifier.c_str(),
+                labels[i].confidentiality_information.policy_identifier.size() + 1);
+
+            labels_out->label[i].classification = new char[labels[i].confidentiality_information.classification.size() + 1];
+            memcpy(labels_out->label[i].classification,
+                labels[i].confidentiality_information.classification.c_str(),
+                labels[i].confidentiality_information.classification.size() + 1);
         }
-        return return_labels;
     }
     catch (const std::exception& e) {
-        // Log the error inside C++ so you know what went wrong
-        std::cerr << "C++ Exception caught in nmbs_read_labels: " << e.what() << std::endl;
-        return return_labels;
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_labels_read_labels: " << e.what() << std::endl;
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in nmbs_read_labels" << std::endl;
-        return return_labels;
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_labels_read_labels" << std::endl;
     }
 }
 
-int nmbs_write_labels(const char* file, const nmbs_confidentiality_labels* labels) noexcept
+int nmbs_confidentiality_labels_write_labels(const char* file, const nmbs_confidentiality_labels* labels) noexcept
 {
     try
     {
@@ -107,7 +135,7 @@ int nmbs_write_labels(const char* file, const nmbs_confidentiality_labels* label
     }
 }
 
-[[nodiscard]] uint32_t nmbs_binding_support(const char* file) noexcept
+[[nodiscard]] uint32_t nmbs_binding_flags_read_support(const char* file) noexcept
 {
     if (!file) {
         return 0;
@@ -129,36 +157,50 @@ int nmbs_write_labels(const char* file, const nmbs_confidentiality_labels* label
     }
 }
 
-void nmbs_free_confidentiality_label(nmbs_confidentiality_label* label) noexcept
+[[nodiscard]] nmbs_confidentiality_labels* nmbs_confidentiality_labels_new() noexcept
 {
-    try
-    {
-        std::free(const_cast<char*>(label->policy_identifier));
-        label->policy_identifier = nullptr;
-        std::free(const_cast<char*>(label->classification));
-        label->classification = nullptr;
-    }
-    catch (...)
-    {
-        std::cerr << "C++ Exception caught in during nmbs_free. High chance of memory leaks!" << std::endl;
-    }
+    auto labels = new nmbs_confidentiality_labels;
+    labels->size = 0;
+    labels->label = nullptr;
+    return labels;
 }
 
-void nmbs_free_confidentiality_labels(nmbs_confidentiality_labels* labels) noexcept
+void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels* labels) noexcept
 {
     try
     {
         for (int i = 0; i < labels->size; ++i)
         {
-            nmbs_free_confidentiality_label(&labels->label[i]);
+            delete[] labels->label[i].policy_identifier;
+            delete[] labels->label[i].classification;
         }
-        std::free(labels->label);
-        labels->label = nullptr;
-        labels->size = 0;
+        delete[] labels->label;
+        delete labels;
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in during nmbs_free. High chance of memory leaks!" << std::endl;
+        std::cerr << "C++ Exception caught in during nmbs_confidentiality_labels_delete. High chance of memory leaks!" << std::endl;
     }
 }
 
+void nmbs_security_policies_delete(nmbs_security_policies* policies) noexcept
+{
+    try
+    {
+        for (int i = 0; i < policies->size; ++i)
+        {
+            for (unsigned long j = 0; j < policies->policy[i].classification_count; ++j)
+            {
+                delete[] policies->policy[i].security_classifications[j].name;
+            }
+            delete[] policies->policy[i].name;
+            delete[] policies->policy[i].security_classifications;
+        }
+        delete[] policies->policy;
+        delete policies;
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in during nmbs_security_policies_delete. High chance of memory leaks!" << std::endl;
+    }
+}

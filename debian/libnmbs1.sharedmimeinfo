@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="application/x-nmbs-spif">
+        <acronym>SPIF</acronym>
+        <expanded-acronym>Security Policy Information File</expanded-acronym>
+        <sub-class-of type="application/xml"/>
+        <comment>Security Classification Policy</comment>
+        <comment xml:lang="fr">Politique de classification de sécurité</comment>
+        <comment xml:lang="de">Richtlinie zur Sicherheitsklassifizierung</comment>
+        <glob pattern="*.spif"/>
+        <generic-icon name="text-html"/>
+    </mime-type>
+    <mime-type type="application/x-nmbs-bdo">
+        <acronym>BDO</acronym>
+        <expanded-acronym>Binding Data Object</expanded-acronym>
+        <sub-class-of type="application/xml"/>
+        <comment>Binding Data Object</comment>
+        <glob pattern="*.bdo"/>
+        <generic-icon name="application-certificate"/>
+    </mime-type>
+</mime-info>

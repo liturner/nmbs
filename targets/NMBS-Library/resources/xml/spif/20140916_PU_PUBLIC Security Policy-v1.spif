@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--  $Id: PUBLIC Security Policy.xml 58 2014-09-16 09:14:24Z g.lunt $ -->
 <spif:SPIF
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:spif="http://www.xmlspif.org/spif"
-	schemaVersion="1.0"
-	version="1"
-	creationDate="20140916090512Z"
-	originatorDN="CN=Graeme Lunt,O=SMHS Ltd,C=GB"
-	keyIdentifier="6AA4BA9F66BFCD44"
-	privilegeId="2.16.840.1.101.2.1.8.3"
-	rbacId="2.16.840.1.101.2.1.8.3">
+        xmlns:spif="http://www.xmlspif.org/spif"
+        schemaVersion="1.0"
+        version="1"
+        creationDate="20140916090512Z"
+        originatorDN="CN=Graeme Lunt,O=SMHS Ltd,C=GB"
+        keyIdentifier="6AA4BA9F66BFCD44"
+        privilegeId="2.16.840.1.101.2.1.8.3"
+        rbacId="2.16.840.1.101.2.1.8.3">
 	<spif:securityPolicyId
 		name="PUBLIC"
 		id="1.3.6.1.4.1.31778.12.2.1"/>

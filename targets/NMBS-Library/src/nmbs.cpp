@@ -31,10 +31,111 @@
 
 #include <exiv2/exiv2.hpp>
 #include <chrono>
-#include <ranges>
 #include <iostream>
 #include <fstream>
 #include <filesystem>
+
+// Anonymous namespace guarantees internal linkage.
+// This symbol will not leak out of this specific .cpp file or the .so.
+namespace
+{
+    std::vector<nmbs::spif::security_policy> security_policies;
+
+    bool security_policies_initialised = false;
+
+    void initialise_security_policies() noexcept
+    {
+        if (security_policies_initialised) [[likely]]
+        {
+            return;
+        }
+
+        try
+        {
+            char* spif_override_cstr = std::getenv(std::string(nmbs::spif::override_spif_location_env_var).c_str());
+            if (spif_override_cstr != nullptr)
+            {
+                const std::filesystem::path spif_override_dir = std::string(spif_override_cstr);
+
+                if (std::filesystem::exists(spif_override_dir) && std::filesystem::is_directory(spif_override_dir))
+                {
+                    for (const auto& entry : std::filesystem::directory_iterator(spif_override_dir))
+                    {
+                        if (entry.is_regular_file())
+                        {
+                            std::ifstream file(entry.path());
+                            if (file)
+                            {
+                                std::stringstream buffer;
+                                buffer << file.rdbuf();
+                                security_policies.emplace_back(nmbs::xml::deserialise_security_policy(buffer.str()));
+                            }
+                        }
+                    }
+                }
+
+                security_policies_initialised = true;
+                return;
+            }
+
+            security_policies.clear();
+            if (std::filesystem::exists(nmbs::spif::packaged_spif_location) && std::filesystem::is_directory(
+                nmbs::spif::packaged_spif_location))
+            {
+                for (const auto& entry : std::filesystem::directory_iterator(nmbs::spif::packaged_spif_location))
+                {
+                    if (entry.is_regular_file())
+                    {
+                        std::ifstream file(entry.path());
+                        if (file)
+                        {
+                            std::stringstream buffer;
+                            buffer << file.rdbuf();
+                            security_policies.emplace_back(nmbs::xml::deserialise_security_policy(buffer.str()));
+                        }
+                    }
+                }
+            }
+            if (std::filesystem::exists(nmbs::spif::administered_spif_location) && std::filesystem::is_directory(
+                nmbs::spif::administered_spif_location))
+            {
+                for (const auto& entry : std::filesystem::directory_iterator(nmbs::spif::administered_spif_location))
+                {
+                    if (entry.is_regular_file())
+                    {
+                        std::ifstream file(entry.path());
+                        if (file)
+                        {
+                            std::stringstream buffer;
+                            buffer << file.rdbuf();
+                            security_policies.emplace_back(nmbs::xml::deserialise_security_policy(buffer.str()));
+                        }
+                    }
+                }
+            }
+
+            // Filter duplicate policies out, preferring newer versions.
+            std::ranges::sort(security_policies,
+                              [](const nmbs::spif::security_policy& a, const nmbs::spif::security_policy& b) {
+                                  if (a.name != b.name) {
+                                      return a.name < b.name; // Group by name
+                                  }
+                                  return a.version > b.version; // Highest version comes first
+                              });
+            auto last = std::ranges::unique(security_policies,
+                                            [](const nmbs::spif::security_policy& a, const nmbs::spif::security_policy& b) {
+                                                return a.name == b.name;
+                                            }).begin();
+            security_policies.erase(last, security_policies.end());
+        }
+        catch (...)
+        {
+            std::cerr << "libnmbs: Exception while reading SPIF files." << std::endl;
+        }
+
+        security_policies_initialised = true;
+    }
+}
 
 namespace nmbs
 {
@@ -379,6 +480,18 @@ namespace nmbs
                 return xml::deserialise_binding_information(xml).labels;
             }
 
+        }
+
+    }
+
+    namespace spif
+    {
+
+        const std::vector<security_policy>& get_security_policies()
+        {
+            ::initialise_security_policies();
+
+            return ::security_policies;
         }
 
     }

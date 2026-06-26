@@ -25,6 +25,8 @@
 
 #pragma once
 
+#include <string_view>
+
 /// @brief Constant values relevant to the ADatP standards.
 ///
 /// Contains URNs, namespaces, keys and generally anything which may be considered
@@ -117,4 +119,8 @@ namespace nmbs::constants
     /// prefixes are actually in use, as multiple aliases may legitimately appear in
     /// existing files.
     inline constexpr std::string_view s4778_key = "bindingInformation";
+
+    inline constexpr std::string_view spif_namespace = "http://www.xmlspif.org/spif";
+
+    inline constexpr std::string_view spif_prefix = "spif";
 }

@@ -13,6 +13,7 @@
       <w>doxygen</w>
       <w>fsanitize</w>
       <w>installxmlcatalogs</w>
+      <w>lacv</w>
       <w>libargparse</w>
       <w>libdevel</w>
       <w>libexiv</w>

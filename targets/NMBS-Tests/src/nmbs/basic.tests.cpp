@@ -39,5 +39,6 @@ TEST(Sidecar, Write)
     std::vector<nmbs::confidentiality_label> labels(1);
     labels[0].confidentiality_information.policy_identifier = "PUBLIC";
     labels[0].confidentiality_information.classification = "UNMARKED";
-    nmbs::write_sidecar("resources/test-no-xmp.jpg", labels);
+    auto response = nmbs::write_sidecar("resources/test-no-xmp.jpg", labels);
+    ASSERT_NE(response, "");
 }

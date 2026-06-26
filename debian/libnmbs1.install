@@ -1,2 +1,2 @@
 usr/lib/*/libnmbs.so.[1-9]*
-usr/share/xml/schema/*
+usr/share/xml/*

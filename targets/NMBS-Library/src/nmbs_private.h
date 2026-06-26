@@ -30,6 +30,8 @@
 
 #include <string>
 
+#include "nmbs/spif.h"
+
 namespace nmbs
 {
     [[nodiscard]] std::string write_xmp(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels);
@@ -47,6 +49,8 @@ namespace nmbs
     namespace xml
     {
         [[nodiscard]] binding::binding_information deserialise_binding_information(const std::string& xml);
+
+        [[nodiscard]] spif::security_policy deserialise_security_policy(const std::string& xml);
 
         [[nodiscard]] std::string encode_base64(const std::string& input);
 

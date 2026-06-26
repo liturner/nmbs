@@ -249,6 +249,99 @@ namespace nmbs::xml
         return bdo;
     }
 
+    [[nodiscard]] spif::security_policy deserialise_security_policy(const std::string& xml)
+    {
+        spif::security_policy spif;
+
+        const std::unique_ptr<xmlDoc, XmlDocDeleter> xml_doc(
+            xmlReadMemory(xml.c_str(), static_cast<int>(xml.length()), nullptr, nullptr, 0)
+        );
+        if (!xml_doc)
+        {
+            throw exceptions::xml_could_not_parse_exception();
+        }
+
+        const std::unique_ptr<xmlXPathContext, XmlXPathCtxDeleter> xpath_ctx(xmlXPathNewContext(xml_doc.get()));
+        if (!xpath_ctx)
+        {
+            throw exceptions::xml_could_not_create_xpath_context_exception();
+        }
+
+        // Here we go to string as the string_view handles null termination differently. The tiny overhead is not a
+        // concern!
+        // ReSharper disable CppVariableCanBeMadeConstexpr
+        const std::string spif_prefix(nmbs::constants::spif_prefix);
+        const std::string spif_namespace(nmbs::constants::spif_namespace);
+        // ReSharper restore CppVariableCanBeMadeConstexpr
+
+        xmlXPathRegisterNs(xpath_ctx.get(), reinterpret_cast<const xmlChar*>(spif_prefix.c_str()),
+                           reinterpret_cast<const xmlChar*>(spif_namespace.c_str()));
+
+        const std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter> binding_information_element(
+            xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//spif:SPIF"), xpath_ctx.get()));
+        if (!binding_information_element || binding_information_element->nodesetval->nodeNr == 0)
+        {
+            throw exceptions::xml_could_not_parse_exception("Could not parse SPIF. Could not find SPIF Element");
+        }
+        if (binding_information_element->nodesetval->nodeNr != 1)
+        {
+            throw exceptions::xml_could_not_parse_exception("Could not parse SPIF. Found multiple SPIF Elements");
+        }
+
+        xmlNodePtr root_element = binding_information_element->nodesetval->nodeTab[0];
+
+        spif.name = get_relative_xpath_node_value(root_element, xpath_ctx.get(), ".//spif:securityPolicyId/@name").value();
+        spif.id = get_relative_xpath_node_value(root_element, xpath_ctx.get(), ".//spif:securityPolicyId/@id").value();
+        try
+        {
+            spif.version = std::stoi(get_relative_xpath_node_value(root_element, xpath_ctx.get(), "./@version").value());
+        }
+        catch (...)
+        {
+            throw exceptions::xml_could_not_parse_exception("Could not parse SPIF. ./@version was missing or invalid");
+        }
+
+        auto security_classification_nodes = std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(
+            reinterpret_cast<const xmlChar*>("//spif:securityClassification"), xpath_ctx.get()));
+        if (!security_classification_nodes || xmlXPathNodeSetIsEmpty(security_classification_nodes->nodesetval))
+        {
+            throw exceptions::xml_could_not_parse_exception("Could not parse SPIF. Found no securityClassification Elements");
+        }
+
+        for (int i = 0; i < security_classification_nodes->nodesetval->nodeNr; ++i)
+        {
+            xmlNode* security_classification_node = security_classification_nodes->nodesetval->nodeTab[i];
+            spif::security_classification current_classification;
+
+            current_classification.name = get_relative_xpath_node_value(security_classification_node, xpath_ctx.get(),"./@name").value();
+
+            try
+            {
+                current_classification.hierarchy = std::stoi(get_relative_xpath_node_value(security_classification_node, xpath_ctx.get(), "./@hierarchy").value());
+            }
+            catch (...)
+            {
+                throw exceptions::xml_could_not_parse_exception("Could not parse SPIF. securityClassification/@hierarchy was missing or invalid");
+            }
+
+            try
+            {
+                current_classification.lacv = std::stoi(get_relative_xpath_node_value(security_classification_node, xpath_ctx.get(), "./@lacv").value());
+            }
+            catch (...)
+            {
+                throw exceptions::xml_could_not_parse_exception("Could not parse SPIF. securityClassification/@lacv was missing or invalid");
+            }
+
+            current_classification.colour = get_relative_xpath_node_value(security_classification_node, xpath_ctx.get(), "./@color");
+            auto obsolete = get_relative_xpath_node_value(security_classification_node, xpath_ctx.get(), "./@obsolete");
+            current_classification.obsolete = obsolete.has_value() &&  obsolete.value() == "true";
+            spif.security_classifications.push_back(current_classification);
+        }
+
+        return spif;
+    }
+
     [[nodiscard]] std::string serialise_binding_information(const binding::binding_information& binding_information)
     {
         std::string xml;

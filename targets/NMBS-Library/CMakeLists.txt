@@ -16,6 +16,7 @@ target_sources(NMBS-Library
         include/nmbs/exceptions.h
         include/nmbs/exit_code.h
         include/nmbs/nmbs.h
+        include/nmbs/spif.h
         PRIVATE
         src/nmbs_private.h
         src/nmbs_c.cpp
@@ -56,6 +57,9 @@ if (DOXYGEN_FOUND)
     set(DOXYGEN_EXTRACT_ALL YES)
     set(DOXYGEN_EXCLUDE_SYMBOLS std::*)
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_CURRENT_SOURCE_DIR}/doc/index.md")
+    set(DOXYGEN_FULL_PATH_NAMES YES)
+    set(DOXYGEN_STRIP_FROM_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    set(DOXYGEN_STRIP_FROM_INC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
     doxygen_add_docs(doxygen ALL
             ${CMAKE_CURRENT_SOURCE_DIR}/doc
             ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -71,9 +75,8 @@ endif ()
 # Resources, Files etc.
 #
 
-install(FILES
-        resources/nl-cl.xsd
-        resources/nl-mb.xsd
-        resources/xmlspif.xsd
-        DESTINATION share/xml/schema/libnmbs
+install(DIRECTORY
+        resources/xml/
+        DESTINATION share/xml/nmbs
 )
+
