@@ -1,6 +1,13 @@
 var searchData=
 [
-  ['read_5flabels_0',['read_labels',['../namespacenmbs.html#a3ed7ef415572610a1ba9d97df8b68bf1',1,'nmbs']]],
-  ['read_5flabels_5fxml_1',['read_labels_xml',['../namespacenmbs.html#ab7c2acae7381d29718e83a33e340b66b',1,'nmbs']]],
-  ['rfc822_5fname_2',['rfc822_name',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#ac449d93eb4a78d128262b271819c7bb9ae711387e334188e1d62be3f80cf0c64a',1,'nmbs::confidentiality_label::originator_id']]]
+  ['obsolete_0',['obsolete',['../structnmbs_1_1spif_1_1security__classification.html#a03e0f9c7a52f7302ef98cd65f01e2e42',1,'nmbs::spif::security_classification']]],
+  ['operator_26_1',['operator&amp;',['../namespacenmbs_1_1binding.html#a581b10c5dd092192dd584c2af1cc643d',1,'nmbs::binding']]],
+  ['operator_26_3d_2',['operator&amp;=',['../namespacenmbs_1_1binding.html#a7dcd930001866074321c1850f4d63a00',1,'nmbs::binding']]],
+  ['operator_3d_3',['operator=',['../structnmbs_1_1confidentiality__label.html#a7bc07da337ca5f654b64358284f7daa4',1,'nmbs::confidentiality_label']]],
+  ['operator_7c_4',['operator|',['../namespacenmbs_1_1binding.html#ab81af51e8ebf5512d7e041877e303954',1,'nmbs::binding']]],
+  ['operator_7c_3d_5',['operator|=',['../namespacenmbs_1_1binding.html#a248a410d7ec5830c5fd1253465654093',1,'nmbs::binding']]],
+  ['operator_7e_6',['operator~',['../namespacenmbs_1_1binding.html#afce5039fdf19749b5d38d109e969e013',1,'nmbs::binding']]],
+  ['originator_7',['originator',['../structnmbs_1_1confidentiality__label.html#a0e1a396a8e0eb34f40b03a1c10261144ad55d91c35a80f92027369e3b0a14fb14',1,'nmbs::confidentiality_label']]],
+  ['originator_5fid_8',['originator_id',['../structnmbs_1_1confidentiality__label_1_1originator__id.html',1,'nmbs::confidentiality_label::originator_id'],['../structnmbs_1_1confidentiality__label.html#a8dc00a71c2d9b343d76c918807c2f3e0',1,'nmbs::confidentiality_label::originator_id']]],
+  ['override_5fspif_5flocation_5fenv_5fvar_9',['override_spif_location_env_var',['../namespacenmbs_1_1spif.html#a6c582819d876feb5947524f1ed67b87d',1,'nmbs::spif']]]
 ];

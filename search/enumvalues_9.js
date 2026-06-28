@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['uniform_5fresource_5fidentifier_0',['uniform_resource_identifier',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#ac449d93eb4a78d128262b271819c7bb9a5c24f7a74c775175def529cdb1b84888',1,'nmbs::confidentiality_label::originator_id']]],
-  ['unknown_5ferror_1',['unknown_error',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca60c99433be2ec360e16d54c9b7bd73cb',1,'nmbs']]],
-  ['user_5fprincipal_5fname_2',['user_principal_name',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#ac449d93eb4a78d128262b271819c7bb9adcc549d465a4a8ff51046e2bcc4297a5',1,'nmbs::confidentiality_label::originator_id']]]
+  ['xml_5fcould_5fnot_5fcreate_5fxpath_5fcontext_0',['xml_could_not_create_xpath_context',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca7055e9f500109018478308f020546180',1,'nmbs']]],
+  ['xml_5fcould_5fnot_5fparse_1',['xml_could_not_parse',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca1f2ee1c2fc50ed4a5d9f81392d45f589',1,'nmbs']]],
+  ['xmp_5fkey_5fnot_5ffound_2',['xmp_key_not_found',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03caf32022ff110ee14ee21a6e74afd940dd',1,'nmbs']]],
+  ['xmp_5fnot_5ffound_3',['xmp_not_found',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca9c89016bbd8ff33462bba510b99853af',1,'nmbs']]]
 ];

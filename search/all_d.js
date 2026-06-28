@@ -1,14 +1,10 @@
 var searchData=
 [
-  ['s4774_5fnamespace_0',['s4774_namespace',['../namespacenmbs_1_1constants.html#a18d541175ff51848f3108a2111b936cf',1,'nmbs::constants']]],
-  ['s4774_5fprefix_1',['s4774_prefix',['../namespacenmbs_1_1constants.html#a96608da219bd2d976afe5ff5d768af49',1,'nmbs::constants']]],
-  ['s4778_5fkey_2',['s4778_key',['../namespacenmbs_1_1constants.html#ad0f6085af97a18f66fe539f8ea69c230',1,'nmbs::constants']]],
-  ['s4778_5fnamespace_3',['s4778_namespace',['../namespacenmbs_1_1constants.html#a8319d656f7a7788cb7750a56dd052823',1,'nmbs::constants']]],
-  ['s4778_5fprefix_4',['s4778_prefix',['../namespacenmbs_1_1constants.html#a22eb4322e1be2e19df85ca7e92c6526e',1,'nmbs::constants']]],
-  ['s4778_5fxmp_5fnamespace_5',['s4778_xmp_namespace',['../namespacenmbs_1_1constants.html#a96112814b9c28f277ecba1b57ea515a5',1,'nmbs::constants']]],
-  ['s4778_5fxmp_5fprefix_6',['s4778_xmp_prefix',['../namespacenmbs_1_1constants.html#a5f73e16c679d4c103bb05739eabef7e8',1,'nmbs::constants']]],
-  ['size_7',['size',['../structnmbs__confidentiality__labels.html#a7715d8b3af07c52c09f988c32f52170e',1,'nmbs_confidentiality_labels']]],
-  ['started_8',['Getting Started',['../index.html',1,'']]],
-  ['success_9',['success',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca8705e8f9efcd319de1a4ab0cc991e07e',1,'nmbs']]],
-  ['successor_10',['successor',['../structnmbs_1_1confidentiality__label.html#a0e1a396a8e0eb34f40b03a1c10261144aba5da41f433ee93f4c3fd6652ca37005',1,'nmbs::confidentiality_label']]]
+  ['packaged_5fspif_5flocation_0',['packaged_spif_location',['../namespacenmbs_1_1spif.html#a868083159931e29d39840fc6e74c7bd1',1,'nmbs::spif']]],
+  ['policies_1',['Security Policies',['../group__c__spif.html',1,'']]],
+  ['policy_2',['policy',['../structnmbs__security__policies.html#aa5d5d451e0cf53892167da979b59ca09',1,'nmbs_security_policies']]],
+  ['policy_5fidentifier_3',['policy_identifier',['../structnmbs__confidentiality__label.html#a7ba5c89776395b400fe4b2640334ead1',1,'nmbs_confidentiality_label::policy_identifier'],['../structnmbs_1_1confidentiality__label_1_1confidentiality__information__type.html#a077f29a40e4f65873d83183b7bf01f8d',1,'nmbs::confidentiality_label::confidentiality_information_type::policy_identifier']]],
+  ['privacy_5fmark_4',['privacy_mark',['../structnmbs_1_1confidentiality__label_1_1confidentiality__information__type.html#a127f834554574fee3c5ed0e7febc7ca2',1,'nmbs::confidentiality_label::confidentiality_information_type']]],
+  ['profile_5fcanonical_5fidentifier_5',['profile_canonical_identifier',['../namespacenmbs_1_1binding_1_1http.html#a108de8901f25f9f81bb257afff9e12b4',1,'nmbs::binding::http']]],
+  ['profile_5fversion_5fidentifier_6',['profile_version_identifier',['../namespacenmbs_1_1binding_1_1http.html#acc26b159b7845e52e9743e397abbd581',1,'nmbs::binding::http']]]
 ];

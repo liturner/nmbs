@@ -1,5 +1,26 @@
 var searchData=
 [
-  ['value_0',['value',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#ae37e792ef7077d8945b9d95b046f2c43',1,'nmbs::confidentiality_label::originator_id']]],
-  ['version_1',['version',['../namespacenmbs.html#ae2dc3062a8b4f7fe4e3500bd08f675c3',1,'nmbs']]]
+  ['s4774_5fnamespace_0',['s4774_namespace',['../namespacenmbs_1_1constants.html#a18d541175ff51848f3108a2111b936cf',1,'nmbs::constants']]],
+  ['s4774_5fprefix_1',['s4774_prefix',['../namespacenmbs_1_1constants.html#a96608da219bd2d976afe5ff5d768af49',1,'nmbs::constants']]],
+  ['s4778_5fkey_2',['s4778_key',['../namespacenmbs_1_1constants.html#ad0f6085af97a18f66fe539f8ea69c230',1,'nmbs::constants']]],
+  ['s4778_5fnamespace_3',['s4778_namespace',['../namespacenmbs_1_1constants.html#a8319d656f7a7788cb7750a56dd052823',1,'nmbs::constants']]],
+  ['s4778_5fprefix_4',['s4778_prefix',['../namespacenmbs_1_1constants.html#a22eb4322e1be2e19df85ca7e92c6526e',1,'nmbs::constants']]],
+  ['s4778_5fxmp_5fnamespace_5',['s4778_xmp_namespace',['../namespacenmbs_1_1constants.html#a96112814b9c28f277ecba1b57ea515a5',1,'nmbs::constants']]],
+  ['s4778_5fxmp_5fprefix_6',['s4778_xmp_prefix',['../namespacenmbs_1_1constants.html#a5f73e16c679d4c103bb05739eabef7e8',1,'nmbs::constants']]],
+  ['security_20policies_7',['Security Policies',['../group__c__spif.html',1,'']]],
+  ['security_5fclassification_8',['security_classification',['../structnmbs_1_1spif_1_1security__classification.html',1,'nmbs::spif']]],
+  ['security_5fclassifications_9',['security_classifications',['../structnmbs__security__policy.html#a977f5925c8dd1f5077ff931a1a768d5f',1,'nmbs_security_policy::security_classifications'],['../structnmbs_1_1spif_1_1security__policy.html#a3692d3e55c1bd6263fc5110a2ef5f0c7',1,'nmbs::spif::security_policy::security_classifications']]],
+  ['security_5fpolicy_10',['security_policy',['../structnmbs_1_1spif_1_1security__policy.html',1,'nmbs::spif']]],
+  ['serialise_5flabels_11',['serialise_labels',['../namespacenmbs_1_1binding_1_1http.html#a446a4e8338d2f5da795f461f669a2cb9',1,'nmbs::binding::http']]],
+  ['size_12',['size',['../structnmbs__security__policies.html#a15fabe88032b5b68facce93672d17740',1,'nmbs_security_policies::size'],['../structnmbs__confidentiality__labels.html#a7715d8b3af07c52c09f988c32f52170e',1,'nmbs_confidentiality_labels::size']]],
+  ['spif_2eh_13',['spif.h',['../spif_8h.html',1,'']]],
+  ['spif_5fnamespace_14',['spif_namespace',['../namespacenmbs_1_1constants.html#ac6cd670a4a722a21dfd159c13f73c58d',1,'nmbs::constants']]],
+  ['spif_5fprefix_15',['spif_prefix',['../namespacenmbs_1_1constants.html#ab654241cbb2d7241bdb23eb4571be045',1,'nmbs::constants']]],
+  ['started_16',['Getting Started',['../index.html',1,'']]],
+  ['success_17',['success',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca8705e8f9efcd319de1a4ab0cc991e07e',1,'nmbs']]],
+  ['successor_18',['successor',['../structnmbs_1_1confidentiality__label.html#a0e1a396a8e0eb34f40b03a1c10261144aba5da41f433ee93f4c3fd6652ca37005',1,'nmbs::confidentiality_label']]],
+  ['support_19',['support',['../namespacenmbs_1_1binding.html#acaa5a056ff49fe33a812433af2deca01',1,'nmbs::binding']]],
+  ['supports_5flabels_20',['supports_labels',['../namespacenmbs_1_1binding.html#af71be04a413805ac99b69f96e433733b',1,'nmbs::binding']]],
+  ['supports_5fsidecar_21',['supports_sidecar',['../namespacenmbs_1_1binding.html#ad06338d4abfe71eba7657b9424e09d5f',1,'nmbs::binding::supports_sidecar(const flags flags) noexcept'],['../namespacenmbs_1_1binding.html#ac9ceb587f944be8fa5c0a22ebbae7bd2a48af32b471add7c1e7b52badda08580e',1,'nmbs::binding::supports_sidecar']]],
+  ['supports_5fxmp_22',['supports_xmp',['../namespacenmbs_1_1binding.html#a5edd2da5b7ef687ea74b50b00abfe26a',1,'nmbs::binding::supports_xmp(const flags flags) noexcept'],['../namespacenmbs_1_1binding.html#ac9ceb587f944be8fa5c0a22ebbae7bd2ab23e98167989b469b17fd5cf8bf07fa9',1,'nmbs::binding::supports_xmp']]]
 ];

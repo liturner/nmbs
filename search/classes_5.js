@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['xml_5fcould_5fnot_5fcreate_5fxpath_5fcontext_5fexception_0',['xml_could_not_create_xpath_context_exception',['../classnmbs_1_1exceptions_1_1xml__could__not__create__xpath__context__exception.html',1,'nmbs::exceptions']]],
-  ['xml_5fcould_5fnot_5fparse_5fexception_1',['xml_could_not_parse_exception',['../classnmbs_1_1exceptions_1_1xml__could__not__parse__exception.html',1,'nmbs::exceptions']]],
-  ['xmp_5fkey_5fnot_5ffound_5fexception_2',['xmp_key_not_found_exception',['../classnmbs_1_1exceptions_1_1xmp__key__not__found__exception.html',1,'nmbs::exceptions']]],
-  ['xmp_5fnot_5ffound_5fexception_3',['xmp_not_found_exception',['../classnmbs_1_1exceptions_1_1xmp__not__found__exception.html',1,'nmbs::exceptions']]]
+  ['nmbs_5fconfidentiality_5flabel_0',['nmbs_confidentiality_label',['../structnmbs__confidentiality__label.html',1,'']]],
+  ['nmbs_5fconfidentiality_5flabels_1',['nmbs_confidentiality_labels',['../structnmbs__confidentiality__labels.html',1,'']]],
+  ['nmbs_5fsecurity_5fclassification_2',['nmbs_security_classification',['../structnmbs__security__classification.html',1,'']]],
+  ['nmbs_5fsecurity_5fpolicies_3',['nmbs_security_policies',['../structnmbs__security__policies.html',1,'']]],
+  ['nmbs_5fsecurity_5fpolicy_4',['nmbs_security_policy',['../structnmbs__security__policy.html',1,'']]]
 ];

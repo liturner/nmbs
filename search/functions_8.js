@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['what_0',['what',['../classnmbs_1_1exception.html#a881db5ff7c2964cc0b2704c161100460',1,'nmbs::exception']]],
-  ['write_5flabels_1',['write_labels',['../namespacenmbs.html#a4d60d5a99dd17fe76892c12757119650',1,'nmbs']]],
-  ['write_5flabels_5fxml_2',['write_labels_xml',['../namespacenmbs.html#a90a9a8bf6127e72a1c98a04f03e096af',1,'nmbs']]]
+  ['read_5flabels_0',['read_labels',['../namespacenmbs.html#a3ed7ef415572610a1ba9d97df8b68bf1',1,'nmbs']]],
+  ['read_5flabels_5fxml_1',['read_labels_xml',['../namespacenmbs.html#ab7c2acae7381d29718e83a33e340b66b',1,'nmbs']]],
+  ['recommend_5fsidecar_2',['recommend_sidecar',['../namespacenmbs_1_1binding.html#a055c93a0478a5244ad4911b1c3088c4f',1,'nmbs::binding']]],
+  ['recommend_5fxmp_3',['recommend_xmp',['../namespacenmbs_1_1binding.html#a28050321860af914bca12895ea38eea2',1,'nmbs::binding']]]
 ];

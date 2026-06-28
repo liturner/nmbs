@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['operator_3d_0',['operator=',['../structnmbs_1_1confidentiality__label.html#a7bc07da337ca5f654b64358284f7daa4',1,'nmbs::confidentiality_label']]],
-  ['originator_1',['originator',['../structnmbs_1_1confidentiality__label.html#a0e1a396a8e0eb34f40b03a1c10261144ad55d91c35a80f92027369e3b0a14fb14',1,'nmbs::confidentiality_label']]],
-  ['originator_5fid_2',['originator_id',['../structnmbs_1_1confidentiality__label_1_1originator__id.html',1,'nmbs::confidentiality_label::originator_id'],['../structnmbs_1_1confidentiality__label.html#a8dc00a71c2d9b343d76c918807c2f3e0',1,'nmbs::confidentiality_label::originator_id']]],
-  ['originator_5fid_5ftype_3',['originator_id_type',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#ac449d93eb4a78d128262b271819c7bb9',1,'nmbs::confidentiality_label::originator_id']]]
+  ['label_0',['label',['../structnmbs__confidentiality__labels.html#a92a264a293555536c4ae5b575dca17ea',1,'nmbs_confidentiality_labels']]],
+  ['label_5ftype_1',['label_type',['../structnmbs_1_1confidentiality__label.html#adb069670b85d3a5e986e9946ee63fd3b',1,'nmbs::confidentiality_label']]],
+  ['labels_2',['labels',['../group__c__confidentiality__labels.html',1,'Confidentiality Labels'],['../structnmbs_1_1binding_1_1binding__information.html#a296a5f8a440eec1171edb6cd36bc368c',1,'nmbs::binding::binding_information::labels']]],
+  ['lacv_3',['lacv',['../structnmbs_1_1spif_1_1security__classification.html#a72470eba72520c15525f019c9bbeeab0',1,'nmbs::spif::security_classification']]],
+  ['language_20api_4',['C Language API',['../group__c__api.html',1,'']]]
 ];

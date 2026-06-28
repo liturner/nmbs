@@ -72,56 +72,63 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structnmbs__confidentiality__label-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">nmbs_confidentiality_label Struct Reference</div></div>
+  <div class="headertitle"><div class="title">nmbs_confidentiality_label Struct Reference<div class="ingroups"><a class="el" href="group__c__api.html">C Language API</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
 <p>C struct representation of <a class="el" href="structnmbs_1_1confidentiality__label.html" title="Struct representation of the &quot;Confidentiality Label&quot;.">nmbs::confidentiality_label</a>.  
  <a href="structnmbs__confidentiality__label.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="c_2nmbs_8h_source.html">nmbs.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="c_2nmbs_8h_source.html">nmbs/c/nmbs.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:ac4200730375f51dc775fe9a183b7898b" id="r_ac4200730375f51dc775fe9a183b7898b"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs__confidentiality__label.html#ac4200730375f51dc775fe9a183b7898b">policy_identifier</a></td></tr>
-<tr class="separator:ac4200730375f51dc775fe9a183b7898b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad1bcbaee664ad4643074f834ad6403d" id="r_aad1bcbaee664ad4643074f834ad6403d"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs__confidentiality__label.html#aad1bcbaee664ad4643074f834ad6403d">classification</a></td></tr>
-<tr class="separator:aad1bcbaee664ad4643074f834ad6403d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ba5c89776395b400fe4b2640334ead1" id="r_a7ba5c89776395b400fe4b2640334ead1"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs__confidentiality__label.html#a7ba5c89776395b400fe4b2640334ead1">policy_identifier</a></td></tr>
+<tr class="memdesc:a7ba5c89776395b400fe4b2640334ead1"><td class="mdescLeft">&#160;</td><td class="mdescRight">e.g. NATO, PUBLIC etc...  <br /></td></tr>
+<tr class="separator:a7ba5c89776395b400fe4b2640334ead1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a384828dfbe50cad70eef1c87cad8bbfe" id="r_a384828dfbe50cad70eef1c87cad8bbfe"><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs__confidentiality__label.html#a384828dfbe50cad70eef1c87cad8bbfe">classification</a></td></tr>
+<tr class="memdesc:a384828dfbe50cad70eef1c87cad8bbfe"><td class="mdescLeft">&#160;</td><td class="mdescRight">e.g. UNMARKED, UNCLASSIFIED, SECRET etc.  <br /></td></tr>
+<tr class="separator:a384828dfbe50cad70eef1c87cad8bbfe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>C struct representation of <a class="el" href="structnmbs_1_1confidentiality__label.html" title="Struct representation of the &quot;Confidentiality Label&quot;.">nmbs::confidentiality_label</a>. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="c_2nmbs_8h.html#a80ccbc27bd4de3684ba224ebb7458b5f" title="Cleans up any allocated memory. Will call free on any sub structures if needed. Pointers will also be...">nmbs_free_confidentiality_label</a> </dd></dl>
+<p>It is not intended that you create these yourself. Use the functions provided for <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a>.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a> </dd></dl>
 </div><h2 class="groupheader">Member Data Documentation</h2>
-<a id="aad1bcbaee664ad4643074f834ad6403d" name="aad1bcbaee664ad4643074f834ad6403d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aad1bcbaee664ad4643074f834ad6403d">&#9670;&#160;</a></span>classification</h2>
+<a id="a384828dfbe50cad70eef1c87cad8bbfe" name="a384828dfbe50cad70eef1c87cad8bbfe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a384828dfbe50cad70eef1c87cad8bbfe">&#9670;&#160;</a></span>classification</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* nmbs_confidentiality_label::classification</td>
+          <td class="memname">char* nmbs_confidentiality_label::classification</td>
         </tr>
       </table>
 </div><div class="memdoc">
 
+<p>e.g. UNMARKED, UNCLASSIFIED, SECRET etc. </p>
+
 </div>
 </div>
-<a id="ac4200730375f51dc775fe9a183b7898b" name="ac4200730375f51dc775fe9a183b7898b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ac4200730375f51dc775fe9a183b7898b">&#9670;&#160;</a></span>policy_identifier</h2>
+<a id="a7ba5c89776395b400fe4b2640334ead1" name="a7ba5c89776395b400fe4b2640334ead1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7ba5c89776395b400fe4b2640334ead1">&#9670;&#160;</a></span>policy_identifier</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* nmbs_confidentiality_label::policy_identifier</td>
+          <td class="memname">char* nmbs_confidentiality_label::policy_identifier</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>e.g. NATO, PUBLIC etc... </p>
 
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/nmbs/c/<a class="el" href="c_2nmbs_8h_source.html">nmbs.h</a></li>
+<li>nmbs/c/<a class="el" href="c_2nmbs_8h_source.html">nmbs.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

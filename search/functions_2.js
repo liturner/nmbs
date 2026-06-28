@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['file_5fnot_5ffound_5fexception_0',['file_not_found_exception',['../classnmbs_1_1exceptions_1_1file__not__found__exception.html#ad56923e50eff50371498f51ad4fa1c8a',1,'nmbs::exceptions::file_not_found_exception']]]
+  ['exception_0',['exception',['../classnmbs_1_1exception.html#af0eb99d060a7c7561a9abaade52298b0',1,'nmbs::exception']]]
 ];

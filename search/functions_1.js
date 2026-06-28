@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['exception_0',['exception',['../classnmbs_1_1exception.html#af0eb99d060a7c7561a9abaade52298b0',1,'nmbs::exception']]]
+  ['deserialise_5flabels_0',['deserialise_labels',['../namespacenmbs_1_1binding_1_1http.html#aa9a11a079f9473dbc002baff3be54ea4',1,'nmbs::binding::http']]]
 ];

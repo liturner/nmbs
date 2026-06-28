@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['label_0',['label',['../structnmbs__confidentiality__labels.html#a92a264a293555536c4ae5b575dca17ea',1,'nmbs_confidentiality_labels']]],
-  ['label_5ftype_1',['label_type',['../structnmbs_1_1confidentiality__label.html#adb069670b85d3a5e986e9946ee63fd3b',1,'nmbs::confidentiality_label']]]
+  ['id_0',['id',['../structnmbs_1_1spif_1_1security__policy.html#aa884132235902dc804c5dcfc963662aa',1,'nmbs::spif::security_policy']]],
+  ['id_5ftype_1',['id_type',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a38e5f71a541a60a024893e84b719fc24',1,'nmbs::confidentiality_label::originator_id']]],
+  ['index_2emd_2',['index.md',['../index_8md.html',1,'']]],
+  ['invalid_5farguments_3',['invalid_arguments',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca26ea39710de3c040dcb9c25827ccbf95',1,'nmbs']]],
+  ['ip_5faddress_4',['ip_address',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a4dfb8b60316de941104959488aab65c6',1,'nmbs::confidentiality_label::originator_id']]]
 ];

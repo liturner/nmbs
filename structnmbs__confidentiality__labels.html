@@ -72,14 +72,14 @@ $(function() {
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structnmbs__confidentiality__labels-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">nmbs_confidentiality_labels Struct Reference</div></div>
+  <div class="headertitle"><div class="title">nmbs_confidentiality_labels Struct Reference<div class="ingroups"><a class="el" href="group__c__api.html">C Language API</a> &raquo; <a class="el" href="group__c__confidentiality__labels.html">Confidentiality Labels</a></div></div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>C struct for holding lists of <a class="el" href="structnmbs_1_1confidentiality__label.html" title="Struct representation of the &quot;Confidentiality Label&quot;.">nmbs::confidentiality_label</a>.  
+<p>C struct for holding lists of <a class="el" href="structnmbs__confidentiality__label.html" title="C struct representation of nmbs::confidentiality_label.">nmbs_confidentiality_label</a>.  
  <a href="structnmbs__confidentiality__labels.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="c_2nmbs_8h_source.html">nmbs.h</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="c_2nmbs_8h_source.html">nmbs/c/nmbs.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -89,8 +89,13 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a92a264a293555536c4ae5b575dca17ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>C struct for holding lists of <a class="el" href="structnmbs_1_1confidentiality__label.html" title="Struct representation of the &quot;Confidentiality Label&quot;.">nmbs::confidentiality_label</a>. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="c_2nmbs_8h.html#a5fb90cf2ff9848cee6918fda92342693" title="Cleans up any allocated memory. Will call free on any sub structures if needed. Pointers will also be...">nmbs_free_confidentiality_labels</a> </dd></dl>
+<div class="textblock"><p>C struct for holding lists of <a class="el" href="structnmbs__confidentiality__label.html" title="C struct representation of nmbs::confidentiality_label.">nmbs_confidentiality_label</a>. </p>
+<p>One of the most important structures in the C API. This is the item for which the majority of the API functions will be provided. Most importantly, create instances using nmbs_confidentiality_labels_new, and clean them up using nmbs_confidentiality_labels_delete. Additional support functions are provided for accessing or manipulating functions.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#gaffe498ab7e1d060460c6e596bf53d93b" title="Creates and returns an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_new</a> </dd>
+<dd>
+<a class="el" href="group__c__confidentiality__labels.html#ga116984d93c84d0d6acea78ec1217f0ec" title="&quot;delete&quot;s an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_delete</a> </dd>
+<dd>
+<a class="el" href="group__c__confidentiality__labels.html#ga8ee6269114918ae9c4b0d471eeae3f60" title="Reads the nmbs_confidentiality_labels from a file, regardless of binding profile.">nmbs_confidentiality_labels_read_labels</a> </dd></dl>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a92a264a293555536c4ae5b575dca17ea" name="a92a264a293555536c4ae5b575dca17ea"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a92a264a293555536c4ae5b575dca17ea">&#9670;&#160;</a></span>label</h2>
@@ -121,7 +126,7 @@ Public Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/nmbs/c/<a class="el" href="c_2nmbs_8h_source.html">nmbs.h</a></li>
+<li>nmbs/c/<a class="el" href="c_2nmbs_8h_source.html">nmbs.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libnmbs: include/nmbs/nmbs.h Source File</title>
+<title>libnmbs: nmbs/nmbs.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -74,19 +74,20 @@ $(document).ready(function() { init_codefold(0); });
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_d44c64559bbebec7f509842c48db8b23.html">include</a></li><li class="navelem"><a class="el" href="dir_70c8b42ef04a7de60476e271ac0f3795.html">nmbs</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_70c8b42ef04a7de60476e271ac0f3795.html">nmbs</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="headertitle"><div class="title">nmbs.h</div></div>
 </div><!--header-->
 <div class="contents">
-<a href="nmbs_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#pragma once</span></div>
-<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
+<a href="nmbs_8h.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#pragma once</span></div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="preprocessor">#include &quot;<a class="code" href="confidentiality__label_8h.html">confidentiality_label.h</a>&quot;</span></div>
 <div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span><span class="preprocessor">#include &quot;<a class="code" href="exceptions_8h.html">exceptions.h</a>&quot;</span></div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span><span class="preprocessor">#include &quot;<a class="code" href="constants_8h.html">constants.h</a>&quot;</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span><span class="preprocessor">#include &lt;string&gt;</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="preprocessor">#include &lt;filesystem&gt;</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
@@ -105,9 +106,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>}</div>
 <div class="ttc" id="aconfidentiality__label_8h_html"><div class="ttname"><a href="confidentiality__label_8h.html">confidentiality_label.h</a></div><div class="ttdoc">Object representation of a Confidentiality Label as per ADatP-4774.</div></div>
-<div class="ttc" id="aconstants_8h_html"><div class="ttname"><a href="constants_8h.html">constants.h</a></div><div class="ttdoc">a collection of relevant constant values such as namespace urns</div></div>
 <div class="ttc" id="aexceptions_8h_html"><div class="ttname"><a href="exceptions_8h.html">exceptions.h</a></div><div class="ttdoc">nmbs specific exceptions</div></div>
-<div class="ttc" id="anamespacenmbs_html"><div class="ttname"><a href="namespacenmbs.html">nmbs</a></div><div class="ttdef"><b>Definition</b> confidentiality_label.h:34</div></div>
+<div class="ttc" id="anamespacenmbs_html"><div class="ttname"><a href="namespacenmbs.html">nmbs</a></div><div class="ttdef"><b>Definition</b> binding.h:34</div></div>
 <div class="ttc" id="anamespacenmbs_html_a3ed7ef415572610a1ba9d97df8b68bf1"><div class="ttname"><a href="namespacenmbs.html#a3ed7ef415572610a1ba9d97df8b68bf1">nmbs::read_labels</a></div><div class="ttdeci">std::vector&lt; confidentiality_label &gt; read_labels(const std::filesystem::path &amp;path)</div><div class="ttdoc">Reads the ADatP-4774 labels from the file.</div></div>
 <div class="ttc" id="anamespacenmbs_html_a4d60d5a99dd17fe76892c12757119650"><div class="ttname"><a href="namespacenmbs.html#a4d60d5a99dd17fe76892c12757119650">nmbs::write_labels</a></div><div class="ttdeci">std::string write_labels(const std::filesystem::path &amp;path, const std::vector&lt; confidentiality_label &gt; &amp;confidentiality_labels)</div><div class="ttdoc">Writes ADatP‑4778 binding information using the best possible binding profile. Embedded is preferred ...</div></div>
 <div class="ttc" id="anamespacenmbs_html_a90a9a8bf6127e72a1c98a04f03e096af"><div class="ttname"><a href="namespacenmbs.html#a90a9a8bf6127e72a1c98a04f03e096af">nmbs::write_labels_xml</a></div><div class="ttdeci">std::string write_labels_xml(const std::filesystem::path &amp;path, const std::string &amp;confidentiality_labels)</div><div class="ttdoc">Writes raw XML packet to the file, using the best possible binding profile. Embedded is preferred ove...</div></div>

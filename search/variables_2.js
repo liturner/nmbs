@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['label_0',['label',['../structnmbs__confidentiality__labels.html#a92a264a293555536c4ae5b575dca17ea',1,'nmbs_confidentiality_labels']]],
-  ['label_5ftype_1',['label_type',['../structnmbs_1_1confidentiality__label.html#adb069670b85d3a5e986e9946ee63fd3b',1,'nmbs::confidentiality_label']]]
+  ['directory_5fname_0',['directory_name',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a120844508f0c858d4feb053ef554e7fe',1,'nmbs::confidentiality_label::originator_id']]],
+  ['dns_5fname_1',['dns_name',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a51272b753b9a533eecb37ca8eafa7dd9',1,'nmbs::confidentiality_label::originator_id']]]
 ];
