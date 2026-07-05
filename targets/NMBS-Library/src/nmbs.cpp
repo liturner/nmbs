@@ -34,7 +34,7 @@
 #include "nmbs/binding.h"
 #include "nmbs/constants.h"
 #include "nmbs/version.h"
-#include "nmbs_private.h"
+#include "nmbs/nmbs_private.h"
 
 // Anonymous namespace guarantees internal linkage.
 // This symbol will not leak out of this specific .cpp file or the .so.

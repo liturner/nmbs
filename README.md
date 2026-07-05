@@ -1,4 +1,4 @@
-# TurnerTech - NATO Metadata Binding Service (tt-nmbs)
+# TurnerTech - Normalised Metadata Binding Service (tt-nmbs)
 
 This project plans to produce a set of tools for use with NATO Confidentiality Metadata Labels. In particular the first
 step aims to provide some basic functionality specifically for XMP metadata in various image formats. The project is

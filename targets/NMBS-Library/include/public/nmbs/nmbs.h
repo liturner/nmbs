@@ -33,9 +33,8 @@
 #include "confidentiality_label.h"
 #include "expected.h"
 
-/// Lightweight helpers for generating NATO confidentiality metadata.
-///
-/// This namespace contains a compact set of utilities implementing the essential parts of the ADatP‑4774, ADatP‑4778,
+/// @brief Lightweight helpers for generating NATO confidentiality metadata.
+/// @details This namespace contains a compact set of utilities implementing the essential parts of the ADatP‑4774, ADatP‑4778,
 /// and STANAG 5636 specifications. The functions focus on producing valid confidentiality labels and binding
 /// information for files that are known to be *not* highly sensitive, enabling consistent tagging without the overhead
 /// of a full‑scale DLP or metadata processing framework.
@@ -47,45 +46,46 @@ namespace nmbs
 {
 
     /// @brief Returns the semantic version of the library.
-    /// @details the version identifier for this binary build using standard
-    /// semantic‑versioning format (`MAJOR.MINOR.PATCH`), for example `1.0.0`.
+    /// @details Using standard semantic‑versioning format (`MAJOR.MINOR.PATCH`), for example `1.0.0`. This value is
+    /// embedded during the build, and will match the CMake version of the source code. This function will return a
+    /// complete version, and never any suffix like "~beta". This is important to consider if you are working with beta
+    /// and pre-release builds, as during beta phases any new API changes will be unstable and may change without the
+    /// version changing.
     /// @return The semantic version string for the current build.
     [[nodiscard]] std::string_view version() noexcept;
 
     /// @brief Free up any allocated memory and state to keep tools like Valgrind clean.
-    /// @details This should be safe to call in the middle of an application, it will just
-    /// delete caches and unregister namespaces etc.
+    /// @details This should be safe to call in the middle of an application, it will just delete caches and unregister
+    /// namespaces etc. This may lead to increased function times in subsequent calls.
     void cleanup();
 
     /// @brief Writes ADatP‑4778 binding information using the best possible binding profile.
-    /// Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if
-    /// embedding is possible. Furthermore, existing data will be overridden.
+    /// @details Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible.
+    /// Furthermore, existing data will be overridden.
     /// @param path to the image file to label.
     /// @param confidentiality_labels collection of labels to write to the file
     /// @return The labels written to the file in XML form.
     [[nodiscard]] expected<std::string> write_labels(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels);
 
     /// @brief Writes raw XML packet to the file, using the best possible binding profile.
-    /// Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if
-    /// embedding is possible. Furthermore, existing data will be overridden. No checks
-    /// for valid labels are performed.
+    /// @details Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible.
+    /// Furthermore, existing data will be overridden. No checks for valid labels are performed on the XML!
     /// @param path to the image file to label.
-    /// @param confidentiality_labels XML to write to the file
+    /// @param confidentiality_labels XML to write to the file.
     /// @return The labels written to the file in XML form.
     [[nodiscard]] expected<std::string> write_labels_xml(const std::filesystem::path& path, const std::string& confidentiality_labels);
 
     /// @brief Reads the ADatP-4774 labels from the file
-    /// @details and returns them in a deserialised form. The deserialization
-    /// is quite tolerant, and will favour returning incomplete data, rather
-    /// than erroring out. This design choice is to ensure interoperability
-    /// with other less strict implementations.
+    /// @details and returns them in a deserialised form. The deserialization is quite tolerant, and will favour
+    /// returning incomplete data, rather than erroring out. This design choice is to ensure interoperability with other
+    /// less strict implementations.
     /// @param path to the file
     /// @return a collection of all labels applied to the file
     /// @see nmbs::write_labels
     [[nodiscard]] expected<std::vector<confidentiality_label>> read_labels(const std::filesystem::path& path);
 
     /// @brief Reads the ADatP-4774 labels from the file
-    /// @details and returns them in their raw XML form
+    /// @details Returns them in their raw XML form
     /// @param path to the file
     /// @return the raw XML of the stored labels
     /// @see nmbs::write_labels_xml

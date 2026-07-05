@@ -1,23 +1,23 @@
 add_library(NMBS-Library SHARED)
 
-configure_file(src/version.h.in src/nmbs/version.h @ONLY)
+configure_file(include/configured/nmbs/version.h.in include/configured/nmbs/version.h @ONLY)
 
 target_sources(NMBS-Library
         PUBLIC
         FILE_SET nmbs_headers
         TYPE HEADERS
-        BASE_DIRS include
+        BASE_DIRS include/public
         FILES
-        include/nmbs/binding.h
-        include/nmbs/confidentiality_label.h
-        include/nmbs/constants.h
-        include/nmbs/exit_code.h
-        include/nmbs/expected.h
-        include/nmbs/nmbs.h
-        include/nmbs/nmbs_c.h
-        include/nmbs/spif.h
+        include/public/nmbs/confidentiality_label.h
+        include/public/nmbs/exit_code.h
+        include/public/nmbs/expected.h
+        include/public/nmbs/nmbs.h
+        include/public/nmbs/nmbs_c.h
         PRIVATE
-        src/nmbs_private.h
+        include/private/nmbs/binding.h
+        include/private/nmbs/constants.h
+        include/private/nmbs/spif.h
+        include/private/nmbs/nmbs_private.h
         src/nmbs_c.cpp
         src/xml_c.cpp
         src/nmbs.cpp
@@ -34,8 +34,8 @@ target_include_directories(NMBS-Library
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
         "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
         PRIVATE
-        src
-        ${CMAKE_CURRENT_BINARY_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/private
+        ${CMAKE_CURRENT_BINARY_DIR}/include/configured
 )
 
 target_link_libraries(NMBS-Library
@@ -57,11 +57,11 @@ if (DOXYGEN_FOUND)
     set(DOXYGEN_EXCLUDE_SYMBOLS std::*)
     set(DOXYGEN_USE_MDFILE_AS_MAINPAGE "${CMAKE_CURRENT_SOURCE_DIR}/doc/index.md")
     set(DOXYGEN_FULL_PATH_NAMES YES)
-    set(DOXYGEN_STRIP_FROM_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
-    set(DOXYGEN_STRIP_FROM_INC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    set(DOXYGEN_STRIP_FROM_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include/public)
+    set(DOXYGEN_STRIP_FROM_INC_PATH ${CMAKE_CURRENT_SOURCE_DIR}/include/public)
     doxygen_add_docs(doxygen ALL
             ${CMAKE_CURRENT_SOURCE_DIR}/doc
-            ${CMAKE_CURRENT_SOURCE_DIR}/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/include/public
     )
 
     install(DIRECTORY

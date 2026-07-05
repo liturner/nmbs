@@ -19,7 +19,7 @@ set_target_properties(NMBS-Tests PROPERTIES
 
 target_include_directories(NMBS-Tests PRIVATE
         src
-        ../NMBS-Library/src
+        ../NMBS-Library/include/private
 )
 
 target_link_libraries(NMBS-Tests

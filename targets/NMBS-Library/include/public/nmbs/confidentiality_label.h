@@ -30,7 +30,7 @@
 
 namespace nmbs
 {
-    /// @brief Struct representation of the "Confidentiality Label"
+    /// @brief Struct representation of the ADatP-4774 "Confidentiality Label"
     /// @details More information can be found on this in section 2.4 of ADatP-4774.1 Ed. A V. 1. The
     /// standard specifies three types of label containing identical data. This struct
     /// represents all three originatorConfidentialityLabel, alternativeConfidentialityLabel and

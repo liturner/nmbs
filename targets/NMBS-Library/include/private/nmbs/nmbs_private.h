@@ -26,12 +26,12 @@
 #pragma once
 
 #include "nmbs/nmbs.h"
-#include "nmbs/binding.h"
+#include "binding.h"
 
 #include <string>
 
 #include "nmbs/expected.h"
-#include "nmbs/spif.h"
+#include "spif.h"
 
 namespace nmbs
 {

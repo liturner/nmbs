@@ -34,10 +34,27 @@
 
 namespace nmbs
 {
+
+    /// @brief A simple error container to use with nmbs::expected for communicating domain issues to function callers.
+    /// @details Intended to be small and lightweight. A nmbs::exit_code is provided to better enable logic to be built
+    /// on top of specific errors. Static factory functions are provided to support in generating errors. e.g.
+    ///
+    /// - auto failure_error = nmbs::error::file_not_found();
+    ///
+    /// The constructors are private, and the produced instances are immutable with only const accessors being provided.
+    /// Copy constructors, including move support are provided.
+    ///
+    /// @see nmbs::error::message
+    /// @see nmbs::error::code
     class error
     {
         exit_code code_;
         std::string message_;
+
+    private:
+        error(const exit_code code, std::string message) : code_(code), message_(std::move(message))
+        {
+        }
 
     public:
         error() = delete;
@@ -45,10 +62,6 @@ namespace nmbs
         error& operator=(error&&) noexcept = default;
         error(const error&) = default;
         error& operator=(const error&) = default;
-
-        error(const exit_code code, std::string message) : code_(code), message_(std::move(message))
-        {
-        }
 
         [[nodiscard]] exit_code code() const { return code_; }
         [[nodiscard]] const std::string& message() const { return message_; }
@@ -90,6 +103,8 @@ namespace nmbs
         }
     };
 
+    /// @brief Convenience typedef to standardise usage of nmbs::error in all std::expected usages.
+    ///
     template <typename T>
     using expected = std::expected<T, error>;
 }

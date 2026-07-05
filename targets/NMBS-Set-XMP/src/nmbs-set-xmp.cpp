@@ -24,7 +24,6 @@
 /// SOFTWARE.
 
 #include <nmbs/nmbs.h>
-#include <nmbs/constants.h>
 #include <argparse/argparse.hpp>
 #include <iostream>
 #include <filesystem>
@@ -68,7 +67,7 @@ int main(const int argc, char* argv[]) {
         if (output.has_value())
         {
             if (program["--verbose"] == true) {
-                std::cout << "  Key: Xmp." << nmbs::constants::s4778_xmp_prefix << "." << nmbs::constants::s4778_key << std::endl
+                std::cout << "  Key: Xmp.mbxmp.bindingInformation" << std::endl
                 << "Value: " << output.value() << std::endl;
             }
             return nmbs::exit_code::success;

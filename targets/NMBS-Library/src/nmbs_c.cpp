@@ -32,7 +32,7 @@
 #include <string>
 
 #include "nmbs/exit_code.h"
-#include "nmbs_private.h"
+#include "nmbs/nmbs_private.h"
 #include "nmbs/binding.h"
 #include "nmbs/spif.h"
 

@@ -23,9 +23,9 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include "nmbs_private.h"
-#include "nmbs/binding.h"
-#include "nmbs/constants.h"
+#include "nmbs/nmbs_private.h"
+#include "../include/private/nmbs/binding.h"
+#include "../include/private/nmbs/constants.h"
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
