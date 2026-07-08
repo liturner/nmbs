@@ -83,15 +83,15 @@ static NautilusOperationResult nmbs_properties_update_file_info(
         if (nmbs_binding_flags_has_labels(flags))
         {
             g_log("NMBS", G_LOG_LEVEL_DEBUG, "Reading Labels for %s", path_str);
-            const auto labels = nmbs_confidentiality_labels_new();
-            nmbs_confidentiality_labels_read_labels(labels, path_str);
+            auto const labels = nmbs_confidentiality_labels_new();
+            nmbs_confidentiality_labels_read_labels_with_known_binding(labels, path_str, flags);
             g_free(path_str);
 
             for (unsigned long i = 0; i < nmbs_confidentiality_labels_size(labels); ++i)
             {
-                const auto label = nmbs_confidentiality_labels_get(labels, i);
-                const auto label_policy = nmbs_confidentiality_label_get_policy(label);
-                const auto label_classification = nmbs_confidentiality_label_get_classification(label);
+                auto const label = nmbs_confidentiality_labels_get(labels, i);
+                auto const label_policy = nmbs_confidentiality_label_get_policy(label);
+                auto const label_classification = nmbs_confidentiality_label_get_classification(label);
 
                 if (label == nullptr || !label_policy || !label_classification)
                 {

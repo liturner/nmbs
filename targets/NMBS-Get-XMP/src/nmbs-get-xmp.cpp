@@ -43,14 +43,14 @@ int main(const int argc, char* argv[]) {
     catch (const std::exception& err) {
         std::cerr << err.what() << std::endl;
         std::cerr << program;
-        return nmbs::exit_code::invalid_arguments;
+        return nmbs::ExitCode::invalid_arguments;
     }
 
     // Argument Validation
     const std::filesystem::path file = program.get<std::string>("file");
     if (!(std::filesystem::exists(file) && std::filesystem::is_regular_file(file))) {
         std::cerr << "file not found" << std::endl;
-        return nmbs::exit_code::file_not_found;
+        return nmbs::ExitCode::file_not_found;
     }
 
     // Program Logic
@@ -60,23 +60,23 @@ int main(const int argc, char* argv[]) {
             if (const auto raw_xml = nmbs::read_labels_xml(file); raw_xml.has_value())
             {
                 std::cout << raw_xml.value() << std::endl;
-                return nmbs::exit_code::success;
+                return nmbs::ExitCode::success;
             }
             std::cerr << "no label was present on the provided file" << std::endl;
-            return nmbs::exit_code::no_label_present;
+            return nmbs::ExitCode::no_label_present;
         }
         if (const auto labels = nmbs::read_labels(file); labels.has_value())
         {
             for (const auto& label : labels.value())
             {
                 std::cout << label.confidentiality_information.policy_identifier << " " << label.confidentiality_information.classification << std::endl;
-                return nmbs::exit_code::success;
+                return nmbs::ExitCode::success;
             }
         }
     }
     catch (const std::exception& e)
     {
         std::cerr << "std::exception: " << e.what() << std::endl;
-        return nmbs::exit_code::unknown_error;
+        return nmbs::ExitCode::unknown_error;
     }
 }

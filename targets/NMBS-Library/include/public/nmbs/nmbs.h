@@ -52,11 +52,13 @@ namespace nmbs
     /// and pre-release builds, as during beta phases any new API changes will be unstable and may change without the
     /// version changing.
     /// @return The semantic version string for the current build.
+    /// @since 1.0.0
     [[nodiscard]] std::string_view version() noexcept;
 
     /// @brief Free up any allocated memory and state to keep tools like Valgrind clean.
     /// @details This should be safe to call in the middle of an application, it will just delete caches and unregister
     /// namespaces etc. This may lead to increased function times in subsequent calls.
+    /// @since 1.0.0
     void cleanup();
 
     /// @brief Writes ADatP‑4778 binding information using the best possible binding profile.
@@ -65,7 +67,8 @@ namespace nmbs
     /// @param path to the image file to label.
     /// @param confidentiality_labels collection of labels to write to the file
     /// @return The labels written to the file in XML form.
-    [[nodiscard]] expected<std::string> write_labels(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels);
+    /// @since 1.0.0
+    [[nodiscard]] Expected<std::string> write_labels(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels);
 
     /// @brief Writes raw XML packet to the file, using the best possible binding profile.
     /// @details Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible.
@@ -73,7 +76,8 @@ namespace nmbs
     /// @param path to the image file to label.
     /// @param confidentiality_labels XML to write to the file.
     /// @return The labels written to the file in XML form.
-    [[nodiscard]] expected<std::string> write_labels_xml(const std::filesystem::path& path, const std::string& confidentiality_labels);
+    /// @since 1.0.0
+    [[nodiscard]] Expected<std::string> write_labels_xml(const std::filesystem::path& path, const std::string& confidentiality_labels);
 
     /// @brief Reads the ADatP-4774 labels from the file
     /// @details and returns them in a deserialised form. The deserialization is quite tolerant, and will favour
@@ -82,13 +86,15 @@ namespace nmbs
     /// @param path to the file
     /// @return a collection of all labels applied to the file
     /// @see nmbs::write_labels
-    [[nodiscard]] expected<std::vector<confidentiality_label>> read_labels(const std::filesystem::path& path);
+    /// @since 1.0.0
+    [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(const std::filesystem::path& path);
 
     /// @brief Reads the ADatP-4774 labels from the file
     /// @details Returns them in their raw XML form
     /// @param path to the file
     /// @return the raw XML of the stored labels
     /// @see nmbs::write_labels_xml
-    [[nodiscard]] expected<std::string> read_labels_xml(const std::filesystem::path& path);
+    /// @since 1.0.0
+    [[nodiscard]] Expected<std::string> read_labels_xml(const std::filesystem::path& path);
 
 }

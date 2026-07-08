@@ -35,33 +35,39 @@
 
 namespace nmbs
 {
-    [[nodiscard]] expected<std::string> write_xmp(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels);
+    [[nodiscard]] Expected<std::string> write_xmp(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels);
 
-    [[nodiscard]] expected<std::string> write_sidecar(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels);
+    [[nodiscard]] Expected<std::string> write_sidecar(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels);
 
-    [[nodiscard]] std::vector<confidentiality_label> read_xmp(const std::filesystem::path& path);
+    [[nodiscard]] std::vector<ConfidentialityLabel> read_xmp(const std::filesystem::path& path);
 
-    [[nodiscard]] expected<std::string> read_xmp_xml(const std::filesystem::path& path);
+    [[nodiscard]] Expected<std::string> read_xmp_xml(const std::filesystem::path& path);
 
-    [[nodiscard]] std::vector<confidentiality_label> read_sidecar(const std::filesystem::path& path);
+    [[nodiscard]] std::vector<ConfidentialityLabel> read_sidecar(const std::filesystem::path& path);
 
-    [[nodiscard]] expected<std::string> read_sidecar_xml(const std::filesystem::path& path);
+    [[nodiscard]] Expected<std::string> read_sidecar_xml(const std::filesystem::path& path);
+
+    [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(const std::filesystem::path& path, std::optional<binding::Flags> binding_support = std::nullopt);
 
     namespace xml
     {
-        [[nodiscard]] expected<binding::binding_information> deserialise_binding_information(const std::string& xml);
+        [[nodiscard]] Expected<binding::BindingInformation> deserialise_binding_information(const std::string& xml);
 
-        [[nodiscard]] expected<spif::security_policy> deserialise_security_policy(const std::string& xml);
+        [[nodiscard]] Expected<std::optional<binding::BindingInformation>> deserialise_binding_information_from_file(const std::filesystem::path& file);
+
+        [[nodiscard]] Expected<spif::SecurityPolicy> deserialise_security_policy(const std::string& xml);
 
         [[nodiscard]] std::string encode_base64(const std::string& input);
 
         [[nodiscard]] std::string decode_base64(std::string_view input);
 
-        [[nodiscard]] std::string serialise_binding_information(const binding::binding_information& binding_information);
+        [[nodiscard]] std::string serialise_binding_information(const binding::BindingInformation& binding_information);
 
-        [[nodiscard]] std::string serialise_confidentiality_labels(const std::vector<confidentiality_label>& confidentiality_labels);
+        [[nodiscard]] std::string serialise_confidentiality_labels(const std::vector<ConfidentialityLabel>& confidentiality_labels);
 
-        [[nodiscard]] std::string serialise_confidentiality_label(const confidentiality_label& confidentiality_label);
+        [[nodiscard]] std::string serialise_confidentiality_label(const ConfidentialityLabel& confidentiality_label);
+
+        void cleanup();
 
     }
 

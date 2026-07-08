@@ -59,7 +59,7 @@ TEST(HTTP, BindingDataContent)
     NMBS_REQUIREMENT_STANDARD_4778_2_A1
     NMBS_REQUIREMENT_TEXT()
 
-    std::vector<nmbs::confidentiality_label> labels(1);
+    std::vector<nmbs::ConfidentialityLabel> labels(1);
     labels[0].confidentiality_information.policy_identifier = "PUBLIC";
     labels[0].confidentiality_information.classification = "UNMARKED";
     const std::string binding_data = nmbs::binding::http::serialise_labels(labels);
@@ -76,7 +76,7 @@ TEST(HTTP, SerialiseDeserialise)
     NMBS_REQUIREMENT_STANDARD_4778_2_A1
     NMBS_REQUIREMENT_TEXT()
 
-    std::vector<nmbs::confidentiality_label> labels(1);
+    std::vector<nmbs::ConfidentialityLabel> labels(1);
     labels[0].confidentiality_information.policy_identifier = "PUBLIC";
     labels[0].confidentiality_information.classification = "UNMARKED";
     const std::string binding_data = nmbs::binding::http::serialise_labels(labels);

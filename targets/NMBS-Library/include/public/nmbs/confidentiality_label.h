@@ -41,14 +41,14 @@ namespace nmbs
     /// additional metadata such as the user and review dates.
     ///
     /// @see nmbs::confidentiality_information_type
-    struct confidentiality_label
+    struct ConfidentialityLabel
     {
         ///
         /// @brief identifier for the specialisation of the label.
         /// @details There is no <s4774::ConfidentialityLabel> in the standard, but all specialisations
         /// share the exact same values. The specialisation is used in validation steps with logic for
         /// deciding which classification applies.
-        enum confidentiality_label_type
+        enum ConfidentialityLabelType
         {
             ///
             /// @brief <s4774::originatorConfidentialityLabel>
@@ -65,7 +65,7 @@ namespace nmbs
 
         /// @brief A core element of the nmbs::confidentiality_label containing the classification (e.g. PUBLIC UNMARKED)
         /// @details This struct represents <s4774::ConfidentialityInformation>.
-        struct confidentiality_information_type
+        struct ConfidentialityInformation
         {
             ///
             /// @brief <s4774::PolicyIdentifier>
@@ -84,12 +84,12 @@ namespace nmbs
             // TODO: List of other structs. category;
         };
 
-        struct originator_id
+        struct OriginatorId
         {
             static constexpr std::string_view rfc822_name = "rfc822Name";
             static constexpr std::string_view dns_name = "dNSName";
             static constexpr std::string_view directory_name = "directoryName";
-            static constexpr std::string_view uniform_resource_identifier = "uniformResourceIdentifie";
+            static constexpr std::string_view uniform_resource_identifier = "uniformResourceIdentifier";
             static constexpr std::string_view ip_address = "iPAddress";
             static constexpr std::string_view x400_address = "x400Address";
             static constexpr std::string_view jid = "jID";
@@ -103,24 +103,24 @@ namespace nmbs
         /// Overloaded constructor taking the label type as a parameter.
         /// The label type can be changed later.
         /// @param label_type the type of label this instance will represent
-        explicit confidentiality_label(const confidentiality_label_type label_type = originator) :
+        explicit ConfidentialityLabel(const ConfidentialityLabelType label_type = originator) :
             label_type(label_type),
             creation_date_time(std::chrono::floor<std::chrono::seconds>(std::chrono::utc_clock::now())) {}
 
-        confidentiality_label(const confidentiality_label&) = default;
-        confidentiality_label& operator=(const confidentiality_label& rhs) = default;
+        ConfidentialityLabel(const ConfidentialityLabel&) = default;
+        ConfidentialityLabel& operator=(const ConfidentialityLabel& rhs) = default;
 
         ///
         /// @brief Field to save having to implement the type inheritance here
-        confidentiality_label_type label_type;
+        ConfidentialityLabelType label_type;
 
         ///
         /// @brief <s4774::ConfidentialityInformation>
-        confidentiality_information_type confidentiality_information;
+        ConfidentialityInformation confidentiality_information;
 
         ///
         /// @brief <s4774:OriginatorID>
-        std::optional<originator_id> originator_id;
+        std::optional<OriginatorId> originator_id;
 
         ///
         /// @brief <s4774::CreationDateTime>

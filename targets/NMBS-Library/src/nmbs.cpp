@@ -40,7 +40,7 @@
 // This symbol will not leak out of this specific .cpp file or the .so.
 namespace
 {
-    std::vector<nmbs::spif::security_policy> security_policies;
+    std::vector<nmbs::spif::SecurityPolicy> security_policies;
 
     bool security_policies_initialised = false;
 
@@ -125,14 +125,14 @@ namespace
 
             // Filter duplicate policies out, preferring newer versions.
             std::ranges::sort(security_policies,
-                              [](const nmbs::spif::security_policy& a, const nmbs::spif::security_policy& b) {
+                              [](const nmbs::spif::SecurityPolicy& a, const nmbs::spif::SecurityPolicy& b) {
                                   if (a.name != b.name) {
                                       return a.name < b.name; // Group by name
                                   }
                                   return a.version > b.version; // Highest version comes first
                               });
             auto last = std::ranges::unique(security_policies,
-                                            [](const nmbs::spif::security_policy& a, const nmbs::spif::security_policy& b) {
+                                            [](const nmbs::spif::SecurityPolicy& a, const nmbs::spif::SecurityPolicy& b) {
                                                 return a.name == b.name;
                                             }).begin();
             security_policies.erase(last, security_policies.end());
@@ -144,6 +144,36 @@ namespace
 
         security_policies_initialised = true;
     }
+
+    bool is_theoretically_xml(const std::filesystem::path& file_path) {
+        // 1. Open in binary mode to bypass newline translation overhead
+        std::ifstream file(file_path, std::ios::binary);
+        if (!file) {
+            return false;
+        }
+
+        // 2. Read exactly enough bytes to check for the header and a potential BOM.
+        // "<?xml" is 5 bytes. A UTF-8 BOM (EF BB BF) + "<?xml" is 8 bytes.
+        std::array<char, 8> buffer{};
+        file.read(buffer.data(), buffer.size());
+
+        // 3. Create a zero-allocation string_view of the bytes actually read
+        const std::string_view header(buffer.data(), file.gcount());
+
+        // 4. Check for standard XML header
+        if (header.starts_with("<?xml")) {
+            return true;
+        }
+
+        // 5. (Optional but highly recommended) Check for UTF-8 BOM + XML header.
+        // Windows systems frequently prepend this to XML files.
+        if (header.starts_with("\xEF\xBB\xBF<?xml")) {
+            return true;
+        }
+
+        return false;
+    }
+
 }
 
 namespace nmbs
@@ -156,15 +186,16 @@ namespace nmbs
     void cleanup()
     {
         Exiv2::XmpProperties::unregisterNs();
+        xml::cleanup();
     }
 
-    expected<std::string> write_labels(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels)
+    Expected<std::string> write_labels(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels)
     {
-        const binding::flags binding_support = binding::support(path);
+        const binding::Flags binding_support = binding::support(path);
         if (!binding::supports_labels(binding_support))
         {
             // TODO: Throw here with valid exit code
-            return std::unexpected(error::unexpected());
+            return std::unexpected(Error::unexpected());
         }
 
         if (binding::supports_xmp(binding_support))
@@ -178,44 +209,62 @@ namespace nmbs
         }
 
         // TODO: Throw no supported label type
-        return std::unexpected(error::unexpected());
+        return std::unexpected(Error::unexpected());
     }
 
-    expected<std::string> write_labels_xml(const std::filesystem::path& path, const std::string& confidentiality_labels)
+    Expected<std::string> write_labels_xml(const std::filesystem::path& path, const std::string& confidentiality_labels)
     {
         return "";
     }
 
-    [[nodiscard]] expected<std::vector<confidentiality_label>> read_labels(const std::filesystem::path& path)
+    [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(const std::filesystem::path& path)
     {
-        std::vector<confidentiality_label> return_labels;
-        const binding::flags binding_support = binding::support(path);
-        if (!binding::supports_labels(binding_support))
+        return read_labels(path, std::nullopt);
+    }
+
+    [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(const std::filesystem::path& path, std::optional<binding::Flags> binding_support)
+    {
+        std::vector<ConfidentialityLabel> return_labels;
+
+        if (!binding_support.has_value())
+        {
+            binding_support = binding::support(path);
+        }
+        if (!binding::supports_labels(binding_support.value()))
         {
             return return_labels;
         }
 
-        if (binding::has_xmp(binding_support))
+        if (binding::has_xmp(binding_support.value()))
         {
             const auto labels = read_xmp(path);
             return_labels.insert(return_labels.end(), labels.begin(), labels.end());
         }
 
-        if (binding::has_sidecar(binding_support))
+        if (binding::has_sidecar(binding_support.value()))
         {
             const auto labels = read_sidecar(path);
             return_labels.insert(return_labels.end(), labels.begin(), labels.end());
         }
 
+        if (binding::has_xml(binding_support.value()))
+        {
+            const auto binding_information = xml::deserialise_binding_information_from_file(path);
+            if (binding_information.has_value() && binding_information.value().has_value())
+            {
+                return_labels.insert(return_labels.end(), binding_information.value().value().labels.begin(), binding_information.value().value().labels.end());
+            }
+        }
+
         return return_labels;
     }
 
-    [[nodiscard]] expected<std::string> read_labels_xml(const std::filesystem::path& path)
+    [[nodiscard]] Expected<std::string> read_labels_xml(const std::filesystem::path& path)
     {
-        const binding::flags binding_support = binding::support(path);
+        const binding::Flags binding_support = binding::support(path);
         if (!binding::supports_labels(binding_support))
         {
-            return std::unexpected(error::unexpected());;
+            return std::unexpected(Error::unexpected());;
         }
 
         if (binding::has_xmp(binding_support))
@@ -223,22 +272,22 @@ namespace nmbs
             return read_xmp_xml(path);
         }
 
-        return std::unexpected(error::unexpected());;
+        return std::unexpected(Error::unexpected());;
     }
 
 
 
-    expected<std::string> write_xmp(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels)
+    Expected<std::string> write_xmp(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels)
     {
         try
         {
-            binding::binding_information bdo;
+            binding::BindingInformation bdo;
             bdo.labels = confidentiality_labels;
             std::string payload = xml::serialise_binding_information(bdo);
             const auto image = Exiv2::ImageFactory::open(path.string());
             if (image.get() == nullptr)
             {
-                return std::unexpected(error::file_not_found());
+                return std::unexpected(Error::file_not_found());
             }
             image->readMetadata();
             Exiv2::XmpData& xmp_data = image->xmpData();
@@ -250,24 +299,24 @@ namespace nmbs
             return payload;
         }
         catch (const Exiv2::Error& e) {
-            return std::unexpected(error::unexpected("Exiv2::Error: " + std::string(e.what())));
+            return std::unexpected(Error::unexpected("Exiv2::Error: " + std::string(e.what())));
         }
     }
 
-    expected<std::string> write_sidecar(const std::filesystem::path& path, const std::vector<confidentiality_label>& confidentiality_labels)
+    Expected<std::string> write_sidecar(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels)
     {
         try
         {
             if (!std::filesystem::exists(path)) [[unlikely]]
             {
-                return std::unexpected(error::file_not_found());
+                return std::unexpected(Error::file_not_found());
             }
 
             std::filesystem::path bdo_path{path};
             bdo_path += ".bdo";
             const std::filesystem::path bdo_uri = "./" / bdo_path.filename();
 
-            binding::binding_information bdo;
+            binding::BindingInformation bdo;
             bdo.reference.uri = bdo_uri.string();
             bdo.labels = confidentiality_labels;
 
@@ -281,11 +330,11 @@ namespace nmbs
             return payload;
         }
         catch (const std::exception& e) {
-            return std::unexpected(error::unexpected("std::exception: " + std::string(e.what())));
+            return std::unexpected(Error::unexpected("std::exception: " + std::string(e.what())));
         }
     }
 
-    expected<std::string> read_xmp_xml(const std::filesystem::path& path)
+    Expected<std::string> read_xmp_xml(const std::filesystem::path& path)
     {
         try
         {
@@ -293,7 +342,7 @@ namespace nmbs
             const auto image = Exiv2::ImageFactory::open(path.string());
             if (image.get() == nullptr)
             {
-                return std::unexpected(error::file_not_found());
+                return std::unexpected(Error::file_not_found());
             }
             image->readMetadata();
 
@@ -302,7 +351,7 @@ namespace nmbs
             Exiv2::XmpData& xmp_data = image->xmpData();
             if (xmp_data.empty())
             {
-                return std::unexpected(error::xmp_not_found());
+                return std::unexpected(Error::xmp_not_found());
             }
 
             // Here we have XMP, but no label. Its valid to return nullopt
@@ -310,7 +359,7 @@ namespace nmbs
             const auto xmp_iter = xmp_data.findKey(slab_key);
             if (xmp_iter == xmp_data.end())
             {
-                return std::unexpected(error::xmp_key_not_found());
+                return std::unexpected(Error::xmp_key_not_found());
             }
 
             // TODO: Improve here. Probably validate that its sane XML or at least not empty?
@@ -319,11 +368,12 @@ namespace nmbs
 
         }
         catch (const Exiv2::Error& e) {
-            return std::unexpected(error::unexpected("Exiv2::Error: " + std::string(e.what())));
+            return std::unexpected(Error::unexpected("Exiv2::Error: " + std::string(e.what())));
         }
     }
 
-    std::vector<confidentiality_label> read_xmp(const std::filesystem::path& path)
+    // TODO: Just return the full binding info here.
+    std::vector<ConfidentialityLabel> read_xmp(const std::filesystem::path& path)
     {
 
         if (const auto binding = read_xmp_xml(path).and_then(xml::deserialise_binding_information); binding.has_value())
@@ -333,7 +383,7 @@ namespace nmbs
         return {};
     }
 
-    [[nodiscard]] expected<std::string> read_sidecar_xml(const std::filesystem::path& path)
+    [[nodiscard]] Expected<std::string> read_sidecar_xml(const std::filesystem::path& path)
     {
         try
         {
@@ -341,7 +391,7 @@ namespace nmbs
             bdo_path += ".bdo";
             if (!std::filesystem::exists(path) || !std::filesystem::exists(bdo_path)) [[unlikely]]
             {
-                return std::unexpected(error::file_not_found());
+                return std::unexpected(Error::file_not_found());
             }
 
             if (std::ifstream bdo_file(bdo_path); bdo_file.is_open())
@@ -350,15 +400,16 @@ namespace nmbs
                 buffer << bdo_file.rdbuf();
                 return buffer.str();
             }
-            return std::unexpected(error::unexpected());
+            return std::unexpected(Error::unexpected());
         }
         catch (const Exiv2::Error& e)
         {
-            return std::unexpected(error::unexpected("Exiv2::Error: " + std::string(e.what())));
+            return std::unexpected(Error::unexpected("Exiv2::Error: " + std::string(e.what())));
         }
     }
 
-    [[nodiscard]] std::vector<confidentiality_label> read_sidecar(const std::filesystem::path& path)
+    // TODO: Just return the full binding info here.
+    [[nodiscard]] std::vector<ConfidentialityLabel> read_sidecar(const std::filesystem::path& path)
     {
         if (const auto binding = read_sidecar_xml(path).and_then(xml::deserialise_binding_information); binding.has_value())
         {
@@ -369,29 +420,29 @@ namespace nmbs
 
     namespace binding
     {
-        [[nodiscard]] flags support(const std::filesystem::path& path)
+        [[nodiscard]] Flags support(const std::filesystem::path& path)
         {
             // Keep early out logic in mind. This function must be as fast as possible, and IO can
             // be a problem!
 
             if (!std::filesystem::exists(path)) [[unlikely]]
             {
-                return flags::none;
+                return Flags::none;
             }
 
             if (!std::filesystem::is_regular_file(path))
             {
-                return flags::none;
+                return Flags::none;
             }
 
-            flags result_flags = flags::none;
+            Flags result_flags = Flags::none;
 
             const std::filesystem::path dir = path.parent_path();
             std::filesystem::perms dir_perms = std::filesystem::status(dir).permissions();
             if ((dir_perms & std::filesystem::perms::owner_write) != std::filesystem::perms::none || (dir_perms & std::filesystem::perms::group_write) != std::filesystem::perms::none)
             {
                 // This may be removed later if there exists a file with read-only!
-                result_flags |= flags::supports_sidecar;
+                result_flags |= Flags::supports_sidecar;
             }
 
             // Note that the dir may be read-only, but contain a writeable .bdo!
@@ -399,62 +450,73 @@ namespace nmbs
             bdo_path += ".bdo";
             if (std::filesystem::exists(bdo_path) && std::filesystem::is_regular_file(bdo_path)) [[unlikely]]
             {
-                result_flags |= flags::has_sidecar;
+                result_flags |= Flags::has_sidecar;
 
                 const std::filesystem::perms bdo_perms = std::filesystem::status(bdo_path).permissions();
                 if ((bdo_perms & std::filesystem::perms::owner_write) == std::filesystem::perms::none && (bdo_perms & std::filesystem::perms::group_write) == std::filesystem::perms::none) [[unlikely]]
                 {
                     // Rare case. A read only sidecar exists.
-                    result_flags &= ~flags::supports_sidecar;
+                    result_flags &= ~Flags::supports_sidecar;
                 }
                 else
                 {
-                    result_flags |= flags::supports_sidecar;
+                    result_flags |= Flags::supports_sidecar;
                 }
             }
 
-            const Exiv2::ImageType type = Exiv2::ImageFactory::getType(path);
-            try
+            if (is_theoretically_xml(path))
             {
-                const Exiv2::AccessMode mode = Exiv2::ImageFactory::checkMode(type, Exiv2::mdXmp);
-                if (mode == Exiv2::AccessMode::amWrite)
+                result_flags |= Flags::supports_xml;
+                auto labels = xml::deserialise_binding_information_from_file(path);
+                if (labels.has_value() && labels.value().has_value())
                 {
-                    result_flags |= flags::supports_xmp;
+                    result_flags |= Flags::has_xml;
                 }
-                else if (mode == Exiv2::AccessMode::amReadWrite || mode == Exiv2::AccessMode::amRead)
+            }
+            else
+            {
+                const Exiv2::ImageType type = Exiv2::ImageFactory::getType(path);
+                try
                 {
-                    result_flags |= flags::supports_xmp;
-                    // Here it gets expensive. We now need to check the presence of the key
-                    auto image = Exiv2::ImageFactory::open(path);
-                    if (image) {
-                        image->readMetadata();
-                        Exiv2::XmpData& xmp_data = image->xmpData();
-                        if (!xmp_data.empty()) {
-                            const Exiv2::XmpKey slab_key{std::string(constants::s4778_xmp_prefix), std::string(constants::s4778_key)};
-                            const auto xmp_iter = xmp_data.findKey(slab_key);
-                            if (xmp_iter != xmp_data.end())
-                            {
-                                result_flags |= flags::has_xmp;
+                    const Exiv2::AccessMode mode = Exiv2::ImageFactory::checkMode(type, Exiv2::mdXmp);
+                    if (mode == Exiv2::AccessMode::amWrite)
+                    {
+                        result_flags |= Flags::supports_xmp;
+                    }
+                    else if (mode == Exiv2::AccessMode::amReadWrite || mode == Exiv2::AccessMode::amRead)
+                    {
+                        result_flags |= Flags::supports_xmp;
+                        // Here it gets expensive. We now need to check the presence of the key
+                        auto image = Exiv2::ImageFactory::open(path);
+                        if (image) {
+                            image->readMetadata();
+                            Exiv2::XmpData& xmp_data = image->xmpData();
+                            if (!xmp_data.empty()) {
+                                const Exiv2::XmpKey slab_key{std::string(constants::s4778_xmp_prefix), std::string(constants::s4778_key)};
+                                const auto xmp_iter = xmp_data.findKey(slab_key);
+                                if (xmp_iter != xmp_data.end())
+                                {
+                                    result_flags |= Flags::has_xmp;
+                                }
                             }
                         }
                     }
                 }
+                catch (...)
+                {
+                    // This is fine, Exiv just uses exceptions for certain logic flows
+                    result_flags &= ~Flags::supports_xmp;
+                    result_flags &= ~Flags::has_xmp;
+                }
             }
-            catch (...)
-            {
-                // This is fine, Exiv just uses exceptions for certain logic flows
-                result_flags &= ~flags::supports_xmp;
-                result_flags &= ~flags::has_xmp;
-            }
-
             return result_flags;
         }
 
         namespace http
         {
-            [[nodiscard]] std::string serialise_labels(const std::vector<confidentiality_label>& confidentiality_labels)
+            [[nodiscard]] std::string serialise_labels(const std::vector<ConfidentialityLabel>& confidentiality_labels)
             {
-                binding_information bdo;
+                BindingInformation bdo;
                 bdo.labels = confidentiality_labels;
                 const std::string binding_xml = xml::serialise_binding_information(bdo);
                 const std::string base64_xml = xml::encode_base64(binding_xml);
@@ -463,9 +525,9 @@ namespace nmbs
                     base64_xml);
             }
 
-            [[nodiscard]] std::vector<confidentiality_label> deserialise_labels(std::string_view binding_data)
+            [[nodiscard]] std::vector<ConfidentialityLabel> deserialise_labels(std::string_view binding_data)
             {
-                std::vector<confidentiality_label> labels;
+                std::vector<ConfidentialityLabel> labels;
                 if (binding_data.empty())
                 {
                     return labels;
@@ -506,7 +568,7 @@ namespace nmbs
     namespace spif
     {
 
-        const std::vector<security_policy>& get_security_policies()
+        const std::vector<SecurityPolicy>& get_security_policies()
         {
             ::initialise_security_policies();
 

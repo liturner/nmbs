@@ -39,68 +39,68 @@
 namespace
 {
 
-    [[nodiscard]] std::vector<nmbs::spif::security_classification>* to_cpp_classifications(nmbs_security_classifications_ptr in) noexcept
+    [[nodiscard]] std::vector<nmbs::spif::SecurityClassification>* to_cpp_classifications(nmbs_security_classifications_ptr in) noexcept
     {
-        return reinterpret_cast<std::vector<nmbs::spif::security_classification>*>(in);
+        return reinterpret_cast<std::vector<nmbs::spif::SecurityClassification>*>(in);
     }
 
-    [[nodiscard]] nmbs::spif::security_classification* to_cpp_classification(nmbs_security_classification_ptr in) noexcept
+    [[nodiscard]] nmbs::spif::SecurityClassification* to_cpp_classification(nmbs_security_classification_ptr in) noexcept
     {
-        return reinterpret_cast<nmbs::spif::security_classification*>(in);
+        return reinterpret_cast<nmbs::spif::SecurityClassification*>(in);
     }
 
 
-    [[nodiscard]] std::vector<nmbs::confidentiality_label>* to_cpp_labels(nmbs_confidentiality_labels_ptr in) noexcept
+    [[nodiscard]] std::vector<nmbs::ConfidentialityLabel>* to_cpp_labels(nmbs_confidentiality_labels_ptr in) noexcept
     {
-        return reinterpret_cast<std::vector<nmbs::confidentiality_label>*>(in);
+        return reinterpret_cast<std::vector<nmbs::ConfidentialityLabel>*>(in);
     }
 
-    [[nodiscard]] nmbs::confidentiality_label* to_cpp_label(nmbs_confidentiality_label_ptr in) noexcept
+    [[nodiscard]] nmbs::ConfidentialityLabel* to_cpp_label(nmbs_confidentiality_label_ptr in) noexcept
     {
-        return reinterpret_cast<nmbs::confidentiality_label*>(in);
+        return reinterpret_cast<nmbs::ConfidentialityLabel*>(in);
     }
 
-    [[nodiscard]] std::vector<nmbs::spif::security_policy>* to_cpp_policies(nmbs_security_policies_ptr in) noexcept
+    [[nodiscard]] std::vector<nmbs::spif::SecurityPolicy>* to_cpp_policies(nmbs_security_policies_ptr in) noexcept
     {
-        return reinterpret_cast<std::vector<nmbs::spif::security_policy>*>(in);
+        return reinterpret_cast<std::vector<nmbs::spif::SecurityPolicy>*>(in);
     }
 
-    [[nodiscard]] nmbs::spif::security_policy* to_cpp_policy(nmbs_security_policy_ptr in) noexcept
+    [[nodiscard]] nmbs::spif::SecurityPolicy* to_cpp_policy(nmbs_security_policy_ptr in) noexcept
     {
-        return reinterpret_cast<nmbs::spif::security_policy*>(in);
+        return reinterpret_cast<nmbs::spif::SecurityPolicy*>(in);
     }
 
-    [[nodiscard]] nmbs::binding::flags to_cpp_binding_flags(uint32_t in) noexcept
+    [[nodiscard]] nmbs::binding::Flags to_cpp_binding_flags(uint32_t in) noexcept
     {
-        return static_cast<nmbs::binding::flags>(in);
+        return static_cast<nmbs::binding::Flags>(in);
     }
 
-    [[nodiscard]] nmbs_security_classifications_ptr to_c_classifications(std::vector<nmbs::spif::security_classification>* in) noexcept
+    [[nodiscard]] nmbs_security_classifications_ptr to_c_classifications(std::vector<nmbs::spif::SecurityClassification>* in) noexcept
     {
         return reinterpret_cast<nmbs_security_classifications_ptr>(in);
     }
 
-    [[nodiscard]] nmbs_security_classification_ptr to_c_classification(nmbs::spif::security_classification* in) noexcept
+    [[nodiscard]] nmbs_security_classification_ptr to_c_classification(nmbs::spif::SecurityClassification* in) noexcept
     {
         return reinterpret_cast<nmbs_security_classification_ptr>(in);
     }
 
-    [[nodiscard]] nmbs_confidentiality_labels_ptr to_c_labels(std::vector<nmbs::confidentiality_label>* in) noexcept
+    [[nodiscard]] nmbs_confidentiality_labels_ptr to_c_labels(std::vector<nmbs::ConfidentialityLabel>* in) noexcept
     {
         return reinterpret_cast<nmbs_confidentiality_labels_ptr>(in);
     }
 
-    [[nodiscard]] nmbs_confidentiality_label_ptr to_c_label(nmbs::confidentiality_label* in) noexcept
+    [[nodiscard]] nmbs_confidentiality_label_ptr to_c_label(nmbs::ConfidentialityLabel* in) noexcept
     {
         return reinterpret_cast<nmbs_confidentiality_label_ptr>(in);
     }
 
-    [[nodiscard]] nmbs_security_policies_ptr to_c_policies(std::vector<nmbs::spif::security_policy>* in) noexcept
+    [[nodiscard]] nmbs_security_policies_ptr to_c_policies(std::vector<nmbs::spif::SecurityPolicy>* in) noexcept
     {
         return reinterpret_cast<nmbs_security_policies_ptr>(in);
     }
 
-    [[nodiscard]] nmbs_security_policy_ptr to_c_policy(nmbs::spif::security_policy* in) noexcept
+    [[nodiscard]] nmbs_security_policy_ptr to_c_policy(nmbs::spif::SecurityPolicy* in) noexcept
     {
         return reinterpret_cast<nmbs_security_policy_ptr>(in);
     }
@@ -113,7 +113,24 @@ void nmbs_confidentiality_labels_read_labels(nmbs_confidentiality_labels_ptr lab
     {
         auto const cpp_labels = to_cpp_labels(labels_out);
         cpp_labels->clear();
-        if (auto const labels = nmbs::read_labels(std::filesystem::path(std::string(file))); labels.has_value())
+        if (auto const labels = nmbs::read_labels(std::filesystem::path(std::string(file)), std::nullopt); labels.has_value())
+        {
+            cpp_labels->insert(cpp_labels->begin(), labels.value().begin(), labels.value().end());
+        }
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_labels_read_labels" << std::endl;
+    }
+}
+
+void nmbs_confidentiality_labels_read_labels_with_known_binding(nmbs_confidentiality_labels_ptr labels_out, const char* file, uint32_t binding_support) noexcept
+{
+    try
+    {
+        auto const cpp_labels = to_cpp_labels(labels_out);
+        cpp_labels->clear();
+        if (auto const labels = nmbs::read_labels(std::filesystem::path(std::string(file)), to_cpp_binding_flags(binding_support)); labels.has_value())
         {
             cpp_labels->insert(cpp_labels->begin(), labels.value().begin(), labels.value().end());
         }
@@ -270,7 +287,7 @@ int nmbs_confidentiality_labels_write_labels(const char* file, const nmbs_confid
     try
     {
         const std::filesystem::path target_path(file);
-        nmbs::binding::flags cpp_flags = nmbs::binding::support(target_path);
+        nmbs::binding::Flags cpp_flags = nmbs::binding::support(target_path);
         return static_cast<uint32_t>(cpp_flags);
     }
     catch (const std::exception& e) {
@@ -287,7 +304,7 @@ int nmbs_confidentiality_labels_write_labels(const char* file, const nmbs_confid
 [[nodiscard]] nmbs_confidentiality_labels_ptr nmbs_confidentiality_labels_new() noexcept
 {
 
-    return to_c_labels(new std::vector<nmbs::confidentiality_label>());
+    return to_c_labels(new std::vector<nmbs::ConfidentialityLabel>());
 }
 
 void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels_ptr labels) noexcept
@@ -349,7 +366,7 @@ void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels_ptr labels) 
 
 [[nodiscard]] nmbs_security_policies_ptr nmbs_security_policies_new() noexcept
 {
-    return to_c_policies(new std::vector<nmbs::spif::security_policy>);
+    return to_c_policies(new std::vector<nmbs::spif::SecurityPolicy>);
 }
 
 void nmbs_security_policies_read_installed(nmbs_security_policies_ptr policies_out) noexcept

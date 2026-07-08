@@ -24,39 +24,238 @@
 /// SOFTWARE.
 
 #include "nmbs/nmbs_private.h"
-#include "../include/private/nmbs/binding.h"
-#include "../include/private/nmbs/constants.h"
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 #include <libxml/xpath.h>
 #include <libxml/xpathInternals.h>
 #include <libxml/xmlwriter.h>
+#include <libxml/xmlreader.h>
 #include <iostream>
 #include <sstream>
 #include <chrono>
 #include <cstring>
 #include <string>
 
+#include "nmbs/binding.h"
+#include "nmbs/constants.h"
 #include "nmbs/expected.h"
+
+namespace
+{
+    // TODO: Figure out how to use the constants namespace here instead of duplicating.
+    constexpr xmlChar target_local_name[] = "BindingInformation";
+    constexpr xmlChar target_namespace[] = "urn:nato:stanag:4778:bindinginformation:1:0";
+    constexpr xmlChar target_namespace_4774[] = "urn:nato:stanag:4774:confidentialitymetadatalabel:1:0";
+    constexpr xmlChar metadata_binding_container[] = "MetadataBindingContainer";
+    constexpr xmlChar metadata_binding[] = "MetadataBinding";
+    constexpr xmlChar metadata[] = "Metadata";
+    constexpr xmlChar originator_confidentiality_label[] = "originatorConfidentialityLabel";
+    constexpr xmlChar data_reference[] = "DataReference";
+
+    // RAII Custom Deleters
+    struct XmlDocDeleter { void operator()(xmlDoc* const d) const { xmlFreeDoc(d); } };
+    struct XmlCharDeleter { void operator()(xmlChar* const s) const { xmlFree(s); } };
+    struct XmlXPathCtxDeleter { void operator()(xmlXPathContext* const c) const { xmlXPathFreeContext(c); } };
+    struct XmlXPathObjDeleter { void operator()(xmlXPathObject* const o) const { xmlXPathFreeObject(o); } };
+    struct XmlTextReaderDeleter { void operator()(xmlTextReader* const o) const { xmlFreeTextReader(o); } };
+
+    /// Helper for relative XPath queries. In particular, this helper will return only the string value of the
+    /// searched node. It is useful for cases where exactly one node, with no attributes or children are expected.
+    /// @param context_node
+    /// @param ctx
+    /// @param xpath_expr
+    /// @return
+    [[nodiscard]] std::optional<std::string> get_relative_xpath_node_value(xmlNode* context_node, xmlXPathContext* ctx, const std::string& xpath_expr) {
+        const std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter> obj(
+            xmlXPathNodeEval(context_node, reinterpret_cast<const xmlChar*>(xpath_expr.c_str()), ctx)
+        );
+
+        if (obj && !xmlXPathNodeSetIsEmpty(obj->nodesetval)) {
+            const xmlNode* node = obj->nodesetval->nodeTab[0];
+            const std::unique_ptr<xmlChar, XmlCharDeleter> content(xmlNodeGetContent(node));
+            if (content) {
+                return std::string(reinterpret_cast<const char*>(content.get()));
+            }
+        }
+        return std::nullopt;
+    }
+
+    [[nodiscard]] bool is_a_node_named(const xmlNode* node, const xmlChar* name)
+    {
+        return node->type == XML_ELEMENT_NODE &&
+            xmlStrEqual(target_namespace, node->ns->href) &&
+            xmlStrEqual(name, node->name);
+    }
+
+    [[nodiscard]] bool is_a_4774_node_named(const xmlNode* node, const xmlChar* name)
+    {
+        return node->type == XML_ELEMENT_NODE &&
+            xmlStrEqual(target_namespace_4774, node->ns->href) &&
+            xmlStrEqual(name, node->name);
+    }
+
+    [[nodiscard]] std::string get_attribute_value(const xmlAttr* attribute) {
+        if (!attribute || !attribute->children)
+        {
+            return "";
+        }
+        const std::unique_ptr<xmlChar, XmlCharDeleter> value(xmlNodeGetContent(attribute->children));
+        return value ? reinterpret_cast<const char*>(value.get()) : "";
+    }
+
+    [[nodiscard]] std::optional<std::string> get_node_text(const xmlNode* node) {
+        if (!node || !node->children)
+        {
+            return std::nullopt;
+        }
+        const std::unique_ptr<xmlChar, XmlCharDeleter> value(xmlNodeGetContent(node));
+        if (value) [[likely]]
+        {
+            return std::string(reinterpret_cast<const char*>(value.get()));
+        }
+        return std::nullopt;
+    }
+
+    [[nodiscard]] nmbs::Expected<nmbs::binding::BindingInformation> deserialise_binding_information_xml_doc(const std::unique_ptr<xmlDoc, XmlDocDeleter>& xml_doc)
+    {
+        if (!xml_doc)
+        {
+            return std::unexpected(nmbs::Error::xml_could_not_parse("Found an s4778:BindingInformation, but could not parse it."));
+        }
+
+        nmbs::binding::BindingInformation return_binding_information;
+        xmlNodePtr root = xmlDocGetRootElement(xml_doc.get());
+        if (!xmlStrEqual(target_local_name, root->name) ||
+            !xmlStrEqual(target_namespace, root->ns->href))
+        {
+            return std::unexpected(nmbs::Error::xml_could_not_parse("deserialise_binding_information_xml_doc passed an unknown xml element"));
+        }
+
+        for (xmlNodePtr binding_information_child = root->children; binding_information_child; binding_information_child = binding_information_child->next)
+        {
+            if (is_a_node_named(binding_information_child, metadata_binding_container))
+            {
+                for (xmlNodePtr binding_container = binding_information_child->children; binding_container; binding_container = binding_container->next)
+                {
+                    if (is_a_node_named(binding_container, metadata_binding))
+                    {
+                        for (xmlNodePtr metadata_binding_child = binding_container->children; metadata_binding_child; metadata_binding_child = metadata_binding_child->next)
+                        {
+                            if (is_a_node_named(metadata_binding_child, metadata))
+                            {
+                                for (xmlNodePtr metadata_child = metadata_binding_child->children; metadata_child; metadata_child = metadata_child->next)
+                                {
+                                    if (is_a_4774_node_named(metadata_child, reinterpret_cast<const xmlChar*>("originatorConfidentialityLabel")) ||
+                                        is_a_4774_node_named(metadata_child, reinterpret_cast<const xmlChar*>("alternativeConfidentialityLabel")) ||
+                                        is_a_4774_node_named(metadata_child, reinterpret_cast<const xmlChar*>("metadataConfidentialityLabel")))
+                                    {
+                                        nmbs::ConfidentialityLabel confidentiality_label;
+
+                                        if (xmlStrEqual(metadata_child->name, reinterpret_cast<const xmlChar*>("originatorConfidentialityLabel")))
+                                        {
+                                            confidentiality_label.label_type = nmbs::ConfidentialityLabel::originator;
+                                        }
+                                        else if (xmlStrEqual(metadata_child->name, reinterpret_cast<const xmlChar*>("alternativeConfidentialityLabel")))
+                                        {
+                                            confidentiality_label.label_type = nmbs::ConfidentialityLabel::alternative;
+                                        }
+                                        else
+                                        {
+                                            confidentiality_label.label_type = nmbs::ConfidentialityLabel::successor;
+                                        }
+
+                                        for (xmlNodePtr label_child = metadata_child->children; label_child; label_child = label_child->next)
+                                        {
+                                            if (is_a_4774_node_named(label_child, reinterpret_cast<const xmlChar*>("CreationDateTime")))
+                                            {
+                                                const auto creation_time_string = get_node_text(label_child);
+                                                if (creation_time_string->empty())
+                                                {
+                                                    return std::unexpected(nmbs::Error::xml_could_not_parse("Could not parse *ConfidentialityLabel element. No CreationDateTime, although it is a mandatory element."));
+                                                }
+                                                std::istringstream in_stream(creation_time_string.value());
+                                                // TODO: This is not tolerant of +00:00! Make a more flexible date-time reading function
+                                                const std::string in_format = "%FT%TZ";
+                                                in_stream >> std::chrono::parse(in_format, confidentiality_label.creation_date_time);
+                                                if (in_stream.fail()) {
+                                                    return std::unexpected(nmbs::Error::xml_could_not_parse("Could not parse *ConfidentialityLabel element. CreationDateTime could not be parsed. Maybe wrong format?"));
+                                                }
+                                            }
+                                            else if (is_a_4774_node_named(label_child, reinterpret_cast<const xmlChar*>("ConfidentialityInformation")))
+                                            {
+                                                for (xmlNodePtr information_child = label_child->children; information_child; information_child = information_child->next)
+                                                {
+                                                    if (is_a_4774_node_named(information_child, reinterpret_cast<const xmlChar*>("PolicyIdentifier")))
+                                                    {
+                                                        confidentiality_label.confidentiality_information.policy_identifier = get_node_text(information_child).value_or("ERROR!");
+                                                    }
+                                                    else if (is_a_4774_node_named(information_child, reinterpret_cast<const xmlChar*>("Classification")))
+                                                    {
+                                                        confidentiality_label.confidentiality_information.classification = get_node_text(information_child).value_or("ERROR!");
+                                                    }
+                                                }
+                                            }
+                                            else if (is_a_4774_node_named(label_child, reinterpret_cast<const xmlChar*>("OriginatorID")))
+                                            {
+                                                nmbs::ConfidentialityLabel::OriginatorId originator_id;
+                                                auto originator_id_name = get_node_text(label_child);
+                                                if (originator_id_name->empty())
+                                                {
+                                                    return std::unexpected(nmbs::Error::xml_could_not_parse("Could not parse OriginatorID element. No Text content, although it is a mandatory element."));
+                                                }
+                                                originator_id.value = originator_id_name.value();
+                                                for (xmlAttrPtr originator_id_property = label_child->properties; originator_id_property; originator_id_property = originator_id_property->next)
+                                                {
+                                                    if (xmlStrEqual(reinterpret_cast<const xmlChar*>("IDType"), originator_id_property->name))
+                                                    {
+                                                        originator_id.id_type = get_attribute_value(originator_id_property);
+                                                    }
+                                                }
+                                                confidentiality_label.originator_id = originator_id;
+                                            }
+                                        }
+                                        return_binding_information.labels.push_back(confidentiality_label);
+                                    }
+                                }
+                            }
+                            else if (is_a_node_named(metadata_binding_child, data_reference))
+                            {
+                                for (xmlAttrPtr data_reference_property = metadata_binding_child->properties; data_reference_property; data_reference_property = data_reference_property->next)
+                                {
+                                    if (xmlStrEqual(reinterpret_cast<const xmlChar*>("URI"), data_reference_property->name))
+                                    {
+                                        return_binding_information.reference.uri = get_attribute_value(data_reference_property);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return return_binding_information;
+    }
+
+}
 
 namespace nmbs::xml
 {
-    // 2. RAII Custom Deleters
-    struct XmlDocDeleter { void operator()(xmlDoc* d) const { xmlFreeDoc(d); } };
-    struct XmlCharDeleter { void operator()(xmlChar* s) const { xmlFree(s); } };
-    struct XmlXPathCtxDeleter { void operator()(xmlXPathContext* c) const { xmlXPathFreeContext(c); } };
-    struct XmlXPathObjDeleter { void operator()(xmlXPathObject* o) const { xmlXPathFreeObject(o); } };
+    void cleanup()
+    {
+        xmlCleanupParser();
+    }
 
     [[nodiscard]] std::string encode_base64(const std::string& input)
     {
-        xmlBufferPtr const xml_buffer = xmlBufferCreate();
+        xmlBuffer* const xml_buffer = xmlBufferCreate();
         if (!xml_buffer)
         {
             return "";
         }
 
-        xmlTextWriterPtr const writer = xmlNewTextWriterMemory(xml_buffer, 0);
+        xmlTextWriter* const writer = xmlNewTextWriterMemory(xml_buffer, 0);
         if (!writer) {
             xmlBufferFree(xml_buffer);
             return "";
@@ -71,7 +270,7 @@ namespace nmbs::xml
         return result;
     }
 
-    [[nodiscard]] std::string decode_base64(std::string_view input)
+    [[nodiscard]] std::string decode_base64(const std::string_view input)
     {
         std::string out;
         out.reserve((input.size() / 4) * 3); // Pre-allocate exact memory needed
@@ -104,169 +303,75 @@ namespace nmbs::xml
         return out;
     }
 
-    /// Helper for relative XPath queries. In particular, this helper will return only the string value of the
-    /// searched node. It is useful for cases where exactly one node, with no attributes or children are expected.
-    /// @param context_node
-    /// @param ctx
-    /// @param xpath_expr
-    /// @return
-    [[nodiscard]] std::optional<std::string> get_relative_xpath_node_value(xmlNode* context_node, xmlXPathContext* ctx, const std::string& xpath_expr) {
-        std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter> obj(
-            xmlXPathNodeEval(context_node, reinterpret_cast<const xmlChar*>(xpath_expr.c_str()), ctx)
-        );
+    // Will just try to get the binding information from an XML file. Should be irrelevant if a bdo or in some embedded file.
+    [[nodiscard]] Expected<std::optional<binding::BindingInformation>> deserialise_binding_information_from_file(const std::filesystem::path& file)
+    {
+        if (!std::filesystem::is_regular_file(file))
+        {
+            return std::unexpected(Error::file_not_found());
+        }
+        LIBXML_TEST_VERSION
 
-        if (obj && !xmlXPathNodeSetIsEmpty(obj->nodesetval)) {
-            const xmlNode* node = obj->nodesetval->nodeTab[0];
-            const std::unique_ptr<xmlChar, XmlCharDeleter> content(xmlNodeGetContent(node));
-            if (content) {
-                return std::string(reinterpret_cast<const char*>(content.get()));
+        const std::unique_ptr<xmlTextReader, XmlTextReaderDeleter> reader(xmlReaderForFile(file.c_str(), nullptr, 0));
+        while (xmlTextReaderRead(reader.get()))
+        {
+            // Check only name for now. Its very unlikely to hit, so we should optimise as much as possible till
+            // here
+            if (xmlTextReaderNodeType(reader.get()) == XML_READER_TYPE_ELEMENT &&
+                xmlStrEqual(target_local_name, xmlTextReaderConstLocalName(reader.get()))) [[unlikely]]
+            {
+                if (xmlStrEqual(target_namespace, xmlTextReaderConstNamespaceUri(reader.get()))) [[likely]]
+                {
+                    const std::unique_ptr<xmlChar, XmlCharDeleter> outer_xml(xmlTextReaderReadOuterXml(reader.get()));
+                    const std::unique_ptr<xmlDoc, XmlDocDeleter> binding_xml_doc(xmlReadMemory(
+                        reinterpret_cast<const char*>(outer_xml.get()),
+                        xmlStrlen(outer_xml.get()),
+                        nullptr,
+                        nullptr,
+                        0));
+
+                    if (!binding_xml_doc)
+                    {
+                        return std::unexpected(Error::xml_could_not_parse("Found an s4778:BindingInformation, but could not parse it."));
+                    }
+
+                    // NOTE: We only support one s4778:BindingInformation per file!
+                    return deserialise_binding_information_xml_doc(binding_xml_doc);
+                }
+                std::cerr << "Warning: During xml Parsing an element BindingInformation was found, but was not using the namespace urn:nato:stanag:4778:bindinginformation:1:0. This element will be ignored by libnmbs as it may belong to another application." << std::endl;
             }
         }
         return std::nullopt;
     }
 
-
-    expected<binding::binding_information> deserialise_binding_information(const std::string& xml)
+    Expected<binding::BindingInformation> deserialise_binding_information(const std::string& xml)
     {
-        binding::binding_information bdo;
-
         const std::unique_ptr<xmlDoc, XmlDocDeleter> xml_doc(
             xmlReadMemory(xml.c_str(), static_cast<int>(xml.length()), nullptr, nullptr, 0)
         );
-        if (!xml_doc) {
-            return std::unexpected(error::xml_could_not_parse());
-        }
-
-        const std::unique_ptr<xmlXPathContext, XmlXPathCtxDeleter> xpath_ctx(xmlXPathNewContext(xml_doc.get()));
-        if (!xpath_ctx)
+        if (!xml_doc)
         {
-            return std::unexpected(error::xml_could_not_create_xpath_context());
+            return std::unexpected(Error::xml_could_not_parse());
         }
-
-        // Here we go to string as the string_view handles null termination differently. The tiny overhead is not a
-        // concern!
-        // ReSharper disable CppVariableCanBeMadeConstexpr
-        const std::string s4778_prefix(nmbs::constants::s4778_prefix);
-        const std::string s4778_namespace(nmbs::constants::s4778_namespace);
-        const std::string s4774_prefix(nmbs::constants::s4774_prefix);
-        const std::string s4774_namespace(nmbs::constants::s4774_namespace);
-        // ReSharper restore CppVariableCanBeMadeConstexpr
-
-        xmlXPathRegisterNs(xpath_ctx.get(), reinterpret_cast<const xmlChar*>(s4778_prefix.c_str()), reinterpret_cast<const xmlChar*>(s4778_namespace.c_str()));
-        xmlXPathRegisterNs(xpath_ctx.get(), reinterpret_cast<const xmlChar*>(s4774_prefix.c_str()), reinterpret_cast<const xmlChar*>(s4774_namespace.c_str()));
-
-
-        const std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter> binding_information_element(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//s4778:BindingInformation"), xpath_ctx.get()));
-        if (!binding_information_element || binding_information_element->nodesetval->nodeNr == 0) {
-            return std::unexpected(error::xml_could_not_parse("Could not parse XML. Could not find BindingInformation Element"));
-        }
-
-        if (binding_information_element->nodesetval->nodeNr != 1) {
-            return std::unexpected(error::xml_could_not_parse("Could not parse XML. Found multiple BindingInformation Elements"));
-        }
-
-        bdo.reference.uri = get_relative_xpath_node_value(binding_information_element->nodesetval->nodeTab[0], xpath_ctx.get(), ".//s4778:DataReference/@URI").value_or("");
-
-        const std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter> confidentiality_label_collections[3]
-        {
-            std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//s4774:originatorConfidentialityLabel"), xpath_ctx.get())),
-            std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//s4774:alternativeConfidentialityLabel"), xpath_ctx.get())),
-            std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//s4774:metadataConfidentialityLabel"), xpath_ctx.get()))
-        };
-
-        for (const auto & confidentiality_label_collection : confidentiality_label_collections)
-        {
-            if (!confidentiality_label_collection || xmlXPathNodeSetIsEmpty(confidentiality_label_collection->nodesetval)) {
-                continue;
-            }
-
-            xmlNodeSetPtr confidentiality_label_nodes = confidentiality_label_collection->nodesetval;
-
-            for (int i = 0; i < confidentiality_label_nodes->nodeNr; ++i) {
-                xmlNode* binding_node = confidentiality_label_nodes->nodeTab[i];
-                nmbs::confidentiality_label current_label;
-
-                const std::string current_node_name(reinterpret_cast<const char*>(binding_node->name));
-                if (current_node_name == "originatorConfidentialityLabel") {
-                    current_label.label_type = confidentiality_label::originator;
-                } else if (current_node_name == "alternativeConfidentialityLabel") {
-                    current_label.label_type = confidentiality_label::alternative;
-                } else if (current_node_name == "metadataConfidentialityLabel") {
-                    current_label.label_type = confidentiality_label::successor;
-                } else {
-                    // TODO: Possibly cerr a warning here? At this point it is wierd if there is anything other than the three cases, but I dont think its worth killing the function? Consider in depth.
-                    continue;
-                }
-
-                // The './/' means "search anywhere inside the current node".
-                auto node_value = get_relative_xpath_node_value(
-                    binding_node, xpath_ctx.get(), ".//s4774:PolicyIdentifier"
-                );
-                if (!node_value)
-                {
-                    return std::unexpected(error::xml_could_not_parse("Could not parse ConfidentialityInformation element. No PolicyIdentifier, although it is a mandatory element."));
-                }
-                current_label.confidentiality_information.policy_identifier = node_value.value();
-
-
-                node_value = get_relative_xpath_node_value(
-                    binding_node, xpath_ctx.get(), ".//s4774:Classification"
-                );
-                if (!node_value)
-                {
-                    return std::unexpected(error::xml_could_not_parse("Could not parse ConfidentialityInformation element. No Classification, although it is a mandatory element."));
-                }
-                current_label.confidentiality_information.classification = node_value.value();
-
-
-                node_value = get_relative_xpath_node_value(
-                    binding_node, xpath_ctx.get(), ".//s4774:CreationDateTime"
-                );
-                if (!node_value)
-                {
-                    return std::unexpected(error::xml_could_not_parse("Could not parse *ConfidentialityLabel element. No CreationDateTime, although it is a mandatory element."));
-                }
-
-                std::istringstream in_stream(node_value.value());
-                // TODO: This is not tollerant of +00:00! Make a more flexible date-time reading function
-                const std::string in_format = "%FT%TZ";
-                in_stream >> std::chrono::parse(in_format, current_label.creation_date_time);
-                if (in_stream.fail()) {
-                    return std::unexpected(error::xml_could_not_parse("Could not parse *ConfidentialityLabel element. CreationDateTime could not be parsed. Maybe wrong format?"));
-                }
-
-                auto originator_id_type= get_relative_xpath_node_value(binding_node, xpath_ctx.get(), ".//s4774:OriginatorID/@IDType");
-                auto originator_id_value= get_relative_xpath_node_value(binding_node, xpath_ctx.get(), ".//s4774:OriginatorID");
-                if (originator_id_type.has_value() || originator_id_value.has_value())
-                {
-                    current_label.originator_id.emplace();;
-                    current_label.originator_id->id_type = originator_id_type.value_or("");
-                    current_label.originator_id->value = originator_id_value.value_or("");
-                }
-
-                bdo.labels.push_back(current_label);
-            }
-        }
-
-        return bdo;
+        return deserialise_binding_information_xml_doc(xml_doc);
     }
 
-    [[nodiscard]] expected<spif::security_policy> deserialise_security_policy(const std::string& xml)
+    [[nodiscard]] Expected<spif::SecurityPolicy> deserialise_security_policy(const std::string& xml)
     {
-        spif::security_policy spif;
+        spif::SecurityPolicy spif;
 
         const std::unique_ptr<xmlDoc, XmlDocDeleter> xml_doc(
             xmlReadMemory(xml.c_str(), static_cast<int>(xml.length()), nullptr, nullptr, 0)
         );
         if (!xml_doc)
         {
-            return std::unexpected(error::xml_could_not_parse());
+            return std::unexpected(Error::xml_could_not_parse());
         }
 
         const std::unique_ptr<xmlXPathContext, XmlXPathCtxDeleter> xpath_ctx(xmlXPathNewContext(xml_doc.get()));
         if (!xpath_ctx)
         {
-            return std::unexpected(error::xml_could_not_create_xpath_context());
+            return std::unexpected(Error::xml_could_not_create_xpath_context());
         }
 
         // Here we go to string as the string_view handles null termination differently. The tiny overhead is not a
@@ -283,11 +388,11 @@ namespace nmbs::xml
             xmlXPathEvalExpression(reinterpret_cast<const xmlChar*>("//spif:SPIF"), xpath_ctx.get()));
         if (!binding_information_element || binding_information_element->nodesetval->nodeNr == 0)
         {
-            return std::unexpected(error::xml_could_not_parse("Could not parse SPIF. Could not find SPIF Element"));
+            return std::unexpected(Error::xml_could_not_parse("Could not parse SPIF. Could not find SPIF Element"));
         }
         if (binding_information_element->nodesetval->nodeNr != 1)
         {
-            return std::unexpected(error::xml_could_not_parse("Could not parse SPIF. Found multiple SPIF Elements"));
+            return std::unexpected(Error::xml_could_not_parse("Could not parse SPIF. Found multiple SPIF Elements"));
         }
 
         xmlNodePtr root_element = binding_information_element->nodesetval->nodeTab[0];
@@ -300,20 +405,20 @@ namespace nmbs::xml
         }
         catch (...)
         {
-            return std::unexpected(error::xml_could_not_parse("Could not parse SPIF. ./@version was missing or invalid"));
+            return std::unexpected(Error::xml_could_not_parse("Could not parse SPIF. ./@version was missing or invalid"));
         }
 
         auto security_classification_nodes = std::unique_ptr<xmlXPathObject, XmlXPathObjDeleter>(xmlXPathEvalExpression(
             reinterpret_cast<const xmlChar*>("//spif:securityClassification"), xpath_ctx.get()));
         if (!security_classification_nodes || xmlXPathNodeSetIsEmpty(security_classification_nodes->nodesetval))
         {
-            return std::unexpected(error::xml_could_not_parse("Could not parse SPIF. Found no securityClassification Elements"));
+            return std::unexpected(Error::xml_could_not_parse("Could not parse SPIF. Found no securityClassification Elements"));
         }
 
         for (int i = 0; i < security_classification_nodes->nodesetval->nodeNr; ++i)
         {
             xmlNode* security_classification_node = security_classification_nodes->nodesetval->nodeTab[i];
-            spif::security_classification current_classification;
+            spif::SecurityClassification current_classification;
 
             current_classification.name = get_relative_xpath_node_value(security_classification_node, xpath_ctx.get(),"./@name").value();
 
@@ -323,7 +428,7 @@ namespace nmbs::xml
             }
             catch (...)
             {
-                return std::unexpected(error::xml_could_not_parse("Could not parse SPIF. securityClassification/@hierarchy was missing or invalid"));
+                return std::unexpected(Error::xml_could_not_parse("Could not parse SPIF. securityClassification/@hierarchy was missing or invalid"));
             }
 
             try
@@ -332,7 +437,7 @@ namespace nmbs::xml
             }
             catch (...)
             {
-                return std::unexpected(error::xml_could_not_parse("Could not parse SPIF. securityClassification/@lacv was missing or invalid"));
+                return std::unexpected(Error::xml_could_not_parse("Could not parse SPIF. securityClassification/@lacv was missing or invalid"));
             }
 
             current_classification.colour = get_relative_xpath_node_value(security_classification_node, xpath_ctx.get(), "./@color");
@@ -344,7 +449,7 @@ namespace nmbs::xml
         return spif;
     }
 
-    [[nodiscard]] std::string serialise_binding_information(const binding::binding_information& binding_information)
+    [[nodiscard]] std::string serialise_binding_information(const binding::BindingInformation& binding_information)
     {
         std::string xml;
         xml.reserve(1024);
@@ -354,7 +459,7 @@ namespace nmbs::xml
         return xml;
     }
 
-    [[nodiscard]] std::string serialise_confidentiality_labels(const std::vector<confidentiality_label>& confidentiality_labels)
+    [[nodiscard]] std::string serialise_confidentiality_labels(const std::vector<ConfidentialityLabel>& confidentiality_labels)
     {
         std::string xml;
         for (const auto& confidentiality_label : confidentiality_labels)
@@ -364,7 +469,7 @@ namespace nmbs::xml
         return xml;
     }
 
-    [[nodiscard]] std::string serialise_confidentiality_label(const confidentiality_label& confidentiality_label)
+    [[nodiscard]] std::string serialise_confidentiality_label(const ConfidentialityLabel& confidentiality_label)
     {
         const std::string creation_time_string = std::format("{:%FT%TZ}", confidentiality_label.creation_date_time);
 

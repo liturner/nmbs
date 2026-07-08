@@ -170,6 +170,8 @@ void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels_ptr labels) 
 /// @see nmbs_confidentiality_labels_new
 void nmbs_confidentiality_labels_read_labels(nmbs_confidentiality_labels_ptr labels_out, const char* file) NMBS_NOEXCEPT;
 
+void nmbs_confidentiality_labels_read_labels_with_known_binding(nmbs_confidentiality_labels_ptr labels_out, const char* file, uint32_t binding_support) NMBS_NOEXCEPT;
+
 /// @brief Opaque Accessor
 /// @ingroup c_confidentiality_labels
 /// @param labels

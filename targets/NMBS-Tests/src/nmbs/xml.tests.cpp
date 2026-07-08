@@ -85,12 +85,12 @@ TEST(XML, DeserialiseSingleLabel)
 {
     NMBS_REQUIREMENT_STANDARD_4778_2_A1
 
-    const nmbs::binding::binding_information bdo = nmbs::xml::deserialise_binding_information(binding_information_1).value();
+    const nmbs::binding::BindingInformation bdo = nmbs::xml::deserialise_binding_information(binding_information_1).value();
 
     // 2026-06-26T12:47:51Z
     constexpr std::chrono::utc_seconds expected_utc_time{std::chrono::seconds{1782478098}};
     ASSERT_EQ(bdo.labels.size(), 1);
-    ASSERT_EQ(bdo.labels[0].label_type, nmbs::confidentiality_label::originator);
+    ASSERT_EQ(bdo.labels[0].label_type, nmbs::ConfidentialityLabel::originator);
     ASSERT_EQ(bdo.labels[0].confidentiality_information.policy_identifier, "PUBLIC");
     ASSERT_EQ(bdo.labels[0].confidentiality_information.classification, "UNMARKED");
     ASSERT_EQ(bdo.labels[0].creation_date_time, expected_utc_time);
@@ -98,26 +98,43 @@ TEST(XML, DeserialiseSingleLabel)
     ASSERT_EQ(bdo.reference.uri, "./test-no-xmp.jpg.bdo");
 }
 
-TEST(XML, DeserialiseDualLabel)
+TEST(XML, DeserialiseSingleLabelFile)
 {
     NMBS_REQUIREMENT_STANDARD_4778_2_A1
 
-    const nmbs::binding::binding_information bdo = nmbs::xml::deserialise_binding_information(binding_information_2).value();
+    const nmbs::binding::BindingInformation bdo = nmbs::xml::deserialise_binding_information_from_file(std::filesystem::path("resources/xml/test.1.bdo")).value().value();
 
     // 2026-06-26T12:47:51Z
     constexpr std::chrono::utc_seconds expected_utc_time{std::chrono::seconds{1782478098}};
-    ASSERT_EQ(bdo.labels.size(), 2);
-    ASSERT_EQ(bdo.labels[0].label_type, nmbs::confidentiality_label::originator);
+    ASSERT_EQ(bdo.labels.size(), 1);
+    ASSERT_EQ(bdo.labels[0].label_type, nmbs::ConfidentialityLabel::originator);
     ASSERT_EQ(bdo.labels[0].confidentiality_information.policy_identifier, "PUBLIC");
     ASSERT_EQ(bdo.labels[0].confidentiality_information.classification, "UNMARKED");
     ASSERT_EQ(bdo.labels[0].creation_date_time, expected_utc_time);
     ASSERT_EQ(bdo.labels[0].originator_id, std::nullopt);
-    ASSERT_EQ(bdo.labels[1].label_type, nmbs::confidentiality_label::alternative);
+    ASSERT_EQ(bdo.reference.uri, "./a-missing.file.bdo");
+}
+
+TEST(XML, DeserialiseDualLabel)
+{
+    NMBS_REQUIREMENT_STANDARD_4778_2_A1
+
+    const nmbs::binding::BindingInformation bdo = nmbs::xml::deserialise_binding_information(binding_information_2).value();
+
+    // 2026-06-26T12:47:51Z
+    constexpr std::chrono::utc_seconds expected_utc_time{std::chrono::seconds{1782478098}};
+    ASSERT_EQ(bdo.labels.size(), 2);
+    ASSERT_EQ(bdo.labels[0].label_type, nmbs::ConfidentialityLabel::originator);
+    ASSERT_EQ(bdo.labels[0].confidentiality_information.policy_identifier, "PUBLIC");
+    ASSERT_EQ(bdo.labels[0].confidentiality_information.classification, "UNMARKED");
+    ASSERT_EQ(bdo.labels[0].creation_date_time, expected_utc_time);
+    ASSERT_EQ(bdo.labels[0].originator_id, std::nullopt);
+    ASSERT_EQ(bdo.labels[1].label_type, nmbs::ConfidentialityLabel::alternative);
     ASSERT_EQ(bdo.labels[1].confidentiality_information.policy_identifier, "ESOTERIC");
     ASSERT_EQ(bdo.labels[1].confidentiality_information.classification, "UNINTELLIGIBLE");
     ASSERT_EQ(bdo.labels[1].creation_date_time, expected_utc_time);
     ASSERT_TRUE(bdo.labels[1].originator_id.has_value());
-    ASSERT_EQ(bdo.labels[1].originator_id->id_type, nmbs::confidentiality_label::originator_id::rfc822_name);
+    ASSERT_EQ(bdo.labels[1].originator_id->id_type, nmbs::ConfidentialityLabel::OriginatorId::rfc822_name);
     ASSERT_EQ(bdo.labels[1].originator_id->value, "adam.weishaupt@bienenorden.de");
     ASSERT_EQ(bdo.reference.uri, "./test-no-xmp.jpg.bdo");
 }

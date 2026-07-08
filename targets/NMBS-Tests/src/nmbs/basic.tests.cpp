@@ -27,9 +27,9 @@
 
 TEST(XMP, Read)
 {
-    const auto labels = nmbs::read_labels("resources/test-public-unmarked.jpg").value();
+    const auto labels = nmbs::read_labels("resources/test-public-unmarked.jpg", std::nullopt).value();
     ASSERT_EQ(labels.size(), 1);
-    ASSERT_EQ(labels[0].label_type, nmbs::confidentiality_label::originator);
+    ASSERT_EQ(labels[0].label_type, nmbs::ConfidentialityLabel::originator);
     ASSERT_EQ(labels[0].confidentiality_information.policy_identifier, "PUBLIC");
     ASSERT_EQ(labels[0].confidentiality_information.classification, "UNMARKED");
     nmbs::cleanup();
@@ -37,7 +37,7 @@ TEST(XMP, Read)
 
 TEST(Sidecar, Write)
 {
-    std::vector<nmbs::confidentiality_label> labels(1);
+    std::vector<nmbs::ConfidentialityLabel> labels(1);
     labels[0].confidentiality_information.policy_identifier = "PUBLIC";
     labels[0].confidentiality_information.classification = "UNMARKED";
     auto response = nmbs::write_sidecar("resources/test-no-xmp.jpg", labels);

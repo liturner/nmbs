@@ -44,24 +44,24 @@ int main(const int argc, char* argv[]) {
     catch (const std::exception& err) {
         std::cerr << err.what() << std::endl;
         std::cerr << program;
-        return nmbs::exit_code::invalid_arguments;
+        return nmbs::ExitCode::invalid_arguments;
     }
 
     // Argument Validation
-    nmbs::confidentiality_label label;
+    nmbs::ConfidentialityLabel label;
     const std::filesystem::path file = program.get<std::string>("file");
     label.confidentiality_information.policy_identifier = program.get<std::string>("policy");
     label.confidentiality_information.classification = program.get<std::string>("classification");
 
     if (!(std::filesystem::exists(file) && std::filesystem::is_regular_file(file))) {
         std::cerr << "file not found" << std::endl;
-        return nmbs::exit_code::file_not_found;
+        return nmbs::ExitCode::file_not_found;
     }
 
     // Program Logic
     try
     {
-        std::vector<nmbs::confidentiality_label> labels;
+        std::vector<nmbs::ConfidentialityLabel> labels;
         labels.push_back(label);
         auto output = nmbs::write_labels(file,  labels);
         if (output.has_value())
@@ -70,7 +70,7 @@ int main(const int argc, char* argv[]) {
                 std::cout << "  Key: Xmp.mbxmp.bindingInformation" << std::endl
                 << "Value: " << output.value() << std::endl;
             }
-            return nmbs::exit_code::success;
+            return nmbs::ExitCode::success;
         }
         std::cerr << output.error().message() << std::endl;
         return output.error().code();
@@ -79,8 +79,8 @@ int main(const int argc, char* argv[]) {
     catch (const std::exception& e)
     {
         std::cerr << "std::exception: " << e.what() << std::endl;
-        return nmbs::exit_code::unknown_error;
+        return nmbs::ExitCode::unknown_error;
     }
 
-    return nmbs::exit_code::success;
+    return nmbs::ExitCode::success;
 }

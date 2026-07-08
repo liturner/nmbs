@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<s4778:BindingInformation xmlns:s4778="urn:nato:stanag:4778:bindinginformation:1:0">
+    <s4778:MetadataBindingContainer>
+        <s4778:MetadataBinding>
+            <s4778:Metadata>
+                <s4774:originatorConfidentialityLabel
+                        xmlns:s4774="urn:nato:stanag:4774:confidentialitymetadatalabel:1:0">
+                    <s4774:ConfidentialityInformation>
+                        <s4774:PolicyIdentifier>PUBLIC</s4774:PolicyIdentifier>
+                        <s4774:Classification>UNMARKED</s4774:Classification>
+                    </s4774:ConfidentialityInformation>
+                    <s4774:CreationDateTime>2026-06-26T12:47:51Z</s4774:CreationDateTime>
+                </s4774:originatorConfidentialityLabel>
+            </s4778:Metadata>
+            <s4778:DataReference URI="./a-missing.file.bdo"/>
+        </s4778:MetadataBinding>
+    </s4778:MetadataBindingContainer>
+</s4778:BindingInformation>

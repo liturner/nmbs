@@ -3,6 +3,7 @@ configure_file(resources/test-no-xmp.jpg resources/test-no-xmp.jpg COPYONLY)
 configure_file(resources/test-public-unmarked.jpg resources/test-public-unmarked.jpg COPYONLY)
 configure_file(resources/spif/NATO.spif resources/spif/NATO.spif COPYONLY)
 configure_file(resources/spif/PUBLIC.spif resources/spif/PUBLIC.spif COPYONLY)
+configure_file(resources/xml/test.1.bdo resources/xml/test.1.bdo COPYONLY)
 
 add_executable(NMBS-Tests
         src/nmbs/basic.tests.cpp

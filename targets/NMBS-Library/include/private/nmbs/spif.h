@@ -44,7 +44,7 @@ namespace nmbs::spif
 
     inline constexpr std::string_view override_spif_location_env_var = "NMBS_SPIF_DIR_OVERRIDE";
 
-    struct security_classification
+    struct SecurityClassification
     {
         std::string name;
 
@@ -57,7 +57,7 @@ namespace nmbs::spif
         bool obsolete = false;
     };
 
-    struct security_policy
+    struct SecurityPolicy
     {
         std::string name;
 
@@ -65,8 +65,8 @@ namespace nmbs::spif
 
         int version;
 
-        std::vector<security_classification> security_classifications;
+        std::vector<SecurityClassification> security_classifications;
     };
 
-    const std::vector<security_policy>& get_security_policies();
+    const std::vector<SecurityPolicy>& get_security_policies();
 }
