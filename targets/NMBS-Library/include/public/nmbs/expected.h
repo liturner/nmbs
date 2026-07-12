@@ -101,6 +101,13 @@ namespace nmbs
         {
             return {ExitCode::xml_could_not_create_xpath_context, std::move(message)};
         }
+
+        static Error no_binding_support(
+            std::string message = "Requested file does not support any supported binding mechanism")
+        {
+            return {ExitCode::no_binding_support, std::move(message)};
+        }
+
     };
 
     /// @brief Convenience typedef to standardise usage of nmbs::error in all std::expected usages.

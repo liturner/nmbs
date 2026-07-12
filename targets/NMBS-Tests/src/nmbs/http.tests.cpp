@@ -83,9 +83,5 @@ TEST(HTTP, SerialiseDeserialise)
     const auto deserialised_labels = nmbs::binding::http::deserialise_labels(binding_data);
 
     ASSERT_EQ(deserialised_labels.size(), labels.size());
-    ASSERT_EQ(deserialised_labels[0].creation_date_time, labels[0].creation_date_time);
-    ASSERT_EQ(deserialised_labels[0].label_type, labels[0].label_type);
-    ASSERT_EQ(deserialised_labels[0].confidentiality_information.policy_identifier, labels[0].confidentiality_information.policy_identifier);
-    ASSERT_EQ(deserialised_labels[0].confidentiality_information.classification, labels[0].confidentiality_information.classification);
-    // TODO: Verify the Data Reference here too! All parameters. Maybe just make an equality test set?
+    ASSERT_EQ(deserialised_labels[0], labels[0]);
 }

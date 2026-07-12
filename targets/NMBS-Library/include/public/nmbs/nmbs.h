@@ -66,18 +66,9 @@ namespace nmbs
     /// Furthermore, existing data will be overridden.
     /// @param path to the image file to label.
     /// @param confidentiality_labels collection of labels to write to the file
-    /// @return The labels written to the file in XML form.
+    /// @return The labels written to the file in XML form. If the nmbs::Expected does not have a value, then there was an error.
     /// @since 1.0.0
     [[nodiscard]] Expected<std::string> write_labels(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels);
-
-    /// @brief Writes raw XML packet to the file, using the best possible binding profile.
-    /// @details Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible.
-    /// Furthermore, existing data will be overridden. No checks for valid labels are performed on the XML!
-    /// @param path to the image file to label.
-    /// @param confidentiality_labels XML to write to the file.
-    /// @return The labels written to the file in XML form.
-    /// @since 1.0.0
-    [[nodiscard]] Expected<std::string> write_labels_xml(const std::filesystem::path& path, const std::string& confidentiality_labels);
 
     /// @brief Reads the ADatP-4774 labels from the file
     /// @details and returns them in a deserialised form. The deserialization is quite tolerant, and will favour
@@ -89,12 +80,11 @@ namespace nmbs
     /// @since 1.0.0
     [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(const std::filesystem::path& path);
 
-    /// @brief Reads the ADatP-4774 labels from the file
-    /// @details Returns them in their raw XML form
+    /// @brief Reads the full ADatP-4778 binding from the file.
+    /// @details Returns the full XML packet in its raw XML form.
     /// @param path to the file
-    /// @return the raw XML of the stored labels
-    /// @see nmbs::write_labels_xml
+    /// @return the raw XML of the stored binding.
     /// @since 1.0.0
-    [[nodiscard]] Expected<std::string> read_labels_xml(const std::filesystem::path& path);
+    [[nodiscard]] Expected<std::string> read_binding_xml(const std::filesystem::path& path);
 
 }

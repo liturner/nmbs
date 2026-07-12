@@ -2,6 +2,9 @@
 <project version="4">
   <component name="CidrCTestProjectState">
     <ctestState>
+      <lineNumber testId="path:targets/NMBS-Tests/CMakeLists.txt test:NMBS-Get-XMP.CanRead" value="46" />
+      <lineNumber testId="path:targets/NMBS-Tests/CMakeLists.txt test:NMBS-Set-XMP.TryWrite" value="47" />
+      <lineNumber testId="path:targets/NMBS-Tests/CMakeLists.txt test:NMBS-Set-XMP.VerifyWrite" value="48" />
       <lineNumber testId="path:targets/NMBS-Tests/CMakeLists.txt test:TestAppSuccess" value="26" />
     </ctestState>
   </component>

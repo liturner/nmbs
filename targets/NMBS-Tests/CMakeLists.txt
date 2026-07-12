@@ -43,25 +43,51 @@ add_test(NAME Fixtures.Reset.test-has-label.jpg
         "${CMAKE_CURRENT_SOURCE_DIR}/resources/test-has-label.jpg"
         "${CMAKE_CURRENT_BINARY_DIR}/resources/test-has-label.jpg"
 )
-
-add_test(NAME NMBS-Get-XMP.CanRead COMMAND NMBS-Get-XMP resources/test-has-label.jpg)
-add_test(NAME NMBS-Set-XMP.TryWrite COMMAND NMBS-Set-XMP resources/test-has-label.jpg NATO RESTRICTED)
-add_test(NAME NMBS-Set-XMP.VerifyWrite COMMAND NMBS-Get-XMP resources/test-has-label.jpg)
-
 set_property(TEST Fixtures.Reset.test-has-label.jpg PROPERTY
         FIXTURES_SETUP TestFiles
         FIXTURES_CLEANUP TestFiles
 )
-set_property(TEST NMBS-Set-XMP.TryWrite PROPERTY DEPENDS NMBS-Get-XMP.CanRead)
-set_property(TEST NMBS-Set-XMP.VerifyWrite PROPERTY DEPENDS NMBS-Set-XMP.TryWrite)
 
-set_tests_properties(NMBS-Get-XMP.CanRead PROPERTIES
+
+# The API is intended to be very expandable. There are no positional arguments. This test
+# must fail, as it doesnt specify an "object type" to expect (e.g. file, string, pipe)
+add_test(NAME NMBS-Verify.ErrorWithoutFileFlag COMMAND NMBS-Verify resources/test-has-label.jpg)
+set_tests_properties(NMBS-Verify.ErrorWithoutFileFlag PROPERTIES
+        WILL_FAIL TRUE
+)
+
+
+add_test(NAME NMBS-Verify.CanRead COMMAND NMBS-Verify -f resources/test-has-label.jpg)
+set_tests_properties(NMBS-Verify.CanRead PROPERTIES
         FIXTURES_REQUIRED TestFiles
         PASS_REGULAR_EXPRESSION "PUBLIC UNMARKED"
         REQUIRED_FILES "resources/test-has-label.jpg"
 )
 
-set_tests_properties(NMBS-Set-XMP.VerifyWrite PROPERTIES
+
+add_test(NAME NMBS-Verify.CanReadAndOutputXml COMMAND NMBS-Verify -f resources/test-public-unmarked.jpg --raw)
+set_tests_properties(NMBS-Verify.CanReadAndOutputXml PROPERTIES
+        PASS_REGULAR_EXPRESSION ":BindingInformation.*originatorConfidentialityLabel.*PUBLIC.*UNMARKED"
+        REQUIRED_FILES "resources/test-public-unmarked.jpg"
+)
+
+
+add_test(NAME NMBS-Verify.CanReadEmpty COMMAND NMBS-Verify --file resources/test-no-xmp.jpg)
+set_tests_properties(NMBS-Verify.CanReadEmpty PROPERTIES
+        PASS_REGULAR_EXPRESSION ""
+        REQUIRED_FILES "resources/test-no-xmp.jpg"
+)
+
+
+add_test(NAME NMBS-Set.TryWrite COMMAND NMBS-Set -f resources/test-has-label.jpg -p NATO -c RESTRICTED)
+set_tests_properties(NMBS-Set.TryWrite PROPERTIES
+        DEPENDS NMBS-Verify.CanRead
+)
+
+
+add_test(NAME NMBS-Set.VerifyWrite COMMAND NMBS-Verify -f resources/test-has-label.jpg)
+set_tests_properties(NMBS-Set.VerifyWrite PROPERTIES
+        DEPENDS NMBS-Set.TryWrite
         FIXTURES_REQUIRED TestFiles
         PASS_REGULAR_EXPRESSION "NATO RESTRICTED"
         REQUIRED_FILES "resources/test-has-label.jpg"

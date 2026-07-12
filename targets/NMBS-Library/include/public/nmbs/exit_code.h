@@ -64,6 +64,10 @@ namespace nmbs
         no_label_present = 15,
 
         ///
+        /// There was no binding profile available for the selected file.
+        no_binding_support = 16,
+
+        ///
         /// An unspecified error occurred.
         unknown_error = 99
     };

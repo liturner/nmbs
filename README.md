@@ -1,31 +1,35 @@
 # TurnerTech - Normalised Metadata Binding Service (tt-nmbs)
 
-This project plans to produce a set of tools for use with NATO Confidentiality Metadata Labels. In particular the first
-step aims to provide some basic functionality specifically for XMP metadata in various image formats. The project is
-however going to be built in such a way as to allow for expansion.
+This project provides a set of tools for use with the NATO Confidentiality Metadata Labels as specified in ADatP-4774 
+and ADatP-4778.
 
-The project is aimed as a Debian Linux project only. The intention is to produce (at least at first) a set of commands
-which can be run directly on a system. This should ensure that there are no IT Security limitations (e.g. sending a TOP
-SECRET document to some web service to label it opens increases the security complexity).
-
-A Library containing the core functionality will also be produced, enabling other tools to integrate much of the core
-functionality with ease. For example, a GUI tool saving a screenshot can label the file before it even gets saved to
-disk.
+The project is aimed as a Debian Linux project only. The intention is to produce a set of commands which can be run 
+directly on a system. A Library containing the core functionality will also be produced, enabling other tools to 
+integrate much of the core functionality with ease.
 
 # Usage
 
 Install the package to your system using apt.
 
 ```shell
+# For users
 apt install nmbs
+
+# For developers
+apt install libnmbs-dev
 ```
 
-The documentation for the CLI is packaged with the tool itself. Doxygen is otherwise available for the code
+The documentation for the CLI is packaged with the tool itself. Doxygen is otherwise available for the code in the 
+libnmbs-dev package.
 
 ```shell
 # For the CLI, use the supplied man page, or the --help argument
-man nmbs-set-xmp
-nmbs-set-xmp --help
+man nmbs-get
+man nmbs-set
+man nmbs-verify
+
+# For development documentation, the doxygen can be accessed using a doc-base tool or by e.g.
+xdg-open /usr/share/doc/libnmbs-dev/html/index.html
 ```
 
 # Building
@@ -34,8 +38,7 @@ There are a few methods for building this project. The primary focus is ensuring
 stable. This is done as follows (assuming current dir is the project root).
 
 ```shell
-# Use the gpg fingerprint for the -k field. e.g.
-dpkg-buildpackage -kB6B00085FA5CADF5EA06188D11846BA6C8BEAD9A
+dpkg-buildpackage
 lintian ../tt-nmbs*.changes
 
 # To update the changelog use dch. In particular, the commands --append, --increment, --edit, --release and --newversion
@@ -52,10 +55,7 @@ dch -mi
 dh clean
 ```
 
-Alternatively, the commands in the .github folder show how the CI packages the project. Note that this is a different
-build chain (e.g. with ninja) but should still build. The debhelper chain takes precedence!
-
-Finally, this is a CLion project. The project settings include a "package" target, and just using the GUI will work for
+Finally, this is a CLion project. The project settings include a "dpkg" target, and just using the GUI will work for
 the CMake Targets.
 
 # Standards
@@ -108,7 +108,3 @@ Their original sources are as follows.
 | xmlspif.xsd                                | [xmlspif.org](http://www.xmlspif.org/schema/xmlspif.xsd)                                   | XSD for the "Security Policy Information File" format used to describe available classifications.                      |
 | 20140916_PU_PUBLIC Security Policy-v1.spif | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | This contains a list of the standard classifications used. It is not normative, but till now is the best I have found. |
 | 20210506_PU_NATO Security Policy-v88.spif  | [ADatP-4774.5 EDA V1.zip](https://nso.nato.int/nso/nsdd/main/standards/srd-details/245/EN) | This contains a list of the standard classifications used. It is not normative, but till now is the best I have found. |
-
-# Standards Conformance
-
-4778.2 Ed.A V.1 CHAPTER 7: urn:nato:stanag:4778:profile:rest:1:2, Supports. We have no server, but provide functions to support sonsuming programs.

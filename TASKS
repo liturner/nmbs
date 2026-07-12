@@ -1,10 +1,4 @@
-v1.0.0~alpha3
-TODO: Native XML files can be read for labels. Test it using the NATO SPIF
-TODO: Binding Information serialisation and deserialisation is very sloppy. We lose all data. Add full (de)serialise functions. We want a Binding Object too....
-TODO: Check code TODOs
-
-v1.0.0~alpha4
-TODO: Equality operator for all confidentiality label structs
+v1.0.1
 TODO: Refactor constants into respective namespaces
 
 Debian 14

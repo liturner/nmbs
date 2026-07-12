@@ -43,15 +43,8 @@
 
 namespace
 {
-    // TODO: Figure out how to use the constants namespace here instead of duplicating.
-    constexpr xmlChar target_local_name[] = "BindingInformation";
-    constexpr xmlChar target_namespace[] = "urn:nato:stanag:4778:bindinginformation:1:0";
+    constexpr xmlChar target_namespace_4778[] = "urn:nato:stanag:4778:bindinginformation:1:0";
     constexpr xmlChar target_namespace_4774[] = "urn:nato:stanag:4774:confidentialitymetadatalabel:1:0";
-    constexpr xmlChar metadata_binding_container[] = "MetadataBindingContainer";
-    constexpr xmlChar metadata_binding[] = "MetadataBinding";
-    constexpr xmlChar metadata[] = "Metadata";
-    constexpr xmlChar originator_confidentiality_label[] = "originatorConfidentialityLabel";
-    constexpr xmlChar data_reference[] = "DataReference";
 
     // RAII Custom Deleters
     struct XmlDocDeleter { void operator()(xmlDoc* const d) const { xmlFreeDoc(d); } };
@@ -84,7 +77,7 @@ namespace
     [[nodiscard]] bool is_a_node_named(const xmlNode* node, const xmlChar* name)
     {
         return node->type == XML_ELEMENT_NODE &&
-            xmlStrEqual(target_namespace, node->ns->href) &&
+            xmlStrEqual(target_namespace_4778, node->ns->href) &&
             xmlStrEqual(name, node->name);
     }
 
@@ -126,23 +119,23 @@ namespace
 
         nmbs::binding::BindingInformation return_binding_information;
         xmlNodePtr root = xmlDocGetRootElement(xml_doc.get());
-        if (!xmlStrEqual(target_local_name, root->name) ||
-            !xmlStrEqual(target_namespace, root->ns->href))
+        if (!xmlStrEqual(root->name, reinterpret_cast<const xmlChar*>("BindingInformation")) ||
+            !xmlStrEqual(root->ns->href, target_namespace_4778))
         {
             return std::unexpected(nmbs::Error::xml_could_not_parse("deserialise_binding_information_xml_doc passed an unknown xml element"));
         }
 
         for (xmlNodePtr binding_information_child = root->children; binding_information_child; binding_information_child = binding_information_child->next)
         {
-            if (is_a_node_named(binding_information_child, metadata_binding_container))
+            if (is_a_node_named(binding_information_child, reinterpret_cast<const xmlChar*>("MetadataBindingContainer")))
             {
                 for (xmlNodePtr binding_container = binding_information_child->children; binding_container; binding_container = binding_container->next)
                 {
-                    if (is_a_node_named(binding_container, metadata_binding))
+                    if (is_a_node_named(binding_container, reinterpret_cast<const xmlChar*>("MetadataBinding")))
                     {
                         for (xmlNodePtr metadata_binding_child = binding_container->children; metadata_binding_child; metadata_binding_child = metadata_binding_child->next)
                         {
-                            if (is_a_node_named(metadata_binding_child, metadata))
+                            if (is_a_node_named(metadata_binding_child, reinterpret_cast<const xmlChar*>("Metadata")))
                             {
                                 for (xmlNodePtr metadata_child = metadata_binding_child->children; metadata_child; metadata_child = metadata_child->next)
                                 {
@@ -219,7 +212,7 @@ namespace
                                     }
                                 }
                             }
-                            else if (is_a_node_named(metadata_binding_child, data_reference))
+                            else if (is_a_node_named(metadata_binding_child, reinterpret_cast<const xmlChar*>("DataReference")))
                             {
                                 for (xmlAttrPtr data_reference_property = metadata_binding_child->properties; data_reference_property; data_reference_property = data_reference_property->next)
                                 {
@@ -318,9 +311,9 @@ namespace nmbs::xml
             // Check only name for now. Its very unlikely to hit, so we should optimise as much as possible till
             // here
             if (xmlTextReaderNodeType(reader.get()) == XML_READER_TYPE_ELEMENT &&
-                xmlStrEqual(target_local_name, xmlTextReaderConstLocalName(reader.get()))) [[unlikely]]
+                xmlStrEqual(reinterpret_cast<const xmlChar*>("BindingInformation"), xmlTextReaderConstLocalName(reader.get()))) [[unlikely]]
             {
-                if (xmlStrEqual(target_namespace, xmlTextReaderConstNamespaceUri(reader.get()))) [[likely]]
+                if (xmlStrEqual(target_namespace_4778, xmlTextReaderConstNamespaceUri(reader.get()))) [[likely]]
                 {
                     const std::unique_ptr<xmlChar, XmlCharDeleter> outer_xml(xmlTextReaderReadOuterXml(reader.get()));
                     const std::unique_ptr<xmlDoc, XmlDocDeleter> binding_xml_doc(xmlReadMemory(

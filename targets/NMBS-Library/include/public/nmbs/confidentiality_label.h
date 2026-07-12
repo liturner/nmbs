@@ -79,9 +79,7 @@ namespace nmbs
             /// @brief <s4774::PrivacyMark>
             std::optional<std::string> privacy_mark;
 
-            ///
-            /// @brief <s4774::Category>
-            // TODO: List of other structs. category;
+            bool operator==(const ConfidentialityInformation&) const = default;
         };
 
         struct OriginatorId
@@ -98,6 +96,8 @@ namespace nmbs
             std::string id_type;
 
             std::string value;
+
+            bool operator==(const OriginatorId&) const = default;
         };
 
         /// Overloaded constructor taking the label type as a parameter.
@@ -109,6 +109,7 @@ namespace nmbs
 
         ConfidentialityLabel(const ConfidentialityLabel&) = default;
         ConfidentialityLabel& operator=(const ConfidentialityLabel& rhs) = default;
+        bool operator==(const ConfidentialityLabel&) const = default;
 
         ///
         /// @brief Field to save having to implement the type inheritance here

@@ -1,4 +1,4 @@
-/// @file nmbs-get-xmp.cpp
+/// @file nmbs-verify.cpp
 /// @brief
 ///
 /// @author Luke Ian Turner
@@ -31,11 +31,12 @@
 
 int main(const int argc, char* argv[]) {
 
-    // Argument Parsing
-    argparse::ArgumentParser program("nmbs-get-xmp", std::string(nmbs::version()));
-    program.add_description("gets the classification tag on XMP compatible file types following the NATO ADatP-4774, ADatP-4778 and ADatP-5636 standards. This is a minimal tagging tool, and is only intended to aid in simple tagging. Further refinement, such as the addition of exemptions or markings is outside the scope of this tool. The use case of this tool is rather to lower the cost of tagging uninteresting files in complex systems (e.g. this tool may be used by software to tag software icons as UNCLASSIFIED, rather than paying thousands for full tagging tools...)");
-    program.add_argument("file").help("the file to retrieve the classification labels from");
-    program.add_argument("-r", "--raw").help("print the raw XML label. This will be output as a single line and is intended to be ingested by other applications").flag();
+    // Argument Parsing. Note, there is quite a lot of functionality needed long term. Make sure the API
+    // can get complicated. Use arguments like "-f" for a file, and not positional args
+    argparse::ArgumentParser program("nmbs-verify", std::string(nmbs::version()));
+    program.add_description("Gets the classification tag on compatible file types following the NATO ADatP-4774, ADatP-4778 and ADatP-5636 standards.");
+    program.add_argument("-f", "--file").help("The file to retrieve the classification labels from").required().nargs(1);
+    program.add_argument("-r", "--raw").help("Print the raw XML binding. This will be output as a single line and is intended to be ingested by other applications").flag();
 
     try {
         program.parse_args(argc, argv);
@@ -47,7 +48,7 @@ int main(const int argc, char* argv[]) {
     }
 
     // Argument Validation
-    const std::filesystem::path file = program.get<std::string>("file");
+    const std::filesystem::path file = program.get<std::string>("-f");
     if (!(std::filesystem::exists(file) && std::filesystem::is_regular_file(file))) {
         std::cerr << "file not found" << std::endl;
         return nmbs::ExitCode::file_not_found;
@@ -57,7 +58,7 @@ int main(const int argc, char* argv[]) {
     try
     {
         if (program["--raw"] == true) {
-            if (const auto raw_xml = nmbs::read_labels_xml(file); raw_xml.has_value())
+            if (const auto raw_xml = nmbs::read_binding_xml(file); raw_xml.has_value())
             {
                 std::cout << raw_xml.value() << std::endl;
                 return nmbs::ExitCode::success;

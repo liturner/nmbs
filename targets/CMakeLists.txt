@@ -1,11 +1,9 @@
 add_subdirectory(NMBS-Library)
-add_subdirectory(NMBS-Get-XMP)
-add_subdirectory(NMBS-Set-XMP)
+add_subdirectory(NMBS-Verify)
+add_subdirectory(NMBS-Set)
 add_subdirectory(NMBS-Nautilus)
 add_subdirectory(NMBS-Tests)
 
-# Add this to force the cli executables to be available for GTest
-add_dependencies(NMBS-Tests NMBS-Set-XMP NMBS-Get-XMP)
 add_dependencies(NMBS-Library doxygen)
 
 #

@@ -1,4 +1,4 @@
-usr/bin/nmbs-get-xmp
-usr/bin/nmbs-set-xmp
+usr/bin/nmbs-verify
+usr/bin/nmbs-set
 usr/lib/*/nautilus/extensions-4/libnmbs-nautilus.so
 usr/share/man/man1/*

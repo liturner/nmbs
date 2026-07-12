@@ -30,9 +30,9 @@ ever need for libnmbs (assuming your using C++ of course...).
 ```
 
 The following is a minimal example for writing and reading the XMP metadata on an image.
-Note that the error handling for the library is using nmbs::exception, which contains
-a human-readable message, and a machine-readable code. nmbs::confidentiality_label is
-a simple struct reflecting the content of the XML specified in ADatP-4774.
+Note that the error handling for the library is using nmbs::Expected, which is simply a
+std::Expected<T, nmbs::Error> typedef. The majority of errors will be reported in this
+manner. The nmbs::Error contains a human-readable message, and a machine-readable code. 
 
 ```cpp
 std::filesystem::path file{"my-image.jpg"};
@@ -41,25 +41,29 @@ nmbs::confidentiality_label label;
 label.confidentiality_information.policy_identifier{"PUBLIC"};
 label.confidentiality_information.classification{"UNMARKED"};
 
-try
+std::vector<nmbs::ConfidentialityLabel> labels;
+labels.push_back(label);
+
+// Write labels to a file, check for errors in the return value.
+auto output = nmbs::write_labels(file,  labels);
+if (!output.has_value())
 {
-    // The returned string contains the XML which was written to the file.
-    std::vector<nmbs::confidentiality_label> labels_to_write;
-    labels_to_write.push_back(label);
-    std::string output = nmbs::write_labels(file, labels_to_write);
-    
-    // Note that single files can contain multiple labels (e.g. NATO / ACME / PUBLIC)
-    std::vector<nmbs::confidentiality_label> labels_read = nmbs::read_labels(file)
+    std::cerr << output.error().message() << std::endl;
+    return output.error().code();
 }
-catch (const nmbs::exception& e)
+
+// Read labels from a file. Check has_value() before iterating.
+if (const auto labels = nmbs::read_labels(file); labels.has_value())
 {
-    // The nmbs::exception contains an nmbs::exit_code for communicating failures via API / CLI
-    std::cerr << e.what() << std::endl;
-    return e.code();
+    for (const auto& label : labels.value())
+    {
+        std::cout << label.confidentiality_information.policy_identifier << " " << label.confidentiality_information.classification << std::endl;
+        return nmbs::ExitCode::success;
+    }
 }
 ```
 
-If you plan to use the limited C API, look into the C header:
+If you plan to use the limited C API, look into the C header.:
 
 ```cpp
 #include <nmbs/nmbs_c.h>

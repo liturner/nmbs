@@ -25,13 +25,12 @@
 
 #pragma once
 
-#include "nmbs/nmbs.h"
-#include "binding.h"
-
 #include <string>
 
+#include "nmbs/nmbs.h"
+#include "nmbs/binding.h"
 #include "nmbs/expected.h"
-#include "spif.h"
+#include "nmbs/spif.h"
 
 namespace nmbs
 {
@@ -39,11 +38,11 @@ namespace nmbs
 
     [[nodiscard]] Expected<std::string> write_sidecar(const std::filesystem::path& path, const std::vector<ConfidentialityLabel>& confidentiality_labels);
 
-    [[nodiscard]] std::vector<ConfidentialityLabel> read_xmp(const std::filesystem::path& path);
+    [[nodiscard]] Expected<binding::BindingInformation> read_xmp(const std::filesystem::path& path);
 
     [[nodiscard]] Expected<std::string> read_xmp_xml(const std::filesystem::path& path);
 
-    [[nodiscard]] std::vector<ConfidentialityLabel> read_sidecar(const std::filesystem::path& path);
+    [[nodiscard]] std::expected<binding::BindingInformation, Error> read_sidecar(const std::filesystem::path& path);
 
     [[nodiscard]] Expected<std::string> read_sidecar_xml(const std::filesystem::path& path);
 

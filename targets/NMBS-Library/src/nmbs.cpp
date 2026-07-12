@@ -194,8 +194,7 @@ namespace nmbs
         const binding::Flags binding_support = binding::support(path);
         if (!binding::supports_labels(binding_support))
         {
-            // TODO: Throw here with valid exit code
-            return std::unexpected(Error::unexpected());
+            return std::unexpected(Error::no_binding_support());
         }
 
         if (binding::supports_xmp(binding_support))
@@ -207,14 +206,7 @@ namespace nmbs
         {
             return write_sidecar(path, confidentiality_labels);
         }
-
-        // TODO: Throw no supported label type
         return std::unexpected(Error::unexpected());
-    }
-
-    Expected<std::string> write_labels_xml(const std::filesystem::path& path, const std::string& confidentiality_labels)
-    {
-        return "";
     }
 
     [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(const std::filesystem::path& path)
@@ -237,29 +229,32 @@ namespace nmbs
 
         if (binding::has_xmp(binding_support.value()))
         {
-            const auto labels = read_xmp(path);
-            return_labels.insert(return_labels.end(), labels.begin(), labels.end());
+            if (const auto binding = read_xmp(path); binding.has_value())
+            {
+                return_labels.insert(return_labels.end(), binding->labels.begin(), binding->labels.end());
+            }
         }
 
         if (binding::has_sidecar(binding_support.value()))
         {
-            const auto labels = read_sidecar(path);
-            return_labels.insert(return_labels.end(), labels.begin(), labels.end());
+            if (const auto binding = read_sidecar(path); binding.has_value())
+            {
+                return_labels.insert(return_labels.end(), binding->labels.begin(), binding->labels.end());
+            }
         }
 
         if (binding::has_xml(binding_support.value()))
         {
-            const auto binding_information = xml::deserialise_binding_information_from_file(path);
-            if (binding_information.has_value() && binding_information.value().has_value())
+            if (const auto binding = xml::deserialise_binding_information_from_file(path); binding.has_value() && binding.value().has_value())
             {
-                return_labels.insert(return_labels.end(), binding_information.value().value().labels.begin(), binding_information.value().value().labels.end());
+                return_labels.insert(return_labels.end(), binding.value().value().labels.begin(), binding.value().value().labels.end());
             }
         }
 
         return return_labels;
     }
 
-    [[nodiscard]] Expected<std::string> read_labels_xml(const std::filesystem::path& path)
+    [[nodiscard]] Expected<std::string> read_binding_xml(const std::filesystem::path& path)
     {
         const binding::Flags binding_support = binding::support(path);
         if (!binding::supports_labels(binding_support))
@@ -354,7 +349,7 @@ namespace nmbs
                 return std::unexpected(Error::xmp_not_found());
             }
 
-            // Here we have XMP, but no label. Its valid to return nullopt
+            // Here we have XMP, but no label. It's valid to return nullopt
             const Exiv2::XmpKey slab_key{std::string(constants::s4778_xmp_prefix), std::string(constants::s4778_key)};
             const auto xmp_iter = xmp_data.findKey(slab_key);
             if (xmp_iter == xmp_data.end())
@@ -362,28 +357,20 @@ namespace nmbs
                 return std::unexpected(Error::xmp_key_not_found());
             }
 
-            // TODO: Improve here. Probably validate that its sane XML or at least not empty?
             const auto xmp_value = xmp_iter->getValue();
             return xmp_value->toString();
-
         }
         catch (const Exiv2::Error& e) {
             return std::unexpected(Error::unexpected("Exiv2::Error: " + std::string(e.what())));
         }
     }
 
-    // TODO: Just return the full binding info here.
-    std::vector<ConfidentialityLabel> read_xmp(const std::filesystem::path& path)
+    Expected<binding::BindingInformation> read_xmp(const std::filesystem::path& path)
     {
-
-        if (const auto binding = read_xmp_xml(path).and_then(xml::deserialise_binding_information); binding.has_value())
-        {
-            return binding->labels;
-        }
-        return {};
+        return read_xmp_xml(path).and_then(xml::deserialise_binding_information);
     }
 
-    [[nodiscard]] Expected<std::string> read_sidecar_xml(const std::filesystem::path& path)
+    Expected<std::string> read_sidecar_xml(const std::filesystem::path& path)
     {
         try
         {
@@ -408,19 +395,14 @@ namespace nmbs
         }
     }
 
-    // TODO: Just return the full binding info here.
-    [[nodiscard]] std::vector<ConfidentialityLabel> read_sidecar(const std::filesystem::path& path)
+    Expected<binding::BindingInformation> read_sidecar(const std::filesystem::path& path)
     {
-        if (const auto binding = read_sidecar_xml(path).and_then(xml::deserialise_binding_information); binding.has_value())
-        {
-            return binding->labels;
-        }
-        return {};
+        return read_sidecar_xml(path).and_then(xml::deserialise_binding_information);
     }
 
     namespace binding
     {
-        [[nodiscard]] Flags support(const std::filesystem::path& path)
+        Flags support(const std::filesystem::path& path)
         {
             // Keep early out logic in mind. This function must be as fast as possible, and IO can
             // be a problem!
@@ -514,7 +496,7 @@ namespace nmbs
 
         namespace http
         {
-            [[nodiscard]] std::string serialise_labels(const std::vector<ConfidentialityLabel>& confidentiality_labels)
+            std::string serialise_labels(const std::vector<ConfidentialityLabel>& confidentiality_labels)
             {
                 BindingInformation bdo;
                 bdo.labels = confidentiality_labels;
@@ -525,7 +507,7 @@ namespace nmbs
                     base64_xml);
             }
 
-            [[nodiscard]] std::vector<ConfidentialityLabel> deserialise_labels(std::string_view binding_data)
+            std::vector<ConfidentialityLabel> deserialise_labels(std::string_view binding_data)
             {
                 std::vector<ConfidentialityLabel> labels;
                 if (binding_data.empty())

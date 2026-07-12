@@ -1,10 +1,11 @@
-tt-nmbs (1.0.0~alpha4) UNRELEASED; urgency=medium
+tt-nmbs (1.0.0~beta4) trixie; urgency=medium
 
+  * Add support for reading labels from XML files
   * Refactor C++ API to use std::expected instead of exceptions
   * Update to C++23
   * Refactor C API
 
- -- Luke Ian Turner <turnertech@outlook.de>  Wed, 01 Jul 2026 21:21:41 +0200
+ -- Luke Ian Turner <turnertech@outlook.de>  Sun, 12 Jul 2026 15:24:14 +0200
 
 tt-nmbs (1.0.0~alpha3) trixie; urgency=medium
 

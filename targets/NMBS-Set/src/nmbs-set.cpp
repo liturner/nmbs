@@ -1,4 +1,4 @@
-/// @file nmbs-set-xmp.cpp
+/// @file nmbs-set.cpp
 /// @brief Basic example of using the libnmbs API
 ///
 /// @author Luke Ian Turner
@@ -31,12 +31,12 @@
 int main(const int argc, char* argv[]) {
 
     // Argument Parsing
-    argparse::ArgumentParser program("nmbs-xmp", std::string(nmbs::version()));
-    program.add_description("sets the classification tag on XMP compatible file types following the NATO ADatP-4774, ADatP-4778 and ADatP-5636 standards. This is a minimal tagging tool, and is only intended to aid in simple tagging. Further refinement, such as the addition of exemptions or markings is outside the scope of this tool. The use case of this tool is rather to lower the cost of tagging uninteresting files in complex systems (e.g. this tool may be used by software to tag software icons as UNCLASSIFIED, rather than paying thousands for full tagging tools...)");
-    program.add_argument("file").help("the file to apply the classification label to");
-    program.add_argument("policy").help("the policy identifier (e.g. NATO, ITAR)");
-    program.add_argument("classification").help(R"(the policy classification (e.g. UNCLASSIFIED, RESTRICTED, CONFIDENTIAL, SECRET, "TOP SECRET" (not the need for parenthesis with spaces!))");
-    program.add_argument("-v", "--verbose").help("print the label written to the file on stdout").flag();
+    argparse::ArgumentParser program("nmbs-set", std::string(nmbs::version()));
+    program.add_description("Sets the classification tag on compatible file types following the NATO ADatP-4774, ADatP-4778 and ADatP-5636 standards.");
+    program.add_argument("-f", "--file").help("The file to apply the classification label to").required().nargs(1);
+    program.add_argument("-v", "--verbose").help("Print the label written to the file on stdout").flag();
+    program.add_argument("-p", "--policy").help("The policy identifier (e.g. NATO, ITAR)").required().nargs(1);
+    program.add_argument("-c", "--classification").help(R"(The policy classification (e.g. UNCLASSIFIED, RESTRICTED, CONFIDENTIAL, SECRET, "TOP SECRET" (not the need for parenthesis with spaces!))").required().nargs(1);
 
     try {
         program.parse_args(argc, argv);
@@ -49,9 +49,9 @@ int main(const int argc, char* argv[]) {
 
     // Argument Validation
     nmbs::ConfidentialityLabel label;
-    const std::filesystem::path file = program.get<std::string>("file");
-    label.confidentiality_information.policy_identifier = program.get<std::string>("policy");
-    label.confidentiality_information.classification = program.get<std::string>("classification");
+    const std::filesystem::path file = program.get<std::string>("--file");
+    label.confidentiality_information.policy_identifier = program.get<std::string>("--policy");
+    label.confidentiality_information.classification = program.get<std::string>("--classification");
 
     if (!(std::filesystem::exists(file) && std::filesystem::is_regular_file(file))) {
         std::cerr << "file not found" << std::endl;
