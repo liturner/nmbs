@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['security_20policies_0',['Security Policies',['../group__c__spif.html',1,'']]]
+  ['policies_0',['Security Policies',['../group__c__spif.html',1,'']]]
 ];

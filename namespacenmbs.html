@@ -70,122 +70,188 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#namespaces">Namespaces</a> &#124;
 <a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">nmbs Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Lightweight helpers for generating NATO confidentiality metadata.  
+<a href="namespacenmbs.html#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="namespaces" name="namespaces"></a>
-Namespaces</h2></td></tr>
-<tr class="memitem:namespacenmbs_1_1binding" id="r_namespacenmbs_1_1binding"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1binding.html">binding</a></td></tr>
-<tr class="memdesc:namespacenmbs_1_1binding"><td class="mdescLeft">&#160;</td><td class="mdescRight">ADatP-4778 oriented namespace, focusing on binding the ADatP-4774 labels to files. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacenmbs_1_1constants" id="r_namespacenmbs_1_1constants"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1constants.html">constants</a></td></tr>
-<tr class="memdesc:namespacenmbs_1_1constants"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constant values relevant to the ADatP standards. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacenmbs_1_1exceptions" id="r_namespacenmbs_1_1exceptions"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1exceptions.html">exceptions</a></td></tr>
-<tr class="memdesc:namespacenmbs_1_1exceptions"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classnmbs_1_1exception.html" title="generic base exception for the nmbs namespace">nmbs::exception</a> specialisations. <br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:namespacenmbs_1_1spif" id="r_namespacenmbs_1_1spif"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1spif.html">spif</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct representation of the "Confidentiality Label".  <a href="structnmbs_1_1confidentiality__label.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1ConfidentialityLabel.html">ConfidentialityLabel</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct representation of the ADatP-4774 "Confidentiality Label".  <a href="structnmbs_1_1ConfidentialityLabel.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnmbs_1_1exception.html">exception</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">generic base exception for the nmbs namespace  <a href="classnmbs_1_1exception.html#details">More...</a><br /></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classnmbs_1_1Error.html">Error</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A simple error container to use with nmbs::expected for communicating domain issues to function callers.  <a href="classnmbs_1_1Error.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:a0a6a8884b975a878e6fe393f7fedf5a4" id="r_a0a6a8884b975a878e6fe393f7fedf5a4"><td class="memTemplParams" colspan="2">template&lt;typename T &gt; </td></tr>
+<tr class="memitem:a0a6a8884b975a878e6fe393f7fedf5a4"><td class="memTemplItemLeft" align="right" valign="top">using&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">Expected</a> = std::expected&lt; T, <a class="el" href="classnmbs_1_1Error.html">Error</a> &gt;</td></tr>
+<tr class="memdesc:a0a6a8884b975a878e6fe393f7fedf5a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Convenience typedef to standardise usage of nmbs::error in all std::expected usages.  <br /></td></tr>
+<tr class="separator:a0a6a8884b975a878e6fe393f7fedf5a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:a76e562f4714615733d201a180c14b03c" id="r_a76e562f4714615733d201a180c14b03c"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03c">exit_code</a> { <br />
-&#160;&#160;<a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca8705e8f9efcd319de1a4ab0cc991e07e">success</a> = 0
-, <a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca26ea39710de3c040dcb9c25827ccbf95">invalid_arguments</a> = 1
-, <a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca490cfde16569fdd8a00baf79666248b6">file_not_found</a> = 10
-, <a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca9c89016bbd8ff33462bba510b99853af">xmp_not_found</a> = 11
+<tr class="memitem:aa2c1b0b4712e286d44c55da3d7e2b36a" id="r_aa2c1b0b4712e286d44c55da3d7e2b36a"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36a">ExitCode</a> { <br />
+&#160;&#160;<a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e">success</a> = 0
+, <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa26ea39710de3c040dcb9c25827ccbf95">invalid_arguments</a> = 1
+, <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa490cfde16569fdd8a00baf79666248b6">file_not_found</a> = 10
+, <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa9c89016bbd8ff33462bba510b99853af">xmp_not_found</a> = 11
 , <br />
-&#160;&#160;<a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03caf32022ff110ee14ee21a6e74afd940dd">xmp_key_not_found</a> = 12
-, <a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca1f2ee1c2fc50ed4a5d9f81392d45f589">xml_could_not_parse</a> = 13
-, <a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca7055e9f500109018478308f020546180">xml_could_not_create_xpath_context</a> = 14
-, <a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca330361a8781281964074838818889c01">no_label_present</a> = 15
+&#160;&#160;<a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aaf32022ff110ee14ee21a6e74afd940dd">xmp_key_not_found</a> = 12
+, <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa1f2ee1c2fc50ed4a5d9f81392d45f589">xml_could_not_parse</a> = 13
+, <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa7055e9f500109018478308f020546180">xml_could_not_create_xpath_context</a> = 14
+, <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01">no_label_present</a> = 15
 , <br />
-&#160;&#160;<a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03ca60c99433be2ec360e16d54c9b7bd73cb">unknown_error</a> = 99
+&#160;&#160;<a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aaedd6bbfd675fa12eac5e3b855f02d47b">no_binding_support</a> = 16
+, <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa60c99433be2ec360e16d54c9b7bd73cb">unknown_error</a> = 99
 <br />
  }</td></tr>
-<tr class="separator:a76e562f4714615733d201a180c14b03c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:aa2c1b0b4712e286d44c55da3d7e2b36a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ae2dc3062a8b4f7fe4e3500bd08f675c3" id="r_ae2dc3062a8b4f7fe4e3500bd08f675c3"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#ae2dc3062a8b4f7fe4e3500bd08f675c3">version</a> ()</td></tr>
-<tr class="memdesc:ae2dc3062a8b4f7fe4e3500bd08f675c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the semantic version of the library.  <br /></td></tr>
-<tr class="separator:ae2dc3062a8b4f7fe4e3500bd08f675c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d60d5a99dd17fe76892c12757119650" id="r_a4d60d5a99dd17fe76892c12757119650"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a4d60d5a99dd17fe76892c12757119650">write_labels</a> (const std::filesystem::path &amp;path, const std::vector&lt; <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &gt; &amp;confidentiality_labels)</td></tr>
-<tr class="memdesc:a4d60d5a99dd17fe76892c12757119650"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes ADatP‑4778 binding information using the best possible binding profile. Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible. Furthermore, existing data will be overridden.  <br /></td></tr>
-<tr class="separator:a4d60d5a99dd17fe76892c12757119650"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a9a8bf6127e72a1c98a04f03e096af" id="r_a90a9a8bf6127e72a1c98a04f03e096af"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a90a9a8bf6127e72a1c98a04f03e096af">write_labels_xml</a> (const std::filesystem::path &amp;path, const std::string &amp;confidentiality_labels)</td></tr>
-<tr class="memdesc:a90a9a8bf6127e72a1c98a04f03e096af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes raw XML packet to the file, using the best possible binding profile. Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible. Furthermore, existing data will be overridden. No checks for valid labels are performed.  <br /></td></tr>
-<tr class="separator:a90a9a8bf6127e72a1c98a04f03e096af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3ed7ef415572610a1ba9d97df8b68bf1" id="r_a3ed7ef415572610a1ba9d97df8b68bf1"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a3ed7ef415572610a1ba9d97df8b68bf1">read_labels</a> (const std::filesystem::path &amp;path)</td></tr>
-<tr class="memdesc:a3ed7ef415572610a1ba9d97df8b68bf1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the ADatP-4774 labels from the file.  <br /></td></tr>
-<tr class="separator:a3ed7ef415572610a1ba9d97df8b68bf1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7c2acae7381d29718e83a33e340b66b" id="r_ab7c2acae7381d29718e83a33e340b66b"><td class="memItemLeft" align="right" valign="top">std::optional&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#ab7c2acae7381d29718e83a33e340b66b">read_labels_xml</a> (const std::filesystem::path &amp;path)</td></tr>
-<tr class="memdesc:ab7c2acae7381d29718e83a33e340b66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the ADatP-4774 labels from the file.  <br /></td></tr>
-<tr class="separator:ab7c2acae7381d29718e83a33e340b66b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3dc9a31562bcc51bb4202b45747804b" id="r_ad3dc9a31562bcc51bb4202b45747804b"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#ad3dc9a31562bcc51bb4202b45747804b">version</a> () noexcept</td></tr>
+<tr class="memdesc:ad3dc9a31562bcc51bb4202b45747804b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the semantic version of the library.  <br /></td></tr>
+<tr class="separator:ad3dc9a31562bcc51bb4202b45747804b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8e48307b2c63da07b22472bdbedddd3a" id="r_a8e48307b2c63da07b22472bdbedddd3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a8e48307b2c63da07b22472bdbedddd3a">cleanup</a> ()</td></tr>
+<tr class="memdesc:a8e48307b2c63da07b22472bdbedddd3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free up any allocated memory and state to keep tools like Valgrind clean.  <br /></td></tr>
+<tr class="separator:a8e48307b2c63da07b22472bdbedddd3a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a87e76758750af59bfdc7fae8afca6aa7" id="r_a87e76758750af59bfdc7fae8afca6aa7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">Expected</a>&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a87e76758750af59bfdc7fae8afca6aa7">write_labels</a> (const std::filesystem::path &amp;path, const std::vector&lt; <a class="el" href="structnmbs_1_1ConfidentialityLabel.html">ConfidentialityLabel</a> &gt; &amp;confidentiality_labels)</td></tr>
+<tr class="memdesc:a87e76758750af59bfdc7fae8afca6aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes ADatP‑4778 binding information using the best possible binding profile.  <br /></td></tr>
+<tr class="separator:a87e76758750af59bfdc7fae8afca6aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb8c750789af18f5e478d6ee98e6bebd" id="r_afb8c750789af18f5e478d6ee98e6bebd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">Expected</a>&lt; std::vector&lt; <a class="el" href="structnmbs_1_1ConfidentialityLabel.html">ConfidentialityLabel</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#afb8c750789af18f5e478d6ee98e6bebd">read_labels</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="memdesc:afb8c750789af18f5e478d6ee98e6bebd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the ADatP-4774 labels from the file.  <br /></td></tr>
+<tr class="separator:afb8c750789af18f5e478d6ee98e6bebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab909dbf0f74f96172eb97718cf2b2d87" id="r_ab909dbf0f74f96172eb97718cf2b2d87"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">Expected</a>&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#ab909dbf0f74f96172eb97718cf2b2d87">read_binding_xml</a> (const std::filesystem::path &amp;path)</td></tr>
+<tr class="memdesc:ab909dbf0f74f96172eb97718cf2b2d87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the full ADatP-4778 binding from the file.  <br /></td></tr>
+<tr class="separator:ab909dbf0f74f96172eb97718cf2b2d87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Lightweight helpers for generating NATO confidentiality metadata.</p>
+<div class="textblock"><p>Lightweight helpers for generating NATO confidentiality metadata. </p>
 <p>This namespace contains a compact set of utilities implementing the essential parts of the ADatP‑4774, ADatP‑4778, and STANAG 5636 specifications. The functions focus on producing valid confidentiality labels and binding information for files that are known to be <em>not</em> highly sensitive, enabling consistent tagging without the overhead of a full‑scale DLP or metadata processing framework.</p>
 <p>The goal of this library is to provide a minimal, dependency‑free toolkit that makes it easy to attach correct, standards‑compliant metadata to low‑sensitivity artifacts—an important step in reducing the scope of data requiring strict handling in cybersecurity workflows. </p>
-</div><h2 class="groupheader">Enumeration Type Documentation</h2>
-<a id="a76e562f4714615733d201a180c14b03c" name="a76e562f4714615733d201a180c14b03c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a76e562f4714615733d201a180c14b03c">&#9670;&#160;</a></span>exit_code</h2>
+</div><h2 class="groupheader">Typedef Documentation</h2>
+<a id="a0a6a8884b975a878e6fe393f7fedf5a4" name="a0a6a8884b975a878e6fe393f7fedf5a4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0a6a8884b975a878e6fe393f7fedf5a4">&#9670;&#160;</a></span>Expected</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">using <a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">nmbs::Expected</a> = typedef std::expected&lt;T, <a class="el" href="classnmbs_1_1Error.html">Error</a>&gt;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Convenience typedef to standardise usage of nmbs::error in all std::expected usages. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a id="aa2c1b0b4712e286d44c55da3d7e2b36a" name="aa2c1b0b4712e286d44c55da3d7e2b36a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa2c1b0b4712e286d44c55da3d7e2b36a">&#9670;&#160;</a></span>ExitCode</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">enum <a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03c">nmbs::exit_code</a></td>
+          <td class="memname">enum <a class="el" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36a">nmbs::ExitCode</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 <p>The possible exit codes which any of the nmbs tools may produce. These may be used in library functions, and as return values for executables. </p>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca8705e8f9efcd319de1a4ab0cc991e07e" name="a76e562f4714615733d201a180c14b03ca8705e8f9efcd319de1a4ab0cc991e07e"></a>success&#160;</td><td class="fielddoc"><p>No errors occurred. The operation completed successfully. </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e" name="aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e"></a>success&#160;</td><td class="fielddoc"><p>No errors occurred. The operation completed successfully. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca26ea39710de3c040dcb9c25827ccbf95" name="a76e562f4714615733d201a180c14b03ca26ea39710de3c040dcb9c25827ccbf95"></a>invalid_arguments&#160;</td><td class="fielddoc"><p>One or more of the mandatory or provided arguments was invalid. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa26ea39710de3c040dcb9c25827ccbf95" name="aa2c1b0b4712e286d44c55da3d7e2b36aa26ea39710de3c040dcb9c25827ccbf95"></a>invalid_arguments&#160;</td><td class="fielddoc"><p>One or more of the mandatory or provided arguments was invalid. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca490cfde16569fdd8a00baf79666248b6" name="a76e562f4714615733d201a180c14b03ca490cfde16569fdd8a00baf79666248b6"></a>file_not_found&#160;</td><td class="fielddoc"><p>The specified file could not be found. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa490cfde16569fdd8a00baf79666248b6" name="aa2c1b0b4712e286d44c55da3d7e2b36aa490cfde16569fdd8a00baf79666248b6"></a>file_not_found&#160;</td><td class="fielddoc"><p>The specified file could not be found. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca9c89016bbd8ff33462bba510b99853af" name="a76e562f4714615733d201a180c14b03ca9c89016bbd8ff33462bba510b99853af"></a>xmp_not_found&#160;</td><td class="fielddoc"><p>There was no XMP packet attached to a file. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa9c89016bbd8ff33462bba510b99853af" name="aa2c1b0b4712e286d44c55da3d7e2b36aa9c89016bbd8ff33462bba510b99853af"></a>xmp_not_found&#160;</td><td class="fielddoc"><p>There was no XMP packet attached to a file. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03caf32022ff110ee14ee21a6e74afd940dd" name="a76e562f4714615733d201a180c14b03caf32022ff110ee14ee21a6e74afd940dd"></a>xmp_key_not_found&#160;</td><td class="fielddoc"><p>Although the file contained XMP, the desired key was not found. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aaf32022ff110ee14ee21a6e74afd940dd" name="aa2c1b0b4712e286d44c55da3d7e2b36aaf32022ff110ee14ee21a6e74afd940dd"></a>xmp_key_not_found&#160;</td><td class="fielddoc"><p>Although the file contained XMP, the desired key was not found. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca1f2ee1c2fc50ed4a5d9f81392d45f589" name="a76e562f4714615733d201a180c14b03ca1f2ee1c2fc50ed4a5d9f81392d45f589"></a>xml_could_not_parse&#160;</td><td class="fielddoc"><p>The XML parser was unable to read the provided XML. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa1f2ee1c2fc50ed4a5d9f81392d45f589" name="aa2c1b0b4712e286d44c55da3d7e2b36aa1f2ee1c2fc50ed4a5d9f81392d45f589"></a>xml_could_not_parse&#160;</td><td class="fielddoc"><p>The XML parser was unable to read the provided XML. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca7055e9f500109018478308f020546180" name="a76e562f4714615733d201a180c14b03ca7055e9f500109018478308f020546180"></a>xml_could_not_create_xpath_context&#160;</td><td class="fielddoc"><p>The XML parser was unable to read create an XPath context. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa7055e9f500109018478308f020546180" name="aa2c1b0b4712e286d44c55da3d7e2b36aa7055e9f500109018478308f020546180"></a>xml_could_not_create_xpath_context&#160;</td><td class="fielddoc"><p>The XML parser was unable to read create an XPath context. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca330361a8781281964074838818889c01" name="a76e562f4714615733d201a180c14b03ca330361a8781281964074838818889c01"></a>no_label_present&#160;</td><td class="fielddoc"><p>There was no label attached to the file. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01" name="aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01"></a>no_label_present&#160;</td><td class="fielddoc"><p>There was no label attached to the file. </p>
 </td></tr>
-<tr><td class="fieldname"><a id="a76e562f4714615733d201a180c14b03ca60c99433be2ec360e16d54c9b7bd73cb" name="a76e562f4714615733d201a180c14b03ca60c99433be2ec360e16d54c9b7bd73cb"></a>unknown_error&#160;</td><td class="fielddoc"><p>An unspecified error occurred. </p>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aaedd6bbfd675fa12eac5e3b855f02d47b" name="aa2c1b0b4712e286d44c55da3d7e2b36aaedd6bbfd675fa12eac5e3b855f02d47b"></a>no_binding_support&#160;</td><td class="fielddoc"><p>There was no binding profile available for the selected file. </p>
+</td></tr>
+<tr><td class="fieldname"><a id="aa2c1b0b4712e286d44c55da3d7e2b36aa60c99433be2ec360e16d54c9b7bd73cb" name="aa2c1b0b4712e286d44c55da3d7e2b36aa60c99433be2ec360e16d54c9b7bd73cb"></a>unknown_error&#160;</td><td class="fielddoc"><p>An unspecified error occurred. </p>
 </td></tr>
 </table>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a3ed7ef415572610a1ba9d97df8b68bf1" name="a3ed7ef415572610a1ba9d97df8b68bf1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3ed7ef415572610a1ba9d97df8b68bf1">&#9670;&#160;</a></span>read_labels()</h2>
+<a id="a8e48307b2c63da07b22472bdbedddd3a" name="a8e48307b2c63da07b22472bdbedddd3a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e48307b2c63da07b22472bdbedddd3a">&#9670;&#160;</a></span>cleanup()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt; <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &gt; nmbs::read_labels </td>
+          <td class="memname">void nmbs::cleanup </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Free up any allocated memory and state to keep tools like Valgrind clean. </p>
+<p>This should be safe to call in the middle of an application, it will just delete caches and unregister namespaces etc. This may lead to increased function times in subsequent calls. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+
+</div>
+</div>
+<a id="ab909dbf0f74f96172eb97718cf2b2d87" name="ab909dbf0f74f96172eb97718cf2b2d87"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab909dbf0f74f96172eb97718cf2b2d87">&#9670;&#160;</a></span>read_binding_xml()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">Expected</a>&lt; std::string &gt; nmbs::read_binding_xml </td>
+          <td>(</td>
+          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
+          <td class="paramname"><em>path</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads the full ADatP-4778 binding from the file. </p>
+<p>Returns the full XML packet in its raw XML form. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">path</td><td>to the file </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>the raw XML of the stored binding. </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+
+</div>
+</div>
+<a id="afb8c750789af18f5e478d6ee98e6bebd" name="afb8c750789af18f5e478d6ee98e6bebd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb8c750789af18f5e478d6ee98e6bebd">&#9670;&#160;</a></span>read_labels()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">Expected</a>&lt; std::vector&lt; <a class="el" href="structnmbs_1_1ConfidentialityLabel.html">ConfidentialityLabel</a> &gt; &gt; nmbs::read_labels </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
           <td class="paramname"><em>path</em></td><td>)</td>
@@ -202,81 +268,48 @@ Functions</h2></td></tr>
   </dd>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>a collection of all labels applied to the file </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classnmbs_1_1exceptions_1_1file__not__found__exception.html" title="&quot;File not found&quot; exception including sensible defaults for the message.">nmbs::exceptions::file_not_found_exception</a></td><td>failed to locate the provided path </td></tr>
-    <tr><td class="paramname"><a class="el" href="classnmbs_1_1exception.html" title="generic base exception for the nmbs namespace">nmbs::exception</a></td><td>for all unexpected errors </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespacenmbs.html#a4d60d5a99dd17fe76892c12757119650" title="Writes ADatP‑4778 binding information using the best possible binding profile. Embedded is preferred ...">nmbs::write_labels</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespacenmbs.html#a87e76758750af59bfdc7fae8afca6aa7" title="Writes ADatP‑4778 binding information using the best possible binding profile.">nmbs::write_labels</a> </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
-<a id="ab7c2acae7381d29718e83a33e340b66b" name="ab7c2acae7381d29718e83a33e340b66b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab7c2acae7381d29718e83a33e340b66b">&#9670;&#160;</a></span>read_labels_xml()</h2>
+<a id="ad3dc9a31562bcc51bb4202b45747804b" name="ad3dc9a31562bcc51bb4202b45747804b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad3dc9a31562bcc51bb4202b45747804b">&#9670;&#160;</a></span>version()</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::optional&lt; std::string &gt; nmbs::read_labels_xml </td>
-          <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Reads the ADatP-4774 labels from the file. </p>
-<p>and returns them in their raw XML form </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>to the file </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>the raw XML of the stored labels </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname"><a class="el" href="classnmbs_1_1exceptions_1_1file__not__found__exception.html" title="&quot;File not found&quot; exception including sensible defaults for the message.">nmbs::exceptions::file_not_found_exception</a></td><td>failed to locate the provided path </td></tr>
-    <tr><td class="paramname"><a class="el" href="classnmbs_1_1exception.html" title="generic base exception for the nmbs namespace">nmbs::exception</a></td><td>for all unexpected errors </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespacenmbs.html#a90a9a8bf6127e72a1c98a04f03e096af" title="Writes raw XML packet to the file, using the best possible binding profile. Embedded is preferred ove...">nmbs::write_labels_xml</a> </dd></dl>
-
-</div>
-</div>
-<a id="ae2dc3062a8b4f7fe4e3500bd08f675c3" name="ae2dc3062a8b4f7fe4e3500bd08f675c3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2dc3062a8b4f7fe4e3500bd08f675c3">&#9670;&#160;</a></span>version()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string nmbs::version </td>
+          <td class="memname">std::string_view nmbs::version </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
 
 <p>Returns the semantic version of the library. </p>
-<p>Provides the version identifier for this binary build using standard semantic‑versioning format (<code>MAJOR.MINOR.PATCH</code>), for example <code>1.0.0</code>.</p>
-<dl class="section return"><dt>Returns</dt><dd>The semantic version string for the current build. </dd></dl>
+<p>Using standard semantic‑versioning format (<code>MAJOR.MINOR.PATCH</code>), for example <code>1.0.0</code>. This value is embedded during the build, and will match the CMake version of the source code. This function will return a complete version, and never any suffix like "~beta". This is important to consider if you are working with beta and pre-release builds, as during beta phases any new API changes will be unstable and may change without the version changing. </p><dl class="section return"><dt>Returns</dt><dd>The semantic version string for the current build. </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
-<a id="a4d60d5a99dd17fe76892c12757119650" name="a4d60d5a99dd17fe76892c12757119650"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4d60d5a99dd17fe76892c12757119650">&#9670;&#160;</a></span>write_labels()</h2>
+<a id="a87e76758750af59bfdc7fae8afca6aa7" name="a87e76758750af59bfdc7fae8afca6aa7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87e76758750af59bfdc7fae8afca6aa7">&#9670;&#160;</a></span>write_labels()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string nmbs::write_labels </td>
+          <td class="memname"><a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4">Expected</a>&lt; std::string &gt; nmbs::write_labels </td>
           <td>(</td>
           <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
           <td class="paramname"><em>path</em>, </td>
@@ -284,7 +317,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const std::vector&lt; <a class="el" href="structnmbs_1_1confidentiality__label.html">confidentiality_label</a> &gt; &amp;&#160;</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="structnmbs_1_1ConfidentialityLabel.html">ConfidentialityLabel</a> &gt; &amp;&#160;</td>
           <td class="paramname"><em>confidentiality_labels</em>&#160;</td>
         </tr>
         <tr>
@@ -295,65 +328,16 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Writes ADatP‑4778 binding information using the best possible binding profile. Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible. Furthermore, existing data will be overridden. </p>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Writes ADatP‑4778 binding information using the best possible binding profile. </p>
+<p>Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible. Furthermore, existing data will be overridden. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">path</td><td>to the image file to label. </td></tr>
     <tr><td class="paramname">confidentiality_labels</td><td>collection of labels to write to the file </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>The labels written to the file in XML form. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">nmbs::file_not_found_exception</td><td>failed to locate the provided path </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<a id="a90a9a8bf6127e72a1c98a04f03e096af" name="a90a9a8bf6127e72a1c98a04f03e096af"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a90a9a8bf6127e72a1c98a04f03e096af">&#9670;&#160;</a></span>write_labels_xml()</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string nmbs::write_labels_xml </td>
-          <td>(</td>
-          <td class="paramtype">const std::filesystem::path &amp;&#160;</td>
-          <td class="paramname"><em>path</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::string &amp;&#160;</td>
-          <td class="paramname"><em>confidentiality_labels</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-<p>Writes raw XML packet to the file, using the best possible binding profile. Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible. Furthermore, existing data will be overridden. No checks for valid labels are performed. </p>
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td>to the image file to label. </td></tr>
-    <tr><td class="paramname">confidentiality_labels</td><td>XML to write to the file </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>The labels written to the file in XML form. </dd></dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">nmbs::file_not_found_exception</td><td>failed to locate the provided path </td></tr>
-  </table>
-  </dd>
-</dl>
+<dl class="section return"><dt>Returns</dt><dd>The labels written to the file in XML form. If the <a class="el" href="namespacenmbs.html#a0a6a8884b975a878e6fe393f7fedf5a4" title="Convenience typedef to standardise usage of nmbs::error in all std::expected usages.">nmbs::Expected</a> does not have a value, then there was an error. </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>

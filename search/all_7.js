@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['has_5fsidecar_0',['has_sidecar',['../namespacenmbs_1_1binding.html#a17d0dc7f2d63b7960888d7104212c15e',1,'nmbs::binding::has_sidecar(const flags flags) noexcept'],['../namespacenmbs_1_1binding.html#ac9ceb587f944be8fa5c0a22ebbae7bd2a293e6a52e2b3ffa95feb334842cfc77d',1,'nmbs::binding::has_sidecar']]],
-  ['has_5fxmp_1',['has_xmp',['../namespacenmbs_1_1binding.html#ad41f06da3d913791f7ca64bba99415c4',1,'nmbs::binding::has_xmp(const flags flags) noexcept'],['../namespacenmbs_1_1binding.html#ac9ceb587f944be8fa5c0a22ebbae7bd2a33adb1dacdc5a5f343f34da9a3213997',1,'nmbs::binding::has_xmp']]],
-  ['header_5fkey_2',['header_key',['../namespacenmbs_1_1binding_1_1http.html#a67760b8780dd43062341c919d3d1e3c9',1,'nmbs::binding::http']]],
-  ['hierarchy_3',['hierarchy',['../structnmbs_1_1spif_1_1security__classification.html#ae6d2ed22216b8cb8582da2263a7f89f9',1,'nmbs::spif::security_classification']]]
+  ['id_5ftype_0',['id_type',['../structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#acbfcbe88c80746c30c2c7e5bb19dfd65',1,'nmbs::ConfidentialityLabel::OriginatorId']]],
+  ['index_2emd_1',['index.md',['../index_8md.html',1,'']]],
+  ['invalid_5farguments_2',['invalid_arguments',['../namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa26ea39710de3c040dcb9c25827ccbf95',1,'nmbs']]],
+  ['ip_5faddress_3',['ip_address',['../structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#a80cd4e3aec1d832ea3710ca11eafb907',1,'nmbs::ConfidentialityLabel::OriginatorId']]]
 ];

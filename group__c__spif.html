@@ -70,7 +70,6 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
 <a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Security Policies<div class="ingroups"><a class="el" href="group__c__api.html">C Language API</a></div></div></div>
@@ -80,58 +79,227 @@ $(function() {
 <p>Functions for working with SPIF files and Security Policies.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">C struct for holding a list of <a class="el" href="structnmbs__security__policy.html" title="C struct for holding a security policy (e.g. NATO).">nmbs_security_policy</a>.  <a href="structnmbs__security__policies.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
-<tr class="memitem:gab018a4b96002c14276a879963ffcf3ca" id="r_gab018a4b96002c14276a879963ffcf3ca"><td class="memItemLeft" align="right" valign="top">typedef struct <a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gab018a4b96002c14276a879963ffcf3ca">nmbs_security_policies</a></td></tr>
-<tr class="memdesc:gab018a4b96002c14276a879963ffcf3ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">C struct for holding a list of <a class="el" href="structnmbs__security__policy.html" title="C struct for holding a security policy (e.g. NATO).">nmbs_security_policy</a>.  <br /></td></tr>
-<tr class="separator:gab018a4b96002c14276a879963ffcf3ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf5acb84e25b96a0a57c40355e794fa11" id="r_gaf5acb84e25b96a0a57c40355e794fa11"><td class="memItemLeft" align="right" valign="top">typedef struct nmbs_security_classifications *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a></td></tr>
+<tr class="memdesc:gaf5acb84e25b96a0a57c40355e794fa11"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Pointer to a collection of security classifications.  <br /></td></tr>
+<tr class="separator:gaf5acb84e25b96a0a57c40355e794fa11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacc4fc43e6d4900c43fe034e08612c385" id="r_gacc4fc43e6d4900c43fe034e08612c385"><td class="memItemLeft" align="right" valign="top">typedef struct nmbs_security_classification *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gacc4fc43e6d4900c43fe034e08612c385">nmbs_security_classification_ptr</a></td></tr>
+<tr class="memdesc:gacc4fc43e6d4900c43fe034e08612c385"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Pointer to a security classification.  <br /></td></tr>
+<tr class="separator:gacc4fc43e6d4900c43fe034e08612c385"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga44e97f139178547be166389835e764d0" id="r_ga44e97f139178547be166389835e764d0"><td class="memItemLeft" align="right" valign="top">typedef struct nmbs_security_policies *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a></td></tr>
+<tr class="memdesc:ga44e97f139178547be166389835e764d0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Pointer to a collection of security policies.  <br /></td></tr>
+<tr class="separator:ga44e97f139178547be166389835e764d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga380a968e24866498b2d370c5eed6f6d2" id="r_ga380a968e24866498b2d370c5eed6f6d2"><td class="memItemLeft" align="right" valign="top">typedef struct nmbs_security_policy *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a></td></tr>
+<tr class="memdesc:ga380a968e24866498b2d370c5eed6f6d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Pointer to a security policy.  <br /></td></tr>
+<tr class="separator:ga380a968e24866498b2d370c5eed6f6d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:ga118ed716e6c7839e00625d1d45d7f8f1" id="r_ga118ed716e6c7839e00625d1d45d7f8f1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga118ed716e6c7839e00625d1d45d7f8f1">nmbs_security_policies_new</a> ()</td></tr>
-<tr class="memdesc:ga118ed716e6c7839e00625d1d45d7f8f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and returns an instance of <a class="el" href="structnmbs__security__policies.html" title="C struct for holding a list of nmbs_security_policy.">nmbs_security_policies</a>.  <br /></td></tr>
-<tr class="separator:ga118ed716e6c7839e00625d1d45d7f8f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gae6f374ac5ad40d4e215b64bd71508cff" id="r_gae6f374ac5ad40d4e215b64bd71508cff"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gae6f374ac5ad40d4e215b64bd71508cff">nmbs_security_policies_delete</a> (<a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a> *policies)</td></tr>
-<tr class="memdesc:gae6f374ac5ad40d4e215b64bd71508cff"><td class="mdescLeft">&#160;</td><td class="mdescRight">"delete"s an instance of nmbs_security_policies_delete.  <br /></td></tr>
-<tr class="separator:gae6f374ac5ad40d4e215b64bd71508cff"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2fc52015927d18b60e8b9b4169a43fba" id="r_ga2fc52015927d18b60e8b9b4169a43fba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga2fc52015927d18b60e8b9b4169a43fba">nmbs_security_policies_read_installed</a> (<a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a> *policies_out)</td></tr>
-<tr class="memdesc:ga2fc52015927d18b60e8b9b4169a43fba"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the <a class="el" href="structnmbs__security__policies.html" title="C struct for holding a list of nmbs_security_policy.">nmbs_security_policies</a> which are installed on the system.  <br /></td></tr>
-<tr class="separator:ga2fc52015927d18b60e8b9b4169a43fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8cb0a6214355bf502d32d4c4f3e267b8" id="r_ga8cb0a6214355bf502d32d4c4f3e267b8"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga8cb0a6214355bf502d32d4c4f3e267b8">nmbs_security_classifications_size</a> (<a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a> classifications)</td></tr>
+<tr class="memdesc:ga8cb0a6214355bf502d32d4c4f3e267b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:ga8cb0a6214355bf502d32d4c4f3e267b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacdc66fc4e944b370c9d5d70c8599167a" id="r_gacdc66fc4e944b370c9d5d70c8599167a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__spif.html#gacc4fc43e6d4900c43fe034e08612c385">nmbs_security_classification_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gacdc66fc4e944b370c9d5d70c8599167a">nmbs_security_classifications_get</a> (<a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a> classifications, unsigned long i)</td></tr>
+<tr class="memdesc:gacdc66fc4e944b370c9d5d70c8599167a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:gacdc66fc4e944b370c9d5d70c8599167a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0b354e08a748b19ffb260ffafccb5597" id="r_ga0b354e08a748b19ffb260ffafccb5597"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga0b354e08a748b19ffb260ffafccb5597">nmbs_security_classification_get_name</a> (<a class="el" href="group__c__spif.html#gacc4fc43e6d4900c43fe034e08612c385">nmbs_security_classification_ptr</a> classification)</td></tr>
+<tr class="memdesc:ga0b354e08a748b19ffb260ffafccb5597"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:ga0b354e08a748b19ffb260ffafccb5597"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga8b13c54e02d292d50af3c7358a807f1a" id="r_ga8b13c54e02d292d50af3c7358a807f1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga8b13c54e02d292d50af3c7358a807f1a">nmbs_security_policies_new</a> ()</td></tr>
+<tr class="memdesc:ga8b13c54e02d292d50af3c7358a807f1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and returns an instance of nmbs_security_policies.  <br /></td></tr>
+<tr class="separator:ga8b13c54e02d292d50af3c7358a807f1a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaf45d639f55cb3a8218b2d9b9ce2a3d73" id="r_gaf45d639f55cb3a8218b2d9b9ce2a3d73"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gaf45d639f55cb3a8218b2d9b9ce2a3d73">nmbs_security_policies_size</a> (<a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a> policies)</td></tr>
+<tr class="memdesc:gaf45d639f55cb3a8218b2d9b9ce2a3d73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:gaf45d639f55cb3a8218b2d9b9ce2a3d73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga47717cfbce93b4dea8c6ba02c6a5d7a0" id="r_ga47717cfbce93b4dea8c6ba02c6a5d7a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga47717cfbce93b4dea8c6ba02c6a5d7a0">nmbs_security_policies_get</a> (<a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a> policies, unsigned long i)</td></tr>
+<tr class="memdesc:ga47717cfbce93b4dea8c6ba02c6a5d7a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:ga47717cfbce93b4dea8c6ba02c6a5d7a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga92a5aae7d4c7c48c8e4a0d9ec2884d4f" id="r_ga92a5aae7d4c7c48c8e4a0d9ec2884d4f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga92a5aae7d4c7c48c8e4a0d9ec2884d4f">nmbs_security_policies_delete</a> (<a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a> policies)</td></tr>
+<tr class="memdesc:ga92a5aae7d4c7c48c8e4a0d9ec2884d4f"><td class="mdescLeft">&#160;</td><td class="mdescRight">"delete"s an instance of nmbs_security_policies_ptr.  <br /></td></tr>
+<tr class="separator:ga92a5aae7d4c7c48c8e4a0d9ec2884d4f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga992290abcf883e0824bc8334942bb87e" id="r_ga992290abcf883e0824bc8334942bb87e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#ga992290abcf883e0824bc8334942bb87e">nmbs_security_policies_read_installed</a> (<a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a> policies_out)</td></tr>
+<tr class="memdesc:ga992290abcf883e0824bc8334942bb87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the nmbs_security_policies which are installed on the system.  <br /></td></tr>
+<tr class="separator:ga992290abcf883e0824bc8334942bb87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabde0c1e196d49df46c6e1e4e4c4a0522" id="r_gabde0c1e196d49df46c6e1e4e4c4a0522"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gabde0c1e196d49df46c6e1e4e4c4a0522">nmbs_security_policy_get_name</a> (<a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a> policy)</td></tr>
+<tr class="memdesc:gabde0c1e196d49df46c6e1e4e4c4a0522"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:gabde0c1e196d49df46c6e1e4e4c4a0522"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabff2f3a9efd57ab98eb78fe07163863a" id="r_gabff2f3a9efd57ab98eb78fe07163863a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__spif.html#gabff2f3a9efd57ab98eb78fe07163863a">nmbs_security_policy_get_security_classifications</a> (<a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a> policy)</td></tr>
+<tr class="memdesc:gabff2f3a9efd57ab98eb78fe07163863a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:gabff2f3a9efd57ab98eb78fe07163863a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions for working with SPIF files and Security Policies. </p>
 <h2 class="groupheader">Typedef Documentation</h2>
-<a id="gab018a4b96002c14276a879963ffcf3ca" name="gab018a4b96002c14276a879963ffcf3ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gab018a4b96002c14276a879963ffcf3ca">&#9670;&#160;</a></span>nmbs_security_policies</h2>
+<a id="gacc4fc43e6d4900c43fe034e08612c385" name="gacc4fc43e6d4900c43fe034e08612c385"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacc4fc43e6d4900c43fe034e08612c385">&#9670;&#160;</a></span>nmbs_security_classification_ptr</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef struct <a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a> <a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a></td>
+          <td class="memname">typedef struct nmbs_security_classification* <a class="el" href="group__c__spif.html#gacc4fc43e6d4900c43fe034e08612c385">nmbs_security_classification_ptr</a></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>C struct for holding a list of <a class="el" href="structnmbs__security__policy.html" title="C struct for holding a security policy (e.g. NATO).">nmbs_security_policy</a>. </p>
-<p>One of the most important structures in the C API. This is the item for which the majority of the API functions will be provided. Most importantly, create instances using nmbs_security_policies_new, and clean them up using nmbs_security_policies_delete. Additional support functions are provided for accessing or manipulating functions.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__spif.html#ga118ed716e6c7839e00625d1d45d7f8f1" title="Creates and returns an instance of nmbs_security_policies.">nmbs_security_policies_new</a> </dd>
+<p>Opaque Pointer to a security classification. </p>
+<p>Note, that the struct type is not implemented! It is used only to ensure type safety.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__spif.html#gacdc66fc4e944b370c9d5d70c8599167a" title="Opaque Accessor.">nmbs_security_classifications_get</a> </dd></dl>
+
+</div>
+</div>
+<a id="gaf5acb84e25b96a0a57c40355e794fa11" name="gaf5acb84e25b96a0a57c40355e794fa11"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf5acb84e25b96a0a57c40355e794fa11">&#9670;&#160;</a></span>nmbs_security_classifications_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct nmbs_security_classifications* <a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Pointer to a collection of security classifications. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__spif.html#gabff2f3a9efd57ab98eb78fe07163863a" title="Opaque Accessor.">nmbs_security_policy_get_security_classifications</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga44e97f139178547be166389835e764d0" name="ga44e97f139178547be166389835e764d0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga44e97f139178547be166389835e764d0">&#9670;&#160;</a></span>nmbs_security_policies_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct nmbs_security_policies* <a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Pointer to a collection of security policies. </p>
+<p>Note, that the struct type is not implemented! It is used only to ensure type safety.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__spif.html#ga8b13c54e02d292d50af3c7358a807f1a" title="Creates and returns an instance of nmbs_security_policies.">nmbs_security_policies_new</a> </dd>
 <dd>
-<a class="el" href="group__c__spif.html#gae6f374ac5ad40d4e215b64bd71508cff" title="&quot;delete&quot;s an instance of nmbs_security_policies_delete.">nmbs_security_policies_delete</a> </dd>
+<a class="el" href="group__c__spif.html#ga92a5aae7d4c7c48c8e4a0d9ec2884d4f" title="&quot;delete&quot;s an instance of nmbs_security_policies_ptr.">nmbs_security_policies_delete</a> </dd>
 <dd>
-<a class="el" href="group__c__spif.html#ga2fc52015927d18b60e8b9b4169a43fba" title="Reads the nmbs_security_policies which are installed on the system.">nmbs_security_policies_read_installed</a> </dd></dl>
+<a class="el" href="group__c__spif.html#ga992290abcf883e0824bc8334942bb87e" title="Reads the nmbs_security_policies which are installed on the system.">nmbs_security_policies_read_installed</a> </dd></dl>
+
+</div>
+</div>
+<a id="ga380a968e24866498b2d370c5eed6f6d2" name="ga380a968e24866498b2d370c5eed6f6d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga380a968e24866498b2d370c5eed6f6d2">&#9670;&#160;</a></span>nmbs_security_policy_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct nmbs_security_policy* <a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Pointer to a security policy. </p>
+<p>Note, that the struct type is not implemented! It is used only to ensure type safety.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__spif.html#ga47717cfbce93b4dea8c6ba02c6a5d7a0" title="Opaque Accessor.">nmbs_security_policies_get</a> </dd></dl>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="gae6f374ac5ad40d4e215b64bd71508cff" name="gae6f374ac5ad40d4e215b64bd71508cff"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gae6f374ac5ad40d4e215b64bd71508cff">&#9670;&#160;</a></span>nmbs_security_policies_delete()</h2>
+<a id="ga0b354e08a748b19ffb260ffafccb5597" name="ga0b354e08a748b19ffb260ffafccb5597"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga0b354e08a748b19ffb260ffafccb5597">&#9670;&#160;</a></span>nmbs_security_classification_get_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * nmbs_security_classification_get_name </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#gacc4fc43e6d4900c43fe034e08612c385">nmbs_security_classification_ptr</a>&#160;</td>
+          <td class="paramname"><em>classification</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">classification</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="gacdc66fc4e944b370c9d5d70c8599167a" name="gacdc66fc4e944b370c9d5d70c8599167a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacdc66fc4e944b370c9d5d70c8599167a">&#9670;&#160;</a></span>nmbs_security_classifications_get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__c__spif.html#gacc4fc43e6d4900c43fe034e08612c385">nmbs_security_classification_ptr</a> nmbs_security_classifications_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a>&#160;</td>
+          <td class="paramname"><em>classifications</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">classifications</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="ga8cb0a6214355bf502d32d4c4f3e267b8" name="ga8cb0a6214355bf502d32d4c4f3e267b8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8cb0a6214355bf502d32d4c4f3e267b8">&#9670;&#160;</a></span>nmbs_security_classifications_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long nmbs_security_classifications_size </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a>&#160;</td>
+          <td class="paramname"><em>classifications</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">classifications</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga92a5aae7d4c7c48c8e4a0d9ec2884d4f" name="ga92a5aae7d4c7c48c8e4a0d9ec2884d4f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga92a5aae7d4c7c48c8e4a0d9ec2884d4f">&#9670;&#160;</a></span>nmbs_security_policies_delete()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -139,25 +307,69 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void nmbs_security_policies_delete </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a>&#160;</td>
           <td class="paramname"><em>policies</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>"delete"s an instance of nmbs_security_policies_delete. </p>
+<p>"delete"s an instance of nmbs_security_policies_ptr. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">policies</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
-<a id="ga118ed716e6c7839e00625d1d45d7f8f1" name="ga118ed716e6c7839e00625d1d45d7f8f1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga118ed716e6c7839e00625d1d45d7f8f1">&#9670;&#160;</a></span>nmbs_security_policies_new()</h2>
+<a id="ga47717cfbce93b4dea8c6ba02c6a5d7a0" name="ga47717cfbce93b4dea8c6ba02c6a5d7a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga47717cfbce93b4dea8c6ba02c6a5d7a0">&#9670;&#160;</a></span>nmbs_security_policies_get()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a> * nmbs_security_policies_new </td>
+          <td class="memname"><a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a> nmbs_security_policies_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a>&#160;</td>
+          <td class="paramname"><em>policies</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">policies</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="ga8b13c54e02d292d50af3c7358a807f1a" name="ga8b13c54e02d292d50af3c7358a807f1a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga8b13c54e02d292d50af3c7358a807f1a">&#9670;&#160;</a></span>nmbs_security_policies_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a> nmbs_security_policies_new </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -165,13 +377,13 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates and returns an instance of <a class="el" href="structnmbs__security__policies.html" title="C struct for holding a list of nmbs_security_policy.">nmbs_security_policies</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to a "new" <a class="el" href="structnmbs__security__policies.html" title="C struct for holding a list of nmbs_security_policy.">nmbs_security_policies</a> </dd></dl>
+<p>Creates and returns an instance of nmbs_security_policies. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to a "new" nmbs_security_policies </dd></dl>
 
 </div>
 </div>
-<a id="ga2fc52015927d18b60e8b9b4169a43fba" name="ga2fc52015927d18b60e8b9b4169a43fba"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga2fc52015927d18b60e8b9b4169a43fba">&#9670;&#160;</a></span>nmbs_security_policies_read_installed()</h2>
+<a id="ga992290abcf883e0824bc8334942bb87e" name="ga992290abcf883e0824bc8334942bb87e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga992290abcf883e0824bc8334942bb87e">&#9670;&#160;</a></span>nmbs_security_policies_read_installed()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -179,20 +391,101 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void nmbs_security_policies_read_installed </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structnmbs__security__policies.html">nmbs_security_policies</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a>&#160;</td>
           <td class="paramname"><em>policies_out</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the <a class="el" href="structnmbs__security__policies.html" title="C struct for holding a list of nmbs_security_policy.">nmbs_security_policies</a> which are installed on the system. </p>
+<p>Reads the nmbs_security_policies which are installed on the system. </p>
 <p>The C++ API contains a few constants detailing where the lib will look for installed SPIF files.</p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="namespacenmbs_1_1spif.html#a868083159931e29d39840fc6e74c7bd1" title="Location of the spif files sent with the package manager.">nmbs::spif::packaged_spif_location</a> </dd>
+<dl class="section see"><dt>See also</dt><dd>nmbs::spif::packaged_spif_location </dd>
 <dd>
-<a class="el" href="namespacenmbs_1_1spif.html#af267cbab2d4c57b4b850438e66fbdae5" title="Location of spif files additionally read. May be administered by the sys admin.">nmbs::spif::administered_spif_location</a> </dd>
+nmbs::spif::administered_spif_location </dd>
 <dd>
-<a class="el" href="namespacenmbs_1_1spif.html#a6c582819d876feb5947524f1ed67b87d">nmbs::spif::override_spif_location_env_var</a> </dd></dl>
+nmbs::spif::override_spif_location_env_var </dd></dl>
+
+</div>
+</div>
+<a id="gaf45d639f55cb3a8218b2d9b9ce2a3d73" name="gaf45d639f55cb3a8218b2d9b9ce2a3d73"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaf45d639f55cb3a8218b2d9b9ce2a3d73">&#9670;&#160;</a></span>nmbs_security_policies_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long nmbs_security_policies_size </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#ga44e97f139178547be166389835e764d0">nmbs_security_policies_ptr</a>&#160;</td>
+          <td class="paramname"><em>policies</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">policies</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="gabde0c1e196d49df46c6e1e4e4c4a0522" name="gabde0c1e196d49df46c6e1e4e4c4a0522"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabde0c1e196d49df46c6e1e4e4c4a0522">&#9670;&#160;</a></span>nmbs_security_policy_get_name()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * nmbs_security_policy_get_name </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a>&#160;</td>
+          <td class="paramname"><em>policy</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">policy</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="gabff2f3a9efd57ab98eb78fe07163863a" name="gabff2f3a9efd57ab98eb78fe07163863a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gabff2f3a9efd57ab98eb78fe07163863a">&#9670;&#160;</a></span>nmbs_security_policy_get_security_classifications()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__c__spif.html#gaf5acb84e25b96a0a57c40355e794fa11">nmbs_security_classifications_ptr</a> nmbs_security_policy_get_security_classifications </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__spif.html#ga380a968e24866498b2d370c5eed6f6d2">nmbs_security_policy_ptr</a>&#160;</td>
+          <td class="paramname"><em>policy</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">policy</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
 
 </div>
 </div>

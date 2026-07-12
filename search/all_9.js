@@ -1,4 +1,6 @@
 var searchData=
 [
-  ['jid_0',['jid',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a8a3d972a2196dba7a69c12c989089daa',1,'nmbs::confidentiality_label::originator_id']]]
+  ['label_5ftype_0',['label_type',['../structnmbs_1_1ConfidentialityLabel.html#a8290b5ae9e5e9d924c9ed9ad7976e0eb',1,'nmbs::ConfidentialityLabel']]],
+  ['labels_1',['Confidentiality Labels',['../group__c__confidentiality__labels.html',1,'']]],
+  ['language_20api_2',['C Language API',['../group__c__api.html',1,'']]]
 ];

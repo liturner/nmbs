@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['originator_0',['originator',['../structnmbs_1_1confidentiality__label.html#a0e1a396a8e0eb34f40b03a1c10261144ad55d91c35a80f92027369e3b0a14fb14',1,'nmbs::confidentiality_label']]]
+  ['success_0',['success',['../namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e',1,'nmbs']]],
+  ['successor_1',['successor',['../structnmbs_1_1ConfidentialityLabel.html#a8181599a04ce1ebb86917b588822974aa34410a8af022d78b0fea409a255aee4b',1,'nmbs::ConfidentialityLabel']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['binding_5finformation_0',['binding_information',['../structnmbs_1_1binding_1_1binding__information.html',1,'nmbs::binding']]]
+  ['confidentialityinformation_0',['ConfidentialityInformation',['../structnmbs_1_1ConfidentialityLabel_1_1ConfidentialityInformation.html',1,'nmbs::ConfidentialityLabel']]],
+  ['confidentialitylabel_1',['ConfidentialityLabel',['../structnmbs_1_1ConfidentialityLabel.html',1,'nmbs']]]
 ];

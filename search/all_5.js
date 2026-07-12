@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['file_5fnot_5ffound_0',['file_not_found',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca490cfde16569fdd8a00baf79666248b6',1,'nmbs']]],
-  ['file_5fnot_5ffound_5fexception_1',['file_not_found_exception',['../classnmbs_1_1exceptions_1_1file__not__found__exception.html',1,'nmbs::exceptions::file_not_found_exception'],['../classnmbs_1_1exceptions_1_1file__not__found__exception.html#ad56923e50eff50371498f51ad4fa1c8a',1,'nmbs::exceptions::file_not_found_exception::file_not_found_exception()']]],
-  ['flags_2',['flags',['../namespacenmbs_1_1binding.html#ac9ceb587f944be8fa5c0a22ebbae7bd2',1,'nmbs::binding']]]
+  ['file_5fnot_5ffound_0',['file_not_found',['../classnmbs_1_1Error.html#af1cf0a3dae2379c5a835635dd9865717',1,'nmbs::Error::file_not_found()'],['../namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa490cfde16569fdd8a00baf79666248b6',1,'nmbs::file_not_found']]]
 ];

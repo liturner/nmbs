@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['uniform_5fresource_5fidentifier_0',['uniform_resource_identifier',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a00a006d457875ff1f949f110a3c83973',1,'nmbs::confidentiality_label::originator_id']]],
-  ['unknown_5ferror_1',['unknown_error',['../namespacenmbs.html#a76e562f4714615733d201a180c14b03ca60c99433be2ec360e16d54c9b7bd73cb',1,'nmbs']]],
-  ['uri_2',['uri',['../structnmbs_1_1binding_1_1data__reference.html#accd496c21af74ce3dacadb9ea7c43584',1,'nmbs::binding::data_reference']]],
-  ['user_5fprincipal_5fname_3',['user_principal_name',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#ad8e4086cd8adff1c72d2d007127821cc',1,'nmbs::confidentiality_label::originator_id']]]
+  ['unexpected_0',['unexpected',['../classnmbs_1_1Error.html#ad9bf0eacf9a41990beb14fa23678893d',1,'nmbs::Error']]],
+  ['uniform_5fresource_5fidentifier_1',['uniform_resource_identifier',['../structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#abfc3e41febf7b0268aa9caa286e9103b',1,'nmbs::ConfidentialityLabel::OriginatorId']]],
+  ['unknown_5ferror_2',['unknown_error',['../namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa60c99433be2ec360e16d54c9b7bd73cb',1,'nmbs']]],
+  ['user_5fprincipal_5fname_3',['user_principal_name',['../structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#a9a446d7abc332e5e71871729bb3ce591',1,'nmbs::ConfidentialityLabel::OriginatorId']]]
 ];

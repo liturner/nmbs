@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['code_0',['code',['../classnmbs_1_1exception.html#a835759a029863f2e3956dbb2e25c306d',1,'nmbs::exception']]],
-  ['confidentiality_5flabel_1',['confidentiality_label',['../structnmbs_1_1confidentiality__label.html#aa43322c95438dc6e83d81b331bb3880d',1,'nmbs::confidentiality_label::confidentiality_label(const confidentiality_label_type label_type=originator)'],['../structnmbs_1_1confidentiality__label.html#afca0fcb60f9c77d170bbb50b7a104c68',1,'nmbs::confidentiality_label::confidentiality_label(const confidentiality_label &amp;)=default']]],
-  ['create_5fdata_5freference_2',['create_data_reference',['../namespacenmbs_1_1binding_1_1http.html#aabd2431461fb1a8fda3e90c1386b4443',1,'nmbs::binding::http']]]
+  ['cleanup_0',['cleanup',['../namespacenmbs.html#a8e48307b2c63da07b22472bdbedddd3a',1,'nmbs']]],
+  ['code_1',['code',['../classnmbs_1_1Error.html#a2588fd80b03f1c58a72b98f96a34269f',1,'nmbs::Error']]],
+  ['confidentialitylabel_2',['confidentialitylabel',['../structnmbs_1_1ConfidentialityLabel.html#a7e8b10d1c28c0cb1e9a322d06cf4ceac',1,'nmbs::ConfidentialityLabel::ConfidentialityLabel(const ConfidentialityLabelType label_type=originator)'],['../structnmbs_1_1ConfidentialityLabel.html#a06cc118af92d2487272ce609411bd150',1,'nmbs::ConfidentialityLabel::ConfidentialityLabel(const ConfidentialityLabel &amp;)=default']]]
 ];

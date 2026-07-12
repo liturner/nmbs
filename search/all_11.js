@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['value_0',['value',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#ae37e792ef7077d8945b9d95b046f2c43',1,'nmbs::confidentiality_label::originator_id']]],
-  ['version_1',['version',['../structnmbs_1_1spif_1_1security__policy.html#a9c10a7a6798cc761a5963ac2b2ecf8ac',1,'nmbs::spif::security_policy::version'],['../namespacenmbs.html#ae2dc3062a8b4f7fe4e3500bd08f675c3',1,'nmbs::version()']]]
+  ['value_0',['value',['../structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#adcd85a0cdd41ed1e28f08bfaf2dbddf7',1,'nmbs::ConfidentialityLabel::OriginatorId']]],
+  ['version_1',['version',['../namespacenmbs.html#ad3dc9a31562bcc51bb4202b45747804b',1,'nmbs']]]
 ];

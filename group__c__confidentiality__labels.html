@@ -70,7 +70,7 @@ $(function() {
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a> &#124;
+<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">Confidentiality Labels<div class="ingroups"><a class="el" href="group__c__api.html">C Language API</a></div></div></div>
 </div><!--header-->
@@ -79,32 +79,225 @@ $(function() {
 <p>Functions for working with ADatP-4774 labels.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
-Classes</h2></td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">C struct for holding lists of <a class="el" href="structnmbs__confidentiality__label.html" title="C struct representation of nmbs::confidentiality_label.">nmbs_confidentiality_label</a>.  <a href="structnmbs__confidentiality__labels.html#details">More...</a><br /></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="typedef-members" name="typedef-members"></a>
+Typedefs</h2></td></tr>
+<tr class="memitem:ga1254a39d7a682b8b6a4702e3f0145d4d" id="r_ga1254a39d7a682b8b6a4702e3f0145d4d"><td class="memItemLeft" align="right" valign="top">typedef struct nmbs_confidentiality_labels *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a></td></tr>
+<tr class="memdesc:ga1254a39d7a682b8b6a4702e3f0145d4d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Pointer to a collection of confidentiality labels.  <br /></td></tr>
+<tr class="separator:ga1254a39d7a682b8b6a4702e3f0145d4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga5a83f06ce56932413db30975f3811952" id="r_ga5a83f06ce56932413db30975f3811952"><td class="memItemLeft" align="right" valign="top">typedef struct nmbs_confidentiality_label *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a></td></tr>
+<tr class="memdesc:ga5a83f06ce56932413db30975f3811952"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Pointer to a confidentiality label.  <br /></td></tr>
+<tr class="separator:ga5a83f06ce56932413db30975f3811952"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gaffe498ab7e1d060460c6e596bf53d93b" id="r_gaffe498ab7e1d060460c6e596bf53d93b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#gaffe498ab7e1d060460c6e596bf53d93b">nmbs_confidentiality_labels_new</a> ()</td></tr>
-<tr class="memdesc:gaffe498ab7e1d060460c6e596bf53d93b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and returns an instance of <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a>.  <br /></td></tr>
-<tr class="separator:gaffe498ab7e1d060460c6e596bf53d93b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga116984d93c84d0d6acea78ec1217f0ec" id="r_ga116984d93c84d0d6acea78ec1217f0ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga116984d93c84d0d6acea78ec1217f0ec">nmbs_confidentiality_labels_delete</a> (<a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> *labels)</td></tr>
-<tr class="memdesc:ga116984d93c84d0d6acea78ec1217f0ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">"delete"s an instance of <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a>.  <br /></td></tr>
-<tr class="separator:ga116984d93c84d0d6acea78ec1217f0ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga8ee6269114918ae9c4b0d471eeae3f60" id="r_ga8ee6269114918ae9c4b0d471eeae3f60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga8ee6269114918ae9c4b0d471eeae3f60">nmbs_confidentiality_labels_read_labels</a> (<a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> *labels_out, const char *file)</td></tr>
-<tr class="memdesc:ga8ee6269114918ae9c4b0d471eeae3f60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a> from a file, regardless of binding profile.  <br /></td></tr>
-<tr class="separator:ga8ee6269114918ae9c4b0d471eeae3f60"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaf82c8a0dbd8687a24cdd83fb0b8d09a2" id="r_gaf82c8a0dbd8687a24cdd83fb0b8d09a2"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#gaf82c8a0dbd8687a24cdd83fb0b8d09a2">nmbs_confidentiality_labels_write_labels</a> (const char *file, const <a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> *labels)</td></tr>
-<tr class="memdesc:gaf82c8a0dbd8687a24cdd83fb0b8d09a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes ADatP-4774 labels to a file, using the most appropriate method.  <br /></td></tr>
-<tr class="separator:gaf82c8a0dbd8687a24cdd83fb0b8d09a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9a415bdf60378352a6a25c76727dcb2b" id="r_ga9a415bdf60378352a6a25c76727dcb2b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga9a415bdf60378352a6a25c76727dcb2b">nmbs_confidentiality_labels_new</a> ()</td></tr>
+<tr class="memdesc:ga9a415bdf60378352a6a25c76727dcb2b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates and returns an instance of nmbs_confidentiality_labels.  <br /></td></tr>
+<tr class="separator:ga9a415bdf60378352a6a25c76727dcb2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafa1f4ff1b0c40543fe4d68b625b59933" id="r_gafa1f4ff1b0c40543fe4d68b625b59933"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#gafa1f4ff1b0c40543fe4d68b625b59933">nmbs_confidentiality_labels_delete</a> (<a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a> labels)</td></tr>
+<tr class="memdesc:gafa1f4ff1b0c40543fe4d68b625b59933"><td class="mdescLeft">&#160;</td><td class="mdescRight">"delete"s an instance of nmbs_confidentiality_labels.  <br /></td></tr>
+<tr class="separator:gafa1f4ff1b0c40543fe4d68b625b59933"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga95bacb326bd02189c64905cd3bed5a0c" id="r_ga95bacb326bd02189c64905cd3bed5a0c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga95bacb326bd02189c64905cd3bed5a0c">nmbs_confidentiality_labels_emplace_back</a> (<a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a> labels)</td></tr>
+<tr class="memdesc:ga95bacb326bd02189c64905cd3bed5a0c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:ga95bacb326bd02189c64905cd3bed5a0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1430904f78596a9ed25215b57bf0107e" id="r_ga1430904f78596a9ed25215b57bf0107e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga1430904f78596a9ed25215b57bf0107e">nmbs_confidentiality_labels_get</a> (<a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a> labels, unsigned long i)</td></tr>
+<tr class="memdesc:ga1430904f78596a9ed25215b57bf0107e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:ga1430904f78596a9ed25215b57bf0107e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaecf4d2b1d8e5601f3361f15ca6885352" id="r_gaecf4d2b1d8e5601f3361f15ca6885352"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#gaecf4d2b1d8e5601f3361f15ca6885352">nmbs_confidentiality_labels_read_labels</a> (<a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a> labels_out, const char *file)</td></tr>
+<tr class="memdesc:gaecf4d2b1d8e5601f3361f15ca6885352"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the nmbs_confidentiality_labels from a file, regardless of binding profile.  <br /></td></tr>
+<tr class="separator:gaecf4d2b1d8e5601f3361f15ca6885352"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga1e05eb480cd3443a655b60e48b8e9bb8" id="r_ga1e05eb480cd3443a655b60e48b8e9bb8"><td class="memItemLeft" align="right" valign="top">unsigned long&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga1e05eb480cd3443a655b60e48b8e9bb8">nmbs_confidentiality_labels_size</a> (<a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a> labels)</td></tr>
+<tr class="memdesc:ga1e05eb480cd3443a655b60e48b8e9bb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:ga1e05eb480cd3443a655b60e48b8e9bb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga84a36dfe8ce6f9ddc5c4741b8d6d5817" id="r_ga84a36dfe8ce6f9ddc5c4741b8d6d5817"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga84a36dfe8ce6f9ddc5c4741b8d6d5817">nmbs_confidentiality_labels_write_labels</a> (const char *file, <a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a> labels)</td></tr>
+<tr class="memdesc:ga84a36dfe8ce6f9ddc5c4741b8d6d5817"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes ADatP-4774 labels to a file, using the most appropriate method.  <br /></td></tr>
+<tr class="separator:ga84a36dfe8ce6f9ddc5c4741b8d6d5817"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4bf0781c5046587411b8e6889e9fedee" id="r_ga4bf0781c5046587411b8e6889e9fedee"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#ga4bf0781c5046587411b8e6889e9fedee">nmbs_confidentiality_label_get_classification</a> (<a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a> label)</td></tr>
+<tr class="memdesc:ga4bf0781c5046587411b8e6889e9fedee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:ga4bf0781c5046587411b8e6889e9fedee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaad2e408c4a3a6878043d672d3ecb9f9e" id="r_gaad2e408c4a3a6878043d672d3ecb9f9e"><td class="memItemLeft" align="right" valign="top">const char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#gaad2e408c4a3a6878043d672d3ecb9f9e">nmbs_confidentiality_label_get_policy</a> (<a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a> label)</td></tr>
+<tr class="memdesc:gaad2e408c4a3a6878043d672d3ecb9f9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:gaad2e408c4a3a6878043d672d3ecb9f9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa3fc8179aa67044f9b39544104f196c6" id="r_gaa3fc8179aa67044f9b39544104f196c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#gaa3fc8179aa67044f9b39544104f196c6">nmbs_confidentiality_label_set_policy</a> (<a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a> label, const char *string)</td></tr>
+<tr class="memdesc:gaa3fc8179aa67044f9b39544104f196c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:gaa3fc8179aa67044f9b39544104f196c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad62ee7d760264598c3909b5b917dc9a2" id="r_gad62ee7d760264598c3909b5b917dc9a2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__c__confidentiality__labels.html#gad62ee7d760264598c3909b5b917dc9a2">nmbs_confidentiality_label_set_classification</a> (<a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a> label, const char *string)</td></tr>
+<tr class="memdesc:gad62ee7d760264598c3909b5b917dc9a2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opaque Accessor.  <br /></td></tr>
+<tr class="separator:gad62ee7d760264598c3909b5b917dc9a2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Functions for working with ADatP-4774 labels. </p>
+<h2 class="groupheader">Typedef Documentation</h2>
+<a id="ga5a83f06ce56932413db30975f3811952" name="ga5a83f06ce56932413db30975f3811952"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga5a83f06ce56932413db30975f3811952">&#9670;&#160;</a></span>nmbs_confidentiality_label_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct nmbs_confidentiality_label* <a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Pointer to a confidentiality label. </p>
+<p>Note, that the struct type is not implemented! It is used only to ensure type safety.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#ga1430904f78596a9ed25215b57bf0107e" title="Opaque Accessor.">nmbs_confidentiality_labels_get</a> </dd>
+<dd>
+nmbs::confidentiality_label </dd></dl>
+
+</div>
+</div>
+<a id="ga1254a39d7a682b8b6a4702e3f0145d4d" name="ga1254a39d7a682b8b6a4702e3f0145d4d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1254a39d7a682b8b6a4702e3f0145d4d">&#9670;&#160;</a></span>nmbs_confidentiality_labels_ptr</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef struct nmbs_confidentiality_labels* <a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Pointer to a collection of confidentiality labels. </p>
+<p>This is one of the core data objects you should work with. Note, that the struct type is not implemented! It is used only to ensure type safety.</p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#ga9a415bdf60378352a6a25c76727dcb2b" title="Creates and returns an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_new</a> </dd>
+<dd>
+<a class="el" href="group__c__confidentiality__labels.html#gafa1f4ff1b0c40543fe4d68b625b59933" title="&quot;delete&quot;s an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_delete</a> </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="ga116984d93c84d0d6acea78ec1217f0ec" name="ga116984d93c84d0d6acea78ec1217f0ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga116984d93c84d0d6acea78ec1217f0ec">&#9670;&#160;</a></span>nmbs_confidentiality_labels_delete()</h2>
+<a id="ga4bf0781c5046587411b8e6889e9fedee" name="ga4bf0781c5046587411b8e6889e9fedee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga4bf0781c5046587411b8e6889e9fedee">&#9670;&#160;</a></span>nmbs_confidentiality_label_get_classification()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * nmbs_confidentiality_label_get_classification </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a>&#160;</td>
+          <td class="paramname"><em>label</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">label</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="gaad2e408c4a3a6878043d672d3ecb9f9e" name="gaad2e408c4a3a6878043d672d3ecb9f9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaad2e408c4a3a6878043d672d3ecb9f9e">&#9670;&#160;</a></span>nmbs_confidentiality_label_get_policy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char * nmbs_confidentiality_label_get_policy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a>&#160;</td>
+          <td class="paramname"><em>label</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">label</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="gad62ee7d760264598c3909b5b917dc9a2" name="gad62ee7d760264598c3909b5b917dc9a2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gad62ee7d760264598c3909b5b917dc9a2">&#9670;&#160;</a></span>nmbs_confidentiality_label_set_classification()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nmbs_confidentiality_label_set_classification </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a>&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>string</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">label</td><td></td></tr>
+    <tr><td class="paramname">string</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gaa3fc8179aa67044f9b39544104f196c6" name="gaa3fc8179aa67044f9b39544104f196c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaa3fc8179aa67044f9b39544104f196c6">&#9670;&#160;</a></span>nmbs_confidentiality_label_set_policy()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void nmbs_confidentiality_label_set_policy </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a>&#160;</td>
+          <td class="paramname"><em>label</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>string</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">label</td><td></td></tr>
+    <tr><td class="paramname">string</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="gafa1f4ff1b0c40543fe4d68b625b59933" name="gafa1f4ff1b0c40543fe4d68b625b59933"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gafa1f4ff1b0c40543fe4d68b625b59933">&#9670;&#160;</a></span>nmbs_confidentiality_labels_delete()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -112,26 +305,91 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void nmbs_confidentiality_labels_delete </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a>&#160;</td>
           <td class="paramname"><em>labels</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
-<p>"delete"s an instance of <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a>. </p>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#gaffe498ab7e1d060460c6e596bf53d93b" title="Creates and returns an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_new</a> </dd></dl>
+<p>"delete"s an instance of nmbs_confidentiality_labels. </p>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#ga9a415bdf60378352a6a25c76727dcb2b" title="Creates and returns an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_new</a> </dd></dl>
 
 </div>
 </div>
-<a id="gaffe498ab7e1d060460c6e596bf53d93b" name="gaffe498ab7e1d060460c6e596bf53d93b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaffe498ab7e1d060460c6e596bf53d93b">&#9670;&#160;</a></span>nmbs_confidentiality_labels_new()</h2>
+<a id="ga95bacb326bd02189c64905cd3bed5a0c" name="ga95bacb326bd02189c64905cd3bed5a0c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga95bacb326bd02189c64905cd3bed5a0c">&#9670;&#160;</a></span>nmbs_confidentiality_labels_emplace_back()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> * nmbs_confidentiality_labels_new </td>
+          <td class="memname"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a> nmbs_confidentiality_labels_emplace_back </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a>&#160;</td>
+          <td class="paramname"><em>labels</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">labels</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="ga1430904f78596a9ed25215b57bf0107e" name="ga1430904f78596a9ed25215b57bf0107e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1430904f78596a9ed25215b57bf0107e">&#9670;&#160;</a></span>nmbs_confidentiality_labels_get()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__c__confidentiality__labels.html#ga5a83f06ce56932413db30975f3811952">nmbs_confidentiality_label_ptr</a> nmbs_confidentiality_labels_get </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a>&#160;</td>
+          <td class="paramname"><em>labels</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">unsigned long&#160;</td>
+          <td class="paramname"><em>i</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">labels</td><td></td></tr>
+    <tr><td class="paramname">i</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to the underlying data. Do not free or delete this! </dd></dl>
+
+</div>
+</div>
+<a id="ga9a415bdf60378352a6a25c76727dcb2b" name="ga9a415bdf60378352a6a25c76727dcb2b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9a415bdf60378352a6a25c76727dcb2b">&#9670;&#160;</a></span>nmbs_confidentiality_labels_new()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a> nmbs_confidentiality_labels_new </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -139,14 +397,14 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Creates and returns an instance of <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a>. </p>
-<dl class="section return"><dt>Returns</dt><dd>Pointer to a "new" <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a> </dd></dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#ga116984d93c84d0d6acea78ec1217f0ec" title="&quot;delete&quot;s an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_delete</a> </dd></dl>
+<p>Creates and returns an instance of nmbs_confidentiality_labels. </p>
+<dl class="section return"><dt>Returns</dt><dd>Pointer to a "new" nmbs_confidentiality_labels </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#gafa1f4ff1b0c40543fe4d68b625b59933" title="&quot;delete&quot;s an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_delete</a> </dd></dl>
 
 </div>
 </div>
-<a id="ga8ee6269114918ae9c4b0d471eeae3f60" name="ga8ee6269114918ae9c4b0d471eeae3f60"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga8ee6269114918ae9c4b0d471eeae3f60">&#9670;&#160;</a></span>nmbs_confidentiality_labels_read_labels()</h2>
+<a id="gaecf4d2b1d8e5601f3361f15ca6885352" name="gaecf4d2b1d8e5601f3361f15ca6885352"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gaecf4d2b1d8e5601f3361f15ca6885352">&#9670;&#160;</a></span>nmbs_confidentiality_labels_read_labels()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -154,7 +412,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="memname">void nmbs_confidentiality_labels_read_labels </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a>&#160;</td>
           <td class="paramname"><em>labels_out</em>, </td>
         </tr>
         <tr>
@@ -171,7 +429,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Reads the <a class="el" href="structnmbs__confidentiality__labels.html" title="C struct for holding lists of nmbs_confidentiality_label.">nmbs_confidentiality_labels</a> from a file, regardless of binding profile. </p>
+<p>Reads the nmbs_confidentiality_labels from a file, regardless of binding profile. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">labels_out</td><td>A pointer to your buffer which we will fill. </td></tr>
@@ -179,12 +437,39 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#gaffe498ab7e1d060460c6e596bf53d93b" title="Creates and returns an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_new</a> </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="group__c__confidentiality__labels.html#ga9a415bdf60378352a6a25c76727dcb2b" title="Creates and returns an instance of nmbs_confidentiality_labels.">nmbs_confidentiality_labels_new</a> </dd></dl>
 
 </div>
 </div>
-<a id="gaf82c8a0dbd8687a24cdd83fb0b8d09a2" name="gaf82c8a0dbd8687a24cdd83fb0b8d09a2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gaf82c8a0dbd8687a24cdd83fb0b8d09a2">&#9670;&#160;</a></span>nmbs_confidentiality_labels_write_labels()</h2>
+<a id="ga1e05eb480cd3443a655b60e48b8e9bb8" name="ga1e05eb480cd3443a655b60e48b8e9bb8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga1e05eb480cd3443a655b60e48b8e9bb8">&#9670;&#160;</a></span>nmbs_confidentiality_labels_size()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned long nmbs_confidentiality_labels_size </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a>&#160;</td>
+          <td class="paramname"><em>labels</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Opaque Accessor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">labels</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
+<a id="ga84a36dfe8ce6f9ddc5c4741b8d6d5817" name="ga84a36dfe8ce6f9ddc5c4741b8d6d5817"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga84a36dfe8ce6f9ddc5c4741b8d6d5817">&#9670;&#160;</a></span>nmbs_confidentiality_labels_write_labels()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -198,7 +483,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="structnmbs__confidentiality__labels.html">nmbs_confidentiality_labels</a> *&#160;</td>
+          <td class="paramtype"><a class="el" href="group__c__confidentiality__labels.html#ga1254a39d7a682b8b6a4702e3f0145d4d">nmbs_confidentiality_labels_ptr</a>&#160;</td>
           <td class="paramname"><em>labels</em>&#160;</td>
         </tr>
         <tr>
@@ -218,7 +503,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd><a class="el" href="namespacenmbs.html#a76e562f4714615733d201a180c14b03c">nmbs::exit_code</a> </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>nmbs::exit_code </dd></dl>
 
 </div>
 </div>

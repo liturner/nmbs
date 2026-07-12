@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['data_5freference_0',['data_reference',['../structnmbs_1_1binding_1_1data__reference.html',1,'nmbs::binding']]],
-  ['deserialise_5flabels_1',['deserialise_labels',['../namespacenmbs_1_1binding_1_1http.html#aa9a11a079f9473dbc002baff3be54ea4',1,'nmbs::binding::http']]],
-  ['directory_5fname_2',['directory_name',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a120844508f0c858d4feb053ef554e7fe',1,'nmbs::confidentiality_label::originator_id']]],
-  ['dns_5fname_3',['dns_name',['../structnmbs_1_1confidentiality__label_1_1originator__id.html#a51272b753b9a533eecb37ca8eafa7dd9',1,'nmbs::confidentiality_label::originator_id']]]
+  ['directory_5fname_0',['directory_name',['../structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#affe9350a71422566d203a391f1e7deea',1,'nmbs::ConfidentialityLabel::OriginatorId']]],
+  ['dns_5fname_1',['dns_name',['../structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#a2da5dad67d4c6def2144b9be79ab0704',1,'nmbs::ConfidentialityLabel::OriginatorId']]]
 ];

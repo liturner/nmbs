@@ -1,4 +1,30 @@
 var searchData=
 [
-  ['get_5fsecurity_5fpolicies_0',['get_security_policies',['../namespacenmbs_1_1spif.html#ab6114e4a42b609c5583f4ef0f60203bb',1,'nmbs::spif']]]
+  ['nmbs_5fbinding_5fflags_5fhas_5flabels_0',['nmbs_binding_flags_has_labels',['../group__c__bindings.html#gac01c6cd467423b482fc7c75f73a8ae90',1,'nmbs_c.h']]],
+  ['nmbs_5fbinding_5fflags_5fread_5fsupport_1',['nmbs_binding_flags_read_support',['../group__c__bindings.html#gab813498471c9038de3a5cfbd52b5874f',1,'nmbs_c.h']]],
+  ['nmbs_5fbinding_5fflags_5fsupports_5flabels_2',['nmbs_binding_flags_supports_labels',['../group__c__bindings.html#gad6aa0a02e7d089dc54e30b58d195d62c',1,'nmbs_c.h']]],
+  ['nmbs_5fcleanup_3',['nmbs_cleanup',['../group__c__api.html#ga05addc0920cea72257e432840c179f8e',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabel_5fget_5fclassification_4',['nmbs_confidentiality_label_get_classification',['../group__c__confidentiality__labels.html#ga4bf0781c5046587411b8e6889e9fedee',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabel_5fget_5fpolicy_5',['nmbs_confidentiality_label_get_policy',['../group__c__confidentiality__labels.html#gaad2e408c4a3a6878043d672d3ecb9f9e',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabel_5fset_5fclassification_6',['nmbs_confidentiality_label_set_classification',['../group__c__confidentiality__labels.html#gad62ee7d760264598c3909b5b917dc9a2',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabel_5fset_5fpolicy_7',['nmbs_confidentiality_label_set_policy',['../group__c__confidentiality__labels.html#gaa3fc8179aa67044f9b39544104f196c6',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5fdelete_8',['nmbs_confidentiality_labels_delete',['../group__c__confidentiality__labels.html#gafa1f4ff1b0c40543fe4d68b625b59933',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5femplace_5fback_9',['nmbs_confidentiality_labels_emplace_back',['../group__c__confidentiality__labels.html#ga95bacb326bd02189c64905cd3bed5a0c',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5fget_10',['nmbs_confidentiality_labels_get',['../group__c__confidentiality__labels.html#ga1430904f78596a9ed25215b57bf0107e',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5fnew_11',['nmbs_confidentiality_labels_new',['../group__c__confidentiality__labels.html#ga9a415bdf60378352a6a25c76727dcb2b',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5fread_5flabels_12',['nmbs_confidentiality_labels_read_labels',['../group__c__confidentiality__labels.html#gaecf4d2b1d8e5601f3361f15ca6885352',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5fread_5flabels_5fwith_5fknown_5fbinding_13',['nmbs_confidentiality_labels_read_labels_with_known_binding',['../nmbs__c_8h.html#a269ac0eb9bd256da2c53b3887c5bfc89',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5fsize_14',['nmbs_confidentiality_labels_size',['../group__c__confidentiality__labels.html#ga1e05eb480cd3443a655b60e48b8e9bb8',1,'nmbs_c.h']]],
+  ['nmbs_5fconfidentiality_5flabels_5fwrite_5flabels_15',['nmbs_confidentiality_labels_write_labels',['../group__c__confidentiality__labels.html#ga84a36dfe8ce6f9ddc5c4741b8d6d5817',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fclassification_5fget_5fname_16',['nmbs_security_classification_get_name',['../group__c__spif.html#ga0b354e08a748b19ffb260ffafccb5597',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fclassifications_5fget_17',['nmbs_security_classifications_get',['../group__c__spif.html#gacdc66fc4e944b370c9d5d70c8599167a',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fclassifications_5fsize_18',['nmbs_security_classifications_size',['../group__c__spif.html#ga8cb0a6214355bf502d32d4c4f3e267b8',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fpolicies_5fdelete_19',['nmbs_security_policies_delete',['../group__c__spif.html#ga92a5aae7d4c7c48c8e4a0d9ec2884d4f',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fpolicies_5fget_20',['nmbs_security_policies_get',['../group__c__spif.html#ga47717cfbce93b4dea8c6ba02c6a5d7a0',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fpolicies_5fnew_21',['nmbs_security_policies_new',['../group__c__spif.html#ga8b13c54e02d292d50af3c7358a807f1a',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fpolicies_5fread_5finstalled_22',['nmbs_security_policies_read_installed',['../group__c__spif.html#ga992290abcf883e0824bc8334942bb87e',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fpolicies_5fsize_23',['nmbs_security_policies_size',['../group__c__spif.html#gaf45d639f55cb3a8218b2d9b9ce2a3d73',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fpolicy_5fget_5fname_24',['nmbs_security_policy_get_name',['../group__c__spif.html#gabde0c1e196d49df46c6e1e4e4c4a0522',1,'nmbs_c.h']]],
+  ['nmbs_5fsecurity_5fpolicy_5fget_5fsecurity_5fclassifications_25',['nmbs_security_policy_get_security_classifications',['../group__c__spif.html#gabff2f3a9efd57ab98eb78fe07163863a',1,'nmbs_c.h']]],
+  ['no_5fbinding_5fsupport_26',['no_binding_support',['../classnmbs_1_1Error.html#affdf2ae01bcb48e389a350f59aedd4cd',1,'nmbs::Error']]]
 ];
