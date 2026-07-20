@@ -204,6 +204,42 @@ const char* nmbs_confidentiality_label_get_policy(nmbs_confidentiality_label_ptr
     }
 }
 
+const char* nmbs_confidentiality_label_get_originator_id(nmbs_confidentiality_label_ptr label) noexcept
+{
+    try
+    {
+        const auto cpp_label = to_cpp_label(label);
+        if (cpp_label == nullptr || !cpp_label->originator_id.has_value())
+        {
+            return nullptr;
+        }
+        return cpp_label->originator_id->value.c_str();
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_label_get_originator_id" << std::endl;
+        return nullptr;
+    }
+}
+
+const char* nmbs_confidentiality_label_get_originator_id_type(nmbs_confidentiality_label_ptr label) noexcept
+{
+    try
+    {
+        const auto cpp_label = to_cpp_label(label);
+        if (cpp_label == nullptr || !cpp_label->originator_id.has_value())
+        {
+            return nullptr;
+        }
+        return cpp_label->originator_id->id_type.c_str();
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_label_get_originator_id_type" << std::endl;
+        return nullptr;
+    }
+}
+
 const char* nmbs_confidentiality_label_get_classification(nmbs_confidentiality_label_ptr label) noexcept
 {
     try
@@ -222,12 +258,35 @@ const char* nmbs_confidentiality_label_get_classification(nmbs_confidentiality_l
     }
 }
 
+const char* nmbs_confidentiality_label_get_creation_date_time(nmbs_confidentiality_label_ptr label) noexcept
+{
+    try
+    {
+        auto cpp_label = to_cpp_label(label);
+        if (cpp_label == nullptr)
+        {
+            return nullptr;
+        }
+        auto timepoint = cpp_label->creation_date_time;
+        // TODO: This is slightly dangerous. I think in reality it is fine for this use case, but academically
+        // speaking its possible to get failures caused here.
+        thread_local auto timepoint_string = std::format(std::locale(""), "{:L%c}", timepoint);
+        return  timepoint_string.c_str();
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_label_get_creation_date_time" << std::endl;
+        return nullptr;
+    }
+}
+
+
 
 void nmbs_confidentiality_label_set_policy(nmbs_confidentiality_label_ptr label, const char* string) noexcept
 {
     try
     {
-        auto cpp_label = to_cpp_label(label);
+        const auto cpp_label = to_cpp_label(label);
         if (!cpp_label) return;
         cpp_label->confidentiality_information.policy_identifier = string;
     }
@@ -241,13 +300,32 @@ void nmbs_confidentiality_label_set_classification(nmbs_confidentiality_label_pt
 {
     try
     {
-        auto cpp_label = to_cpp_label(label);
+        const auto cpp_label = to_cpp_label(label);
         if (!cpp_label) return;
         cpp_label->confidentiality_information.classification = string;
     }
     catch (...)
     {
         std::cerr << "C++ Exception caught in nmbs_confidentiality_label_set_classification" << std::endl;
+    }
+}
+
+int nmbs_confidentiality_label_set_originator_id(nmbs_confidentiality_label_ptr label, const char* id_type, const char* id) noexcept
+{
+    try
+    {
+        const auto cpp_label = to_cpp_label(label);
+        if (!cpp_label || !id_type || !id)
+        {
+            return nmbs::unknown_error;
+        }
+        cpp_label->originator_id = nmbs::ConfidentialityLabel::OriginatorId{id_type, id};
+        return nmbs::success;
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_label_set_originator_id" << std::endl;
+        return nmbs::unknown_error;
     }
 }
 

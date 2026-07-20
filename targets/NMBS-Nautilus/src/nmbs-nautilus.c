@@ -30,6 +30,8 @@
 
 G_DECLARE_FINAL_TYPE(NmbsProperties, nmbs_properties, NMBS, PROPERTIES, GObject)
 
+static GSettings* nmbs_settings = nullptr;
+
 struct _NmbsProperties
 {
     GObject parent_instance;
@@ -57,8 +59,11 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED(
 const char* const nmbs_column_classification_key = "nmbs::marking";
 const char* const nmbs_property_policy_key = "nmbs::policy";
 const char* const nmbs_property_classification_key = "nmbs::classification";
+const char* const nmbs_property_originator_key = "nmbs::originator";
+const char* const nmbs_property_time_key = "nmbs::time";
 const char* const nmbs_file_has_label = "nmbs::file-has-label";
 const char* const nmbs_file_supports_label = "nmbs::file-supports-label";
+const char* const nmbs_settings_originator_key = "originator-id";
 
 // Little helper for getting our bool style flags out
 bool nmbs_get_file_info_bool_attribute(NautilusFileInfo* file, const char* const attribute)
@@ -114,13 +119,16 @@ static NautilusOperationResult nmbs_properties_update_file_info(
             auto const label = nmbs_confidentiality_labels_get(labels, i);
             auto const label_policy = nmbs_confidentiality_label_get_policy(label);
             auto const label_classification = nmbs_confidentiality_label_get_classification(label);
+            auto const label_originator = nmbs_confidentiality_label_get_originator_id(label);
+            auto const label_time = nmbs_confidentiality_label_get_creation_date_time(label);
 
-            if (label == nullptr || !label_policy || !label_classification)
+            // These are mandatory fields for a label.
+            if (!label || !label_policy || !label_classification || !label_time)
             {
                 continue;
             }
 
-            char* classification = g_strconcat(label_policy, ":", label_classification, NULL);
+            char* classification = g_strconcat(label_policy, " ", label_classification, NULL);
             if (!classification)
             {
                 g_free(classification);
@@ -129,6 +137,8 @@ static NautilusOperationResult nmbs_properties_update_file_info(
             nautilus_file_info_add_string_attribute(file, nmbs_column_classification_key, classification);
             nautilus_file_info_add_string_attribute(file, nmbs_property_policy_key, label_policy);
             nautilus_file_info_add_string_attribute(file, nmbs_property_classification_key, label_classification);
+            nautilus_file_info_add_string_attribute(file, nmbs_property_time_key, label_time);
+            if (label_originator) nautilus_file_info_add_string_attribute(file, nmbs_property_originator_key, label_originator);
             nautilus_file_info_add_string_attribute(file, nmbs_file_has_label, "TRUE");
 
             g_free(classification);
@@ -169,6 +179,14 @@ static void on_classify_item_activated(NautilusMenuItem* menu_item, gpointer use
     nmbs_confidentiality_label_set_policy(label, label_policy);
     nmbs_confidentiality_label_set_classification(label, label_classification);
 
+    gchar* originator_id = g_settings_get_string(nmbs_settings, nmbs_settings_originator_key);
+    if (originator_id && *originator_id != '\0')
+    {
+        nmbs_confidentiality_label_set_originator_id(label, "rfc822Name", originator_id);
+        g_free(originator_id);
+
+    }
+
     for (GList* l = files; l != NULL; l = l->next)
     {
         NautilusFileInfo* file = NAUTILUS_FILE_INFO(l->data);
@@ -196,6 +214,34 @@ static void on_classify_item_activated(NautilusMenuItem* menu_item, gpointer use
     g_strfreev(tokens);
     g_free(item_name);
     nmbs_confidentiality_labels_delete(labels);
+}
+
+static void on_clear_classification_item_activated(NautilusMenuItem*, gpointer user_data)
+{
+    GList* files = user_data;
+    for (GList* l = files; l != NULL; l = l->next)
+    {
+        NautilusFileInfo* file = NAUTILUS_FILE_INFO(l->data);
+        auto const location = nautilus_file_info_get_location(file);
+        if (location == NULL)
+        {
+            continue;
+        }
+        char* path_str = g_file_get_path(location);
+        g_object_unref(location);
+
+        const int return_code = -1;//nmbs_confidentiality_labels_clear_labels(path_str);
+        if (return_code == 0)
+        {
+            g_log("NMBS", G_LOG_LEVEL_MESSAGE, "Cleared Classification from %s", path_str);
+        }
+        else
+        {
+            g_log("NMBS", G_LOG_LEVEL_CRITICAL, "Failed to clear Classification on %s. Error code: %d", path_str, return_code);
+        }
+
+        g_free(path_str);
+    }
 }
 
 /// This little guy just exists as the normal use throws warnings. The glib API was a little dirty
@@ -234,14 +280,16 @@ static GList* nmbs_properties_get_file_items(
         return nullptr;
     }
 
+    GList* items = nullptr;
+
     NautilusMenuItem* menu_root_item = nautilus_menu_item_new(
         "NMBS:Menu:Root",
-        "Classify",
+        gettext("Classify"),
         "Tag this file with ADatP-4774 classification metadata",
         nullptr
     );
 
-    auto policies = nmbs_security_policies_new();
+    auto const policies = nmbs_security_policies_new();
     nmbs_security_policies_read_installed(policies);
     NautilusMenu* policy_submenu = nautilus_menu_new();
 
@@ -290,9 +338,30 @@ static GList* nmbs_properties_get_file_items(
     }
     nautilus_menu_item_set_submenu(menu_root_item, policy_submenu);
     nmbs_security_policies_delete(policies);
-
-    GList* items = nullptr;
     items = g_list_append(items, menu_root_item);
+
+    //
+    // Clear Classification Button
+    //
+    if (nmbs_get_file_info_bool_attribute(file, nmbs_file_has_label))
+    {
+        NautilusMenuItem* clear_classification_button = nautilus_menu_item_new(
+            "NMBS:Menu:Policy",
+            gettext("Clear Classification"),
+            "Tag this file with ADatP-4774 classification metadata",
+            nullptr
+        );
+        g_signal_connect_data(
+            clear_classification_button,
+            "activate",
+            G_CALLBACK(on_clear_classification_item_activated),
+            g_list_copy_deep(files, ref_count_increment, NULL),
+            ref_count_decrement,
+            G_CONNECT_DEFAULT
+        );
+        items = g_list_append(items, clear_classification_button);
+    }
+
     return items;
 }
 
@@ -316,23 +385,36 @@ static GList* nmbs_properties_get_models(NautilusPropertiesModelProvider*, GList
 
     char* policy_identifier = nautilus_file_info_get_string_attribute(file, nmbs_property_policy_key);
     char* classification = nautilus_file_info_get_string_attribute(file, nmbs_property_classification_key);
+    char* classification_time = nautilus_file_info_get_string_attribute(file, nmbs_property_time_key);
+    char* originator_id = nautilus_file_info_get_string_attribute(file, nmbs_property_originator_key);
 
-    if (!(policy_identifier && classification))
+    // Mandatory Properties
+    if (!policy_identifier || !classification || !classification_time)
     {
         return nullptr;
     }
 
     GListStore* model_properties = g_list_store_new(NAUTILUS_TYPE_PROPERTIES_ITEM);
-    NautilusPropertiesItem* policy_property = nautilus_properties_item_new("Policy Identifier", policy_identifier);
-    NautilusPropertiesItem* classification_property = nautilus_properties_item_new("Classification", classification);
-
+    NautilusPropertiesItem* policy_property = nautilus_properties_item_new(gettext("Policy Identifier"), policy_identifier);
     g_list_store_append(model_properties, policy_property);
-    g_list_store_append(model_properties, classification_property);
-
     g_object_unref(policy_property);
+
+    NautilusPropertiesItem* classification_property = nautilus_properties_item_new(gettext("Classification"), classification);
+    g_list_store_append(model_properties, classification_property);
     g_object_unref(classification_property);
 
-    NautilusPropertiesModel* classification_model = nautilus_properties_model_new("Classification", G_LIST_MODEL(model_properties));
+    NautilusPropertiesItem* creation_time_property = nautilus_properties_item_new(gettext("Classified On"), classification_time);
+    g_list_store_append(model_properties, creation_time_property);
+    g_object_unref(creation_time_property);
+
+    if (originator_id)
+    {
+        NautilusPropertiesItem* originator_property = nautilus_properties_item_new(gettext("Classified By"), originator_id);
+        g_list_store_append(model_properties, originator_property);
+        g_object_unref(originator_property);
+    }
+
+    NautilusPropertiesModel* classification_model = nautilus_properties_model_new(gettext("Classification"), G_LIST_MODEL(model_properties));
     g_object_unref(model_properties);
 
     items = g_list_append(items, classification_model);
@@ -400,6 +482,7 @@ void nautilus_module_initialize(GTypeModule* module)
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "NMBS_LOCPATH: %s", getenv("NMBS_LOCPATH"));
 
     nmbs_properties_register_type(module);
+    nmbs_settings = g_settings_new("org.gnome.nautilus-nmbs");
 
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "bindtextdomain: %s", bindtextdomain("nmbs", getenv("NMBS_LOCPATH")));
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "textdomain: %s", textdomain("nmbs"));
@@ -408,6 +491,7 @@ void nautilus_module_initialize(GTypeModule* module)
 void nautilus_module_shutdown(void)
 {
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "nautilus_module_shutdown");
+    g_clear_object(&nmbs_settings);
     nmbs_cleanup();
 }
 
