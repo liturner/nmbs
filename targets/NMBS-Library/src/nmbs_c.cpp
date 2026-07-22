@@ -258,6 +258,29 @@ const char* nmbs_confidentiality_label_get_classification(nmbs_confidentiality_l
     }
 }
 
+const char* nmbs_confidentiality_label_get_creation_date_time(nmbs_confidentiality_label_ptr label) noexcept
+{
+    try
+    {
+        auto cpp_label = to_cpp_label(label);
+        if (cpp_label == nullptr)
+        {
+            return nullptr;
+        }
+        auto timepoint = cpp_label->creation_date_time;
+        // TODO: This is slightly dangerous. I think in reality it is fine for this use case, but academically
+        // speaking its possible to get failures caused here.
+        thread_local auto timepoint_string = std::format(std::locale(""), "{:L%c}", timepoint);
+        return  timepoint_string.c_str();
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_confidentiality_label_get_creation_date_time" << std::endl;
+        return nullptr;
+    }
+}
+
+
 
 void nmbs_confidentiality_label_set_policy(nmbs_confidentiality_label_ptr label, const char* string) noexcept
 {

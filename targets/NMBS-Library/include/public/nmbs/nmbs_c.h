@@ -190,6 +190,12 @@ void nmbs_confidentiality_labels_read_labels_with_known_binding(nmbs_confidentia
 /// @brief Opaque Accessor
 /// @ingroup c_confidentiality_labels
 /// @param label
+/// @return
+[[nodiscard]] const char* nmbs_confidentiality_label_get_creation_date_time(nmbs_confidentiality_label_ptr label) NMBS_NOEXCEPT;
+
+/// @brief Opaque Accessor
+/// @ingroup c_confidentiality_labels
+/// @param label
 /// @return Pointer to the underlying data. Do not free or delete this!
 [[nodiscard]] const char* nmbs_confidentiality_label_get_policy(nmbs_confidentiality_label_ptr label) NMBS_NOEXCEPT;
 
