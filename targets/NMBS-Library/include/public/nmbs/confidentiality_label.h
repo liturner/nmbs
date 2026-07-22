@@ -85,14 +85,14 @@ namespace nmbs
 
         struct OriginatorId
         {
-            static constexpr std::string_view rfc822_name = "rfc822Name";
-            static constexpr std::string_view dns_name = "dNSName";
-            static constexpr std::string_view directory_name = "directoryName";
-            static constexpr std::string_view uniform_resource_identifier = "uniformResourceIdentifier";
-            static constexpr std::string_view ip_address = "iPAddress";
-            static constexpr std::string_view x400_address = "x400Address";
-            static constexpr std::string_view jid = "jID";
-            static constexpr std::string_view user_principal_name = "userPrincipalName";
+            inline static const std::string rfc822_name = "rfc822Name";
+            inline static const std::string dns_name = "dNSName";
+            inline static const std::string directory_name = "directoryName";
+            inline static const std::string uniform_resource_identifier = "uniformResourceIdentifier";
+            inline static const std::string ip_address = "iPAddress";
+            inline static const std::string x400_address = "x400Address";
+            inline static const std::string jid = "jID";
+            inline static const std::string user_principal_name = "userPrincipalName";
 
             std::string id_type;
 

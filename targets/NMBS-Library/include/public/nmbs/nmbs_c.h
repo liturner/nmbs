@@ -196,6 +196,18 @@ void nmbs_confidentiality_labels_read_labels_with_known_binding(nmbs_confidentia
 /// @brief Opaque Accessor
 /// @ingroup c_confidentiality_labels
 /// @param label
+/// @return Pointer to the underlying data. Do not free or delete this! May be null.
+[[nodiscard]] const char* nmbs_confidentiality_label_get_originator_id(nmbs_confidentiality_label_ptr label) NMBS_NOEXCEPT;
+
+/// @brief Opaque Accessor
+/// @ingroup c_confidentiality_labels
+/// @param label
+/// @return Pointer to the underlying data. Do not free or delete this! May be null.
+[[nodiscard]] const char* nmbs_confidentiality_label_get_originator_id_type(nmbs_confidentiality_label_ptr label) NMBS_NOEXCEPT;
+
+/// @brief Opaque Accessor
+/// @ingroup c_confidentiality_labels
+/// @param label
 /// @param string
 void nmbs_confidentiality_label_set_policy(nmbs_confidentiality_label_ptr label, const char* string) NMBS_NOEXCEPT;
 
@@ -204,6 +216,14 @@ void nmbs_confidentiality_label_set_policy(nmbs_confidentiality_label_ptr label,
 /// @param label
 /// @param string
 void nmbs_confidentiality_label_set_classification(nmbs_confidentiality_label_ptr label, const char* string) NMBS_NOEXCEPT;
+
+/// @brief Opaque Accessor
+/// @ingroup c_confidentiality_labels
+/// @param label
+/// @param id_type
+/// @param id
+/// @return
+int nmbs_confidentiality_label_set_originator_id(nmbs_confidentiality_label_ptr label, const char* id_type, const char* id) NMBS_NOEXCEPT;
 
 /// @brief Opaque Accessor
 /// @ingroup c_spif
