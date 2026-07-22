@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE schemalist SYSTEM "/usr/share/glib-2.0/schemas/gschema.dtd">
 <schemalist gettext-domain="nmbs">
-    <schema id="org.gnome.nautilus-nmbs">
+    <schema id="org.gnome.nautilus-nmbs" path="/org/gnome/nautilus-nmbs/">
         <key name="originator-id" type="s">
             <default>''</default>
             <summary>Originator RFC822 Name</summary>

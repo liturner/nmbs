@@ -30,6 +30,8 @@
 
 G_DECLARE_FINAL_TYPE(NmbsProperties, nmbs_properties, NMBS, PROPERTIES, GObject)
 
+static GSettings* nmbs_settings = nullptr;
+
 struct _NmbsProperties
 {
     GObject parent_instance;
@@ -60,6 +62,7 @@ const char* const nmbs_property_classification_key = "nmbs::classification";
 const char* const nmbs_property_originator_key = "nmbs::originator";
 const char* const nmbs_file_has_label = "nmbs::file-has-label";
 const char* const nmbs_file_supports_label = "nmbs::file-supports-label";
+const char* const nmbs_settings_originator_key = "originator-id";
 
 // Little helper for getting our bool style flags out
 bool nmbs_get_file_info_bool_attribute(NautilusFileInfo* file, const char* const attribute)
@@ -171,6 +174,14 @@ static void on_classify_item_activated(NautilusMenuItem* menu_item, gpointer use
     char* label_classification = tokens[3];
     nmbs_confidentiality_label_set_policy(label, label_policy);
     nmbs_confidentiality_label_set_classification(label, label_classification);
+
+    gchar* originator_id = g_settings_get_string(nmbs_settings, nmbs_settings_originator_key);
+    if (originator_id && *originator_id != '\0')
+    {
+        nmbs_confidentiality_label_set_originator_id(label, "rfc822Name", originator_id);
+        g_free(originator_id);
+
+    }
 
     for (GList* l = files; l != NULL; l = l->next)
     {
@@ -379,26 +390,27 @@ static GList* nmbs_properties_get_models(NautilusPropertiesModelProvider*, GList
 
     GListStore* model_properties = g_list_store_new(NAUTILUS_TYPE_PROPERTIES_ITEM);
     NautilusPropertiesItem* policy_property = nautilus_properties_item_new(gettext("Policy Identifier"), policy_identifier);
-    NautilusPropertiesItem* classification_property = nautilus_properties_item_new(gettext("Classification"), classification);
-    NautilusPropertiesItem* creation_time_property = nautilus_properties_item_new(gettext("Classified On"), "");
-    NautilusPropertiesItem* binding_property = nautilus_properties_item_new(gettext("Binding Profile"), ""); // TODO: The full URN here! Including version
-
     g_list_store_append(model_properties, policy_property);
-    g_list_store_append(model_properties, classification_property);
-    g_list_store_append(model_properties, creation_time_property);
-    g_list_store_append(model_properties, binding_property);
-
     g_object_unref(policy_property);
+
+    NautilusPropertiesItem* classification_property = nautilus_properties_item_new(gettext("Classification"), classification);
+    g_list_store_append(model_properties, classification_property);
     g_object_unref(classification_property);
+
+    NautilusPropertiesItem* creation_time_property = nautilus_properties_item_new(gettext("Classified On"), "");
+    g_list_store_append(model_properties, creation_time_property);
     g_object_unref(creation_time_property);
-    g_object_unref(binding_property);
 
     if (originator_id)
     {
-        NautilusPropertiesItem* originator_property = nautilus_properties_item_new(gettext("Classified By"), "");
+        NautilusPropertiesItem* originator_property = nautilus_properties_item_new(gettext("Classified By"), originator_id);
         g_list_store_append(model_properties, originator_property);
         g_object_unref(originator_property);
     }
+
+    NautilusPropertiesItem* binding_property = nautilus_properties_item_new(gettext("Binding Profile"), ""); // TODO: The full URN here! Including version
+    g_list_store_append(model_properties, binding_property);
+    g_object_unref(binding_property);
 
     NautilusPropertiesModel* classification_model = nautilus_properties_model_new(gettext("Classification"), G_LIST_MODEL(model_properties));
     g_object_unref(model_properties);
@@ -468,6 +480,7 @@ void nautilus_module_initialize(GTypeModule* module)
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "NMBS_LOCPATH: %s", getenv("NMBS_LOCPATH"));
 
     nmbs_properties_register_type(module);
+    nmbs_settings = g_settings_new("org.gnome.nautilus-nmbs");
 
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "bindtextdomain: %s", bindtextdomain("nmbs", getenv("NMBS_LOCPATH")));
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "textdomain: %s", textdomain("nmbs"));
@@ -476,6 +489,7 @@ void nautilus_module_initialize(GTypeModule* module)
 void nautilus_module_shutdown(void)
 {
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "nautilus_module_shutdown");
+    g_clear_object(&nmbs_settings);
     nmbs_cleanup();
 }
 
