@@ -1,18 +1,18 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="nmbs-forky" type="docker-deploy" factoryName="dockerfile" focusToolWindowBeforeRun="true" server-name="Docker">
+  <configuration default="false" name="nmbs-build" type="docker-deploy" factoryName="dockerfile" focusToolWindowBeforeRun="true" server-name="Docker">
     <deployment type="dockerfile">
       <settings>
-        <option name="imageTag" value="nmbs:forky" />
+        <option name="imageTag" value="nmbs:trixie" />
         <option name="buildArgs">
           <list>
             <DockerEnvVarImpl>
               <option name="name" value="DEBIAN_RELEASE" />
-              <option name="value" value="forky" />
+              <option name="value" value="trixie" />
             </DockerEnvVarImpl>
           </list>
         </option>
-        <option name="buildCliOptions" value="--target nmbs-forky" />
-        <option name="containerName" value="nmbs-forky" />
+        <option name="buildCliOptions" value="--target nmbs-build" />
+        <option name="containerName" value="nmbs-trixie" />
         <option name="contextFolderPath" value="." />
         <option name="sourceFilePath" value="docker/build.dockerfile" />
       </settings>

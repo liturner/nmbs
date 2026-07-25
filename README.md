@@ -38,6 +38,11 @@ man nmbs-verify
 xdg-open /usr/share/doc/libnmbs-dev/html/index.html
 ```
 
+# Versioning
+
+Versions are built using semver. Any kind of "pre-release" like beta or alpha is simply suffixed with a "~x", where 
+x is an integer.
+
 # Building
 
 There are a few methods for building this project. The primary focus is ensuring that the debian package is clean and
