@@ -11,6 +11,6 @@ jobs:
           file: docker/build.dockerfile
           push: false
           tags: turnertech/nmbs:latest
-          target: nmbs-trixie
+          target: nmbs-build
           build-args: |
             DEBIAN_RELEASE=trixie

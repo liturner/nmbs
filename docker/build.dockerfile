@@ -9,24 +9,8 @@ USER nmbs
 WORKDIR /home/nmbs/src/nmbs
 COPY --chown=nmbs:nmbs . .
 
-RUN dpkg-buildpackage
-
-
-FROM debian:trixie AS nmbs-trixie
-RUN --mount=type=bind,from=nmbs-build,source=/home/nmbs/src,target=/tmp/nmbs \
-    apt-get update &&  \
-    apt-get install --no-install-recommends --yes /tmp/nmbs/libnmbs1_1*.deb /tmp/nmbs/nmbs_1*.deb &&  \
-    rm -rf /var/lib/apt/lists/* && \
-    useradd -ms /bin/bash nmbs
-USER nmbs
-
-
-# Running this as a seperate target to allow flexibility with dependencies during the testing package transitions.
-FROM debian:forky AS nmbs-forky
-RUN --mount=type=bind,from=nmbs-build,source=/usr/src/nmbs,target=/tmp/nmbs \
-    apt-get update &&  \
-    apt-get install --no-install-recommends --yes /tmp/nmbs/libnmbs1_1*.deb /tmp/nmbs/nmbs_1*.deb &&  \
-    rm -rf /var/lib/apt/lists/* && \
-    useradd -ms /bin/bash nmbs
-USER nmbs
-
+RUN cmake --preset debug &&  \
+    cmake --build --preset debug && \
+    cmake --preset release && \
+    cmake --build --preset release && \
+    cpack -B build

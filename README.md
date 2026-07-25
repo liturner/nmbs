@@ -41,9 +41,20 @@ xdg-open /usr/share/doc/libnmbs-dev/html/index.html
 # Building
 
 There are a few methods for building this project. The primary focus is ensuring that the debian package is clean and
-stable. This is done as follows (assuming current dir is the project root).
+stable. We use CMake as the primary build tool in the upstream repository, and a mix of git-buildpackage and debhelper
+in the downstream debian packageing repository. Here are a few common commands used.
+
+Some Docs: 
+https://dep-team.pages.debian.net/deps/dep14/
+https://wiki.debian.org/PackagingWithGit
+https://wiki.debian.org/debian/watch
 
 ```shell
+
+# Update source if a new release has been tagged upstream
+gbp import-orig --uscan
+
+# Build the debian package
 dpkg-buildpackage
 lintian ../nmbs*.changes
 
@@ -64,8 +75,8 @@ dch -mi
 dh clean
 ```
 
-Finally, this is a CLion project. The project settings include a "dpkg" target, and just using the GUI will work for
-the CMake Targets.
+Finally, this is a CLion project. The project settings include "dpkg" and "cpack" targets, just using the GUI will work 
+for the CMake Targets.
 
 # Runtime Environment Variables
 
