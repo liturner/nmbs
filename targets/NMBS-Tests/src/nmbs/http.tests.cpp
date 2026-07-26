@@ -27,38 +27,21 @@
 
 TEST(HTTP, DataReferenceContentType)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-    NMBS_REQUIREMENT_TEXT(
-        The DataReference xmime:contentType attribute MUST be present with a value of message/http.)
-
     ASSERT_EQ(nmbs::binding::http::create_data_reference().content_type, "message/http");
 }
 
 TEST(HTTP, DataReferenceURI)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-    NMBS_REQUIREMENT_TEXT(
-        The BDO is a detached BDO that MUST contain at least one MetadataBinding that
-        contains a null DataReference URI attribute value...)
-
     ASSERT_EQ(nmbs::binding::http::create_data_reference().uri, "");
 }
 
 TEST(HTTP, HeaderKey)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-    NMBS_REQUIREMENT_TEXT(
-        In the cases where there is a requirement for BDOs to be located in the HTTP
-        protocol layer it is RECOMMENDED to use the Binding-Data header field)
-
     ASSERT_EQ(nmbs::binding::http::header_key, "Binding-Data");
 }
 
 TEST(HTTP, BindingDataContent)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-    NMBS_REQUIREMENT_TEXT()
-
     std::vector<nmbs::ConfidentialityLabel> labels(1);
     labels[0].confidentiality_information.policy_identifier = "PUBLIC";
     labels[0].confidentiality_information.classification = "UNMARKED";
@@ -73,9 +56,6 @@ TEST(HTTP, BindingDataContent)
 
 TEST(HTTP, SerialiseDeserialise)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-    NMBS_REQUIREMENT_TEXT()
-
     std::vector<nmbs::ConfidentialityLabel> labels(1);
     labels[0].confidentiality_information.policy_identifier = "PUBLIC";
     labels[0].confidentiality_information.classification = "UNMARKED";

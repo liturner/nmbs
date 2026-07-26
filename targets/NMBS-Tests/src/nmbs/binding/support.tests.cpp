@@ -26,13 +26,25 @@
 
 #include <nmbs/test.h>
 
-TEST(ProfileSupport, All)
+class ProfileSupport : public nmbs::test::RootRelevantTest {
+protected:
+    void SetUp() override {
+        if (running_as_root()) {
+            GTEST_SKIP() << "Skipping test: root user bypasses file permission restrictions.";
+        }
+    }
+};
+
+TEST_F(ProfileSupport, All)
 {
     auto support_flags = nmbs::binding::support("/etc/shadow");
 
     ASSERT_EQ(nmbs::binding::ps_none, 0);
     ASSERT_NE(support_flags | nmbs::binding::ps_none, 0);
-    ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
+    if (running_as_root())
+        ASSERT_EQ(support_flags & nmbs::binding::ps_sidecar, 0);
+    else
+        ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
     ASSERT_EQ(support_flags & nmbs::binding::ps_xml, 0);
     ASSERT_EQ(support_flags & nmbs::binding::ps_xmp, 0);
 
@@ -53,7 +65,10 @@ TEST(ProfileSupport, All)
     support_flags = nmbs::binding::support("/usr/share/xml/schema/xml-core/catalog.xml");
 
     ASSERT_NE(support_flags | nmbs::binding::ps_none, 0);
-    ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
+    if (running_as_root())
+        ASSERT_EQ(support_flags & nmbs::binding::ps_sidecar, 0);
+    else
+        ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
     ASSERT_NE(support_flags & nmbs::binding::ps_xml, 0);
     ASSERT_EQ(support_flags & nmbs::binding::ps_xmp, 0);
 
@@ -66,7 +81,7 @@ TEST(ProfileSupport, All)
     ASSERT_EQ(support_flags, nmbs::binding::ps_none);
 }
 
-TEST(ProfileSupport, XMP)
+TEST_F(ProfileSupport, XMP)
 {
     ASSERT_FALSE(nmbs::binding::xmp::supported("/usr/share/xml/schema/xml-core/catalog.xml"));
     ASSERT_FALSE(nmbs::binding::xmp::supported("trash name"));
@@ -75,7 +90,7 @@ TEST(ProfileSupport, XMP)
     ASSERT_TRUE(nmbs::binding::xmp::supported("resources/test-no-xmp.jpg"));
 }
 
-TEST(ProfileSupport, XML)
+TEST_F(ProfileSupport, XML)
 {
     ASSERT_TRUE(nmbs::binding::xml::supported("/usr/share/xml/schema/xml-core/catalog.xml"));
     ASSERT_FALSE(nmbs::binding::xml::supported("trash name"));
@@ -84,7 +99,7 @@ TEST(ProfileSupport, XML)
     ASSERT_FALSE(nmbs::binding::xml::supported("resources/test-no-xmp.jpg"));
 }
 
-TEST(ProfileSupport, Sidecar)
+TEST_F(ProfileSupport, Sidecar)
 {
     ASSERT_TRUE(nmbs::binding::sidecar::supported("/usr/share/xml/schema/xml-core/catalog.xml"));
     ASSERT_FALSE(nmbs::binding::sidecar::supported("trash name"));

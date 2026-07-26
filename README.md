@@ -83,6 +83,25 @@ dh clean
 Finally, this is a CLion project. The project settings include "dpkg" and "cpack" targets, just using the GUI will work 
 for the CMake Targets.
 
+# Testing
+
+The following steps are mandatory for a release. They provide a pretty high level of confidence and should be executed 
+from the [downstream debian source](https://salsa.debian.org/turnertech/nmbs) before publishing:
+
+```shell
+# Build must succeed with a simple dpkg build call. (as a regular user)
+dpkg-buildpackage -k<key>
+
+# lintian must return no errors or warnings. Specific Info may be ignored depending on content.
+lintian --info --pedantic --display-info nmbs_*_amd64.changes
+
+# pbuilder must succeed in building in an isolated environment. (as root) 
+pbuilder sudo build --buildresult <location> <package>.dsc
+
+# TODO: Run lintian on the pbuilder build too
+
+```
+
 # Runtime Environment Variables
 
 

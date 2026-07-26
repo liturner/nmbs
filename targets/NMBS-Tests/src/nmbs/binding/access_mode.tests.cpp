@@ -26,7 +26,17 @@
 
 #include <nmbs/test.h>
 
-TEST(AccessMode, FileSystem)
+class AccessMode : public nmbs::test::RootRelevantTest {
+protected:
+    void SetUp() override {
+        if (running_as_root()) {
+            GTEST_SKIP() << "Skipping test: root user bypasses file permission restrictions.";
+        }
+    }
+};
+
+
+TEST_F(AccessMode, FileSystem)
 {
     auto access_flags = nmbs::binding::access_mode_filesystem("/etc/shadow");
 
@@ -46,7 +56,7 @@ TEST(AccessMode, FileSystem)
     ASSERT_NE(access_flags & nmbs::binding::am_write, 0);
 }
 
-TEST(AccessMode, XMP)
+TEST_F(AccessMode, XMP)
 {
     auto access_flags = nmbs::binding::xmp::access_mode("/etc/shadow");
 
@@ -66,7 +76,7 @@ TEST(AccessMode, XMP)
     ASSERT_NE(access_flags & nmbs::binding::am_write, 0);
 }
 
-TEST(AccessMode, Sidecar)
+TEST_F(AccessMode, Sidecar)
 {
     auto access_flags = nmbs::binding::sidecar::access_mode("/etc/shadow");
 

@@ -83,8 +83,6 @@ TEST(XML, Namespaces)
 
 TEST(XML, DeserialiseSingleLabel)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-
     const nmbs::binding::BindingInformation bdo = nmbs::serialisation::deserialise_binding_information(binding_information_1).value();
 
     // 2026-06-26T12:47:51Z
@@ -100,8 +98,6 @@ TEST(XML, DeserialiseSingleLabel)
 
 TEST(XML, DeserialiseSingleLabelFile)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-
     const nmbs::binding::BindingInformation bdo = nmbs::serialisation::deserialise_binding_information_from_file(std::filesystem::path("resources/xml/test.1.bdo")).value().value();
 
     // 2026-06-26T12:47:51Z
@@ -117,8 +113,6 @@ TEST(XML, DeserialiseSingleLabelFile)
 
 TEST(XML, DeserialiseDualLabel)
 {
-    NMBS_REQUIREMENT_STANDARD_4778_2_A1
-
     const nmbs::binding::BindingInformation bdo = nmbs::serialisation::deserialise_binding_information(binding_information_2).value();
 
     // 2026-06-26T12:47:51Z
