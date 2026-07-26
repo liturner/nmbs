@@ -37,14 +37,17 @@ protected:
 
 TEST_F(ProfileSupport, All)
 {
+    if (!std::filesystem::exists("/etc/shadow"))
+    {
+        // Happens in paswordless systems
+        GTEST_SKIP() << "Skipping test: /etc/shadow does not exist.";
+    }
+
     auto support_flags = nmbs::binding::support("/etc/shadow");
 
     ASSERT_EQ(nmbs::binding::ps_none, 0);
     ASSERT_NE(support_flags | nmbs::binding::ps_none, 0);
-    if (running_as_root())
-        ASSERT_EQ(support_flags & nmbs::binding::ps_sidecar, 0);
-    else
-        ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
+    ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
     ASSERT_EQ(support_flags & nmbs::binding::ps_xml, 0);
     ASSERT_EQ(support_flags & nmbs::binding::ps_xmp, 0);
 
@@ -65,10 +68,7 @@ TEST_F(ProfileSupport, All)
     support_flags = nmbs::binding::support("/usr/share/xml/schema/xml-core/catalog.xml");
 
     ASSERT_NE(support_flags | nmbs::binding::ps_none, 0);
-    if (running_as_root())
-        ASSERT_EQ(support_flags & nmbs::binding::ps_sidecar, 0);
-    else
-        ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
+    ASSERT_NE(support_flags & nmbs::binding::ps_sidecar, 0);
     ASSERT_NE(support_flags & nmbs::binding::ps_xml, 0);
     ASSERT_EQ(support_flags & nmbs::binding::ps_xmp, 0);
 

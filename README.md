@@ -59,6 +59,9 @@ https://wiki.debian.org/debian/watch
 # Update source if a new release has been tagged upstream
 gbp import-orig --uscan
 
+# Update the build log using dch. Make sure source version is correct
+dch -m
+
 # Build the debian package
 dpkg-buildpackage
 lintian ../nmbs*.changes
