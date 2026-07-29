@@ -96,12 +96,17 @@ from the [downstream debian source](https://salsa.debian.org/turnertech/nmbs) be
 dpkg-buildpackage -k<key>
 
 # lintian must return no errors or warnings. Specific Info may be ignored depending on content.
-lintian --info --pedantic --display-info nmbs_*_amd64.changes
+lintian --info --pedantic --display-info ../nmbs_*_amd64.changes
 
-# pbuilder must succeed in building in an isolated environment. (as root) 
-pbuilder sudo build --buildresult <location> <package>.dsc
+# pbuilder must succeed in building in an isolated environment
+sudo pbuilder create --distribution sid
+origtargz
+pdebuild --auto-debsign --buildresult ..
+lintian --info --pedantic --display-info ../nmbs_*_amd64.changes
 
-# TODO: Run lintian on the pbuilder build too
+# Basic install and check
+sudo apt install ./nmbs_*_amd64.deb ./libnmbs1_*_amd64.deb
+nautilus -q
 
 ```
 
