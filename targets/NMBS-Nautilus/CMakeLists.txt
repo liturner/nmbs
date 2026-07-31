@@ -17,6 +17,8 @@ set_target_properties(NMBS-Nautilus PROPERTIES
 target_include_directories(NMBS-Nautilus PRIVATE
         ${GLIB_INCLUDE_DIRS}
         ${NAUTILUS_INCLUDE_DIRS}
+        # TODO: Remove once C API is public
+        ${CMAKE_CURRENT_SOURCE_DIR}/../NMBS-Library/include/private
 )
 
 # Compiler options (fPIC is automatically handled by CMake for MODULE/SHARED libraries)

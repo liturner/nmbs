@@ -1,8 +1,8 @@
-/// @file basic.tests.cpp
-/// @brief Misc tests
+/// @file example1.cpp
+/// @brief Minimal example of using the NMBS-Library to write and read from an image.
 ///
 /// @author Luke Ian Turner
-/// @date 2026-06-10
+/// @date 2026-08-02
 /// @copyright Copyright (c) 2026 Luke Ian Turner
 /// @copyright
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,23 +23,36 @@
 /// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 /// SOFTWARE.
 
-#include <nmbs/test.h>
+#include <iostream>
+#include <nmbs/nmbs.h>
 
-TEST(XMP, Read)
+int main()
 {
-    const auto binding_information = nmbs::read_binding("resources/test-public-unmarked.jpg").value().value();
-    ASSERT_EQ(binding_information.labels.size(), 1);
-    ASSERT_EQ(binding_information.labels[0].label_type, nmbs::ConfidentialityLabel::originator);
-    ASSERT_EQ(binding_information.labels[0].confidentiality_information.policy_identifier, "PUBLIC");
-    ASSERT_EQ(binding_information.labels[0].confidentiality_information.classification, "UNMARKED");
-    nmbs::cleanup();
-}
+    const std::filesystem::path file{"my-image.jpg"};
 
-TEST(Sidecar, Write)
-{
     std::vector<nmbs::ConfidentialityLabel> labels(1);
     labels[0].confidentiality_information.policy_identifier = "PUBLIC";
     labels[0].confidentiality_information.classification = "UNMARKED";
-    auto response = nmbs::binding::sidecar::write("resources/test-no-xmp.jpg", labels);
-    ASSERT_NE(response, "");
+
+    if (const auto output = nmbs::write_labels(file, labels); !output.has_value())
+    {
+        std::cerr << output.error().message() << std::endl;
+        return output.error().code();
+    }
+
+    if (const auto result = nmbs::read_binding(file); result && *result)
+    {
+        for (const nmbs::binding::BindingInformation& binding = **result; const auto& label : binding.labels)
+        {
+            std::cout << label.confidentiality_information.policy_identifier << " " <<
+                label.confidentiality_information.classification << std::endl;
+        }
+        return nmbs::ExitCode::success;
+    }
+    else if (!result)
+    {
+        std::cerr << result.error().message() << std::endl;
+        return result.error().code();
+    }
+    return nmbs::ExitCode::no_label_present;
 }

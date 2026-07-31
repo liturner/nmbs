@@ -108,6 +108,27 @@ lintian --info --pedantic --display-info ../nmbs_*_amd64.changes
 sudo apt install ./nmbs_*_amd64.deb ./libnmbs1_*_amd64.deb
 nautilus -q
 
+# Check d/watch is working
+uscan -v --no-download
+
+```
+
+## Nautilus Development
+
+It is quite easy to develop for Nautilus. Quite simply, symlink the debug .so to the nautilus extensions folder.
+Important to know is that Nautilus runs with a daemon in the background. You must sometimes kill this or the module
+will not reload.
+
+Check the run configurations of NMBS-Nautilus to see how to Debug. In CLion this is stored in git, so just debug
+the target to start Nautilus with gdb.
+```shell
+nautilus -q
+```
+```shell
+sudo ln -s $PWD/build/debug/targets/NMBS-Nautilus/libnmbs-nautilusd.so /usr/lib/x86_64-linux-gnu/nautilus/extensions-4/libnmbs-nautilus.so 
+```
+```shell
+sudo rm /usr/lib/x86_64-linux-gnu/nautilus/extensions-4/libnmbs-nautilus.so
 ```
 
 # Runtime Environment Variables

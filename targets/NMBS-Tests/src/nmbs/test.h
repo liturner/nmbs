@@ -26,6 +26,7 @@
 #pragma once
 
 #include <gtest/gtest.h>
+#include <random>
 
 #include "nmbs/nmbs.h"
 #include "nmbs/nmbs_private.h"
@@ -40,4 +41,39 @@ namespace nmbs::test
             return geteuid() == 0;
         }
     };
+
+    class IsolatedResourcesTest : public ::testing::Test {
+    protected:
+        std::filesystem::path temp_test_dir_;
+        std::filesystem::path source_resources_dir_ = std::filesystem::absolute("resources");
+
+        void SetUp() override {
+            ASSERT_TRUE(std::filesystem::exists(source_resources_dir_))
+                << "Source resources folder not found at: " << source_resources_dir_;
+
+            const std::filesystem::path temp_base = std::filesystem::temp_directory_path();
+
+            // Generate a random unique folder name to prevent parallel test collisions
+            std::random_device rd;
+            std::mt19937 gen(rd());
+            std::uniform_int_distribution<uint64_t> dis;
+            const std::string unique_dir_name = "test_resources_" + std::to_string(dis(gen));
+            temp_test_dir_ = temp_base / unique_dir_name;
+            std::filesystem::create_directories(temp_test_dir_);
+
+            std::filesystem::copy(source_resources_dir_, temp_test_dir_ / "resources", std::filesystem::copy_options::recursive);
+        }
+
+        void TearDown() override {
+            if (std::filesystem::exists(temp_test_dir_)) {
+                std::filesystem::remove_all(temp_test_dir_);
+            }
+        }
+
+        // Helper function so your individual tests can easily find the copied files
+        [[nodiscard]] std::filesystem::path get_temp_resources_dir() const {
+            return temp_test_dir_ / "resources";
+        }
+    };
+
 }

@@ -52,14 +52,7 @@ namespace nmbs::binding::xmp
         }
     }
 
-
-    Expected<BindingInformation> read(const std::filesystem::path& path)
-    {
-        return read_xml(path).and_then(nmbs::serialisation::deserialise_binding_information);
-    }
-
-
-    Expected<std::string> read_xml(const std::filesystem::path& path)
+    Expected<void> remove(const std::filesystem::path& path)
     {
         try
         {
@@ -85,6 +78,64 @@ namespace nmbs::binding::xmp
             if (xmp_iter == xmp_data.end())
             {
                 return std::unexpected(Error::xmp_key_not_found());
+            }
+
+            xmp_data.erase(xmp_iter);
+            image->writeMetadata();
+            return {};
+        }
+        catch (const Exiv2::Error& e) {
+            return std::unexpected(Error::unexpected("Exiv2::Error: " + std::string(e.what())));
+        }
+    }
+
+
+    Expected<std::optional<BindingInformation>> read(const std::filesystem::path& path)
+    {
+        return read_xml(path)
+            .and_then([](auto optional_xml) -> Expected<std::optional<BindingInformation>>
+            {
+                if (!optional_xml.has_value())
+                {
+                    return std::nullopt;
+                }
+                auto binding_information = serialisation::deserialise_binding_information(optional_xml.value());
+                if (!binding_information.has_value())
+                {
+                    return std::unexpected(binding_information.error());
+                }
+                binding_information->internal_metadata.binding_profile = profile_version_identifier;
+                return std::optional<BindingInformation>(std::move(binding_information.value()));
+            });
+    }
+
+
+    Expected<std::optional<std::string>> read_xml(const std::filesystem::path& path)
+    {
+        try
+        {
+            Exiv2::XmpProperties::registerNs(std::string(s4778_xmp_namespace), std::string(s4778_xmp_prefix));
+            const Exiv2::XmpKey s4778_key{std::string(s4778_xmp_prefix), std::string(s4778_xmp_key)};
+            const auto image = Exiv2::ImageFactory::open(path.string());
+            if (image.get() == nullptr)
+            {
+                return std::unexpected(Error::file_not_found());
+            }
+            image->readMetadata();
+
+            // This function must assume XMP is here. It is an exception if not. The user may be trying to read
+            // a file with no XMP support, so it is NOT a case for returning nullopt.
+            Exiv2::XmpData& xmp_data = image->xmpData();
+            if (xmp_data.empty())
+            {
+                return std::nullopt;
+            }
+
+            // Here we have XMP, but no label. It's valid to return nullopt
+            const auto xmp_iter = xmp_data.findKey(s4778_key);
+            if (xmp_iter == xmp_data.end())
+            {
+                return std::nullopt;
             }
 
             const auto xmp_value = xmp_iter->getValue();

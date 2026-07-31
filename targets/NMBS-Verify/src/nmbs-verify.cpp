@@ -58,22 +58,34 @@ int main(const int argc, char* argv[]) {
     try
     {
         if (program["--raw"] == true) {
-            if (const auto raw_xml = nmbs::read_binding_xml(file); raw_xml.has_value())
+            const auto raw_xml = nmbs::read_binding_xml(file);
+            if (!raw_xml.has_value())
             {
-                std::cout << raw_xml.value() << std::endl;
+                std::cerr << raw_xml.error().message() << std::endl;
+                return raw_xml.error().code();
+            }
+            if (!raw_xml.value().has_value())
+            {
                 return nmbs::ExitCode::success;
             }
-            std::cerr << "no label was present on the provided file" << std::endl;
-            return nmbs::ExitCode::no_label_present;
+            std::cout << raw_xml.value().value() << std::endl;
+            return nmbs::ExitCode::success;
         }
-        if (const auto labels = nmbs::read_labels(file); labels.has_value())
+        const auto binding = nmbs::read_binding(file);
+        if (!binding.has_value())
         {
-            for (const auto& label : labels.value())
-            {
-                std::cout << label.confidentiality_information.policy_identifier << " " << label.confidentiality_information.classification << std::endl;
-                return nmbs::ExitCode::success;
-            }
+            std::cerr << binding.error().message() << std::endl;
+            return binding.error().code();
         }
+        if (!binding.value().has_value())
+        {
+            return nmbs::ExitCode::success;
+        }
+        for (const auto& label : binding.value().value().labels)
+        {
+            std::cout << label.confidentiality_information.policy_identifier << " " << label.confidentiality_information.classification << std::endl;
+        }
+        return nmbs::ExitCode::success;
     }
     catch (const std::exception& e)
     {

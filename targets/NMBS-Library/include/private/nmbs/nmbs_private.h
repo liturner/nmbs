@@ -36,18 +36,6 @@ namespace nmbs
 {
     namespace binding
     {
-        struct DataReference
-        {
-            std::string uri;
-            std::optional<std::string> content_type;
-        };
-
-        struct BindingInformation
-        {
-            std::vector<ConfidentialityLabel> labels;
-            DataReference reference;
-        };
-
         /// @brief XML namespace defined by ADatP‑4774 Ed. A, Ver. 1.
         ///
         /// This constant identifies the official URN for the Confidentiality Metadata
@@ -112,6 +100,9 @@ namespace nmbs
             return binding_flags & check;
         }
 
+        /// @brief Detects the Read and Write possibilities of the path for the current user.
+        /// @param path
+        /// @return flags with bits set for read or write.
         [[nodiscard]] AccessMode access_mode_filesystem(const std::filesystem::path& path);
 
         namespace xmp
@@ -164,18 +155,20 @@ namespace nmbs
             /// existing files.
             inline constexpr std::string_view s4778_xmp_key = "bindingInformation";
 
-            [[nodiscard]] constexpr DataReference create_data_reference()
+            [[nodiscard]] constexpr BindingInformation::DataReference create_data_reference()
             {
-                DataReference reference;
+                BindingInformation::DataReference reference;
                 reference.uri = "";
                 return reference;
             }
 
             [[nodiscard]] AccessMode access_mode(const std::filesystem::path& path);
 
-            [[nodiscard]] Expected<BindingInformation> read(const std::filesystem::path& path);
+            Expected<void> remove(const std::filesystem::path& path);
 
-            [[nodiscard]] Expected<std::string> read_xml(const std::filesystem::path& path);
+            [[nodiscard]] Expected<std::optional<BindingInformation>> read(const std::filesystem::path& path);
+
+            [[nodiscard]] Expected<std::optional<std::string>> read_xml(const std::filesystem::path& path);
 
             [[nodiscard]] bool supported(const std::filesystem::path& path);
 
@@ -191,9 +184,11 @@ namespace nmbs
 
             [[nodiscard]] AccessMode access_mode(const std::filesystem::path& path);
 
-            [[nodiscard]] std::expected<BindingInformation, Error> read(const std::filesystem::path& path);
+            [[nodiscard]] Expected<std::optional<BindingInformation>> read(const std::filesystem::path& path);
 
-            [[nodiscard]] Expected<std::string> read_xml(const std::filesystem::path& path);
+            [[nodiscard]] Expected<std::optional<std::string>> read_xml(const std::filesystem::path& path);
+
+            Expected<void> remove(const std::filesystem::path& path);
 
             [[nodiscard]] bool supported(const std::filesystem::path& path);
 
@@ -215,9 +210,9 @@ namespace nmbs
             /// This factory function handles the creation and initial configuration of a
             /// data_reference structure, ensuring the default content type is properly assigned.
             /// @return A fully initialized binding::data_reference object.
-            [[nodiscard]] constexpr DataReference create_data_reference()
+            [[nodiscard]] constexpr BindingInformation::DataReference create_data_reference()
             {
-                DataReference reference;
+                BindingInformation::DataReference reference;
                 reference.content_type = "message/http";
                 return reference;
             }
@@ -236,11 +231,15 @@ namespace nmbs
 
         namespace xml
         {
+            inline constexpr std::string_view profile_canonical_identifier = "urn:nato:stanag:4778:profile:xml:schema";
+
+            inline constexpr std::string_view profile_version_identifier = "urn:nato:stanag:4778:profile:xml:schema:1:0";
+
             [[nodiscard]] AccessMode access_mode(const std::filesystem::path& path);
 
-            [[nodiscard]] std::expected<BindingInformation, Error> read(const std::filesystem::path& path);
+            [[nodiscard]] Expected<std::optional<BindingInformation>> read(const std::filesystem::path& path);
 
-            [[nodiscard]] Expected<std::string> read_xml(const std::filesystem::path& path);
+            [[nodiscard]] Expected<std::optional<std::string>> read_xml(const std::filesystem::path& path);
 
             [[nodiscard]] bool supported(const std::filesystem::path& path);
 

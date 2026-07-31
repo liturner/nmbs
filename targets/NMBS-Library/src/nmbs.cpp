@@ -154,11 +154,13 @@ namespace nmbs
         return project_version;
     }
 
+
     void cleanup()
     {
         Exiv2::XmpProperties::unregisterNs();
         serialisation::cleanup();
     }
+
 
     Expected<std::string> write_labels(
         const std::filesystem::path& path,
@@ -186,49 +188,39 @@ namespace nmbs
         return std::unexpected(Error::unexpected());
     }
 
-    [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(
-        const std::filesystem::path& path,
-        std::optional<binding::ProfileSupport> binding_support)
-    {
-        std::vector<ConfidentialityLabel> return_labels;
 
+    Expected<std::optional<binding::BindingInformation>> read_binding(const std::filesystem::path& path,
+                                                             std::optional<binding::ProfileSupport> binding_support)
+    {
+        if (!std::filesystem::exists(path))
+        {
+            return std::unexpected(Error::file_not_found());
+        }
         if (!binding_support.has_value())
         {
             binding_support = binding::support(path);
         }
         if (!binding::supports_labels(binding_support.value()))
         {
-            return return_labels;
+            return std::nullopt;
         }
-
         if (binding::supports_xmp(binding_support.value()))
         {
-            if (const auto binding = binding::xmp::read(path); binding.has_value())
-            {
-                return_labels.insert(return_labels.end(), binding->labels.begin(), binding->labels.end());
-            }
+            return binding::xmp::read(path);
         }
-
-        if (binding::supports_sidecar(binding_support.value()))
-        {
-            if (const auto binding = binding::sidecar::read(path); binding.has_value())
-            {
-                return_labels.insert(return_labels.end(), binding->labels.begin(), binding->labels.end());
-            }
-        }
-
         if (binding::supports_xml(binding_support.value()))
         {
-            if (const auto binding = serialisation::deserialise_binding_information_from_file(path); binding.has_value() && binding.value().has_value())
-            {
-                return_labels.insert(return_labels.end(), binding.value().value().labels.begin(), binding.value().value().labels.end());
-            }
+            return binding::xml::read(path);
         }
-
-        return return_labels;
+        if (binding::supports_sidecar(binding_support.value()))
+        {
+            return binding::sidecar::read(path);
+        }
+        return std::nullopt;
     }
 
-    [[nodiscard]] Expected<std::string> read_binding_xml(
+
+    [[nodiscard]] Expected<std::optional<std::string>> read_binding_xml(
         const std::filesystem::path& path,
         std::optional<binding::ProfileSupport> binding_support)
     {
@@ -240,13 +232,37 @@ namespace nmbs
         {
             return std::unexpected(Error::unexpected());;
         }
-
         if (binding::supports_xmp(binding_support.value()))
         {
             return binding::xmp::read_xml(path);
         }
-
+        if (binding::supports_xml(binding_support.value()))
+        {
+            return binding::xml::read_xml(path);
+        }
+        if (binding::supports_sidecar(binding_support.value()))
+        {
+            return binding::sidecar::read_xml(path);
+        }
         return std::unexpected(Error::unexpected());;
+    }
+
+
+    Expected<void> remove_binding(const std::filesystem::path& path, std::optional<binding::ProfileSupport> binding_support)
+    {
+        if (!binding_support.has_value())
+        {
+            binding_support = binding::support(path);
+        }
+        if (binding::supports_sidecar(binding_support.value()))
+        {
+            binding::sidecar::remove(path);
+        }
+        if (binding::supports_xmp(binding_support.value()))
+        {
+            binding::xmp::remove(path);
+        }
+        return {};
     }
 
 

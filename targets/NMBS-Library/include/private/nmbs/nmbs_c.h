@@ -115,6 +115,19 @@ typedef struct nmbs_security_policies* nmbs_security_policies_ptr;
 /// @see nmbs_security_policies_get
 typedef struct nmbs_security_policy* nmbs_security_policy_ptr;
 
+/// @brief Opaque Pointer to a security binding.
+/// @details Note, that the struct type is not implemented! It is used only to ensure type safety.
+/// @ingroup c_spif
+/// @see nmbs_binding_read
+typedef struct nmbs_binding_information* nmbs_binding_information_ptr;
+typedef struct nmbs_binding_information const * nmbs_binding_information_const_ptr;
+
+
+/// @brief
+/// @ingroup c_bindings
+/// @param file
+int nmbs_remove_binding(const char* file) NMBS_NOEXCEPT;
+
 /// Provides flags indicating the binding methods supported or used on the path.
 /// The method does its best to be fast, nonetheless the result should ideally
 /// be cached, as it queries numerous IO APIs to ascertain what is supported.
@@ -128,6 +141,34 @@ typedef struct nmbs_security_policy* nmbs_security_policy_ptr;
 /// @param flags
 /// @return
 [[nodiscard]] bool nmbs_binding_flags_supports_labels(uint32_t flags) NMBS_NOEXCEPT;
+
+/// @brief Creates and returns an instance of nmbs_binding_information.
+/// @ingroup c_bindings
+/// @return Pointer to a "new" nmbs_binding_information
+/// @see nmbs_binding_information_delete
+nmbs_binding_information_ptr nmbs_binding_information_new() NMBS_NOEXCEPT;
+
+/// @brief "delete"s an instance of nmbs_binding_information.
+/// @ingroup c_bindings
+/// @see nmbs_binding_information_new
+void nmbs_binding_information_delete(nmbs_binding_information_ptr binding_information) NMBS_NOEXCEPT;
+
+/// @brief Reads the nmbs_binding_information from a file, regardless of binding profile.
+/// @ingroup c_bindings
+/// @param binding_out A pointer to your buffer which we will fill.
+/// @param file Path to the file to read labels from.
+/// @see nmbs_binding_information_new
+void nmbs_binding_information_read(nmbs_binding_information_ptr binding_out, const char* file) NMBS_NOEXCEPT;
+
+uint32_t nmbs_binding_information_read_with_known_binding(nmbs_binding_information_ptr binding_out, const char* file, uint32_t binding_support) NMBS_NOEXCEPT;
+
+/// @brief Opaque Accessor
+/// @ingroup c_bindings
+/// @param binding
+/// @return Pointer to the underlying data. Do not free or delete this!
+const char* nmbs_binding_information_get_binding_profile(nmbs_binding_information_const_ptr binding) NMBS_NOEXCEPT;
+
+nmbs_confidentiality_labels_ptr nmbs_binding_information_get_labels(nmbs_binding_information_ptr binding) NMBS_NOEXCEPT;
 
 /// @brief
 /// @ingroup c_api
@@ -157,15 +198,6 @@ void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels_ptr labels) 
 /// @return Pointer to the underlying data. Do not free or delete this!
 [[nodiscard]] nmbs_confidentiality_label_ptr nmbs_confidentiality_labels_get(nmbs_confidentiality_labels_ptr labels, unsigned long i) NMBS_NOEXCEPT;
 
-/// @brief Reads the nmbs_confidentiality_labels from a file, regardless of binding profile.
-/// @ingroup c_confidentiality_labels
-/// @param labels_out A pointer to your buffer which we will fill.
-/// @param file Path to the file to read labels from.
-/// @see nmbs_confidentiality_labels_new
-void nmbs_confidentiality_labels_read_labels(nmbs_confidentiality_labels_ptr labels_out, const char* file) NMBS_NOEXCEPT;
-
-void nmbs_confidentiality_labels_read_labels_with_known_binding(nmbs_confidentiality_labels_ptr labels_out, const char* file, uint32_t binding_support) NMBS_NOEXCEPT;
-
 /// @brief Opaque Accessor
 /// @ingroup c_confidentiality_labels
 /// @param labels
@@ -187,11 +219,13 @@ void nmbs_confidentiality_labels_read_labels_with_known_binding(nmbs_confidentia
 /// @return Pointer to the underlying data. Do not free or delete this!
 [[nodiscard]] const char* nmbs_confidentiality_label_get_classification(nmbs_confidentiality_label_ptr label) NMBS_NOEXCEPT;
 
-/// @brief Opaque Accessor
+/// @brief Opaque Generator
 /// @ingroup c_confidentiality_labels
 /// @param label
-/// @return
-[[nodiscard]] const char* nmbs_confidentiality_label_get_creation_date_time(nmbs_confidentiality_label_ptr label) NMBS_NOEXCEPT;
+/// @param out_buffer
+/// @param out_buffer_size
+unsigned int nmbs_confidentiality_label_get_creation_date_time(nmbs_confidentiality_label_ptr label, char* out_buffer,
+                                                               unsigned int out_buffer_size) NMBS_NOEXCEPT;
 
 /// @brief Opaque Accessor
 /// @ingroup c_confidentiality_labels

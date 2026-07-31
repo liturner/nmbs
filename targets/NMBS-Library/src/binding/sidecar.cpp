@@ -63,19 +63,37 @@ namespace nmbs::binding::sidecar
     }
 
 
-    Expected<BindingInformation> read(const std::filesystem::path& path)
+    Expected<std::optional<BindingInformation>> read(const std::filesystem::path& path)
     {
-        return read_xml(path).and_then(nmbs::serialisation::deserialise_binding_information);
+        return read_xml(path)
+            .and_then([](auto optional_xml) -> Expected<std::optional<BindingInformation>>
+            {
+                if (!optional_xml.has_value())
+                {
+                    return std::nullopt;
+                }
+                auto binding_information = serialisation::deserialise_binding_information(optional_xml.value());
+                if (!binding_information.has_value())
+                {
+                    return std::unexpected(binding_information.error());
+                }
+                binding_information->internal_metadata.binding_profile = profile_version_identifier;
+                return std::optional<BindingInformation>(std::move(binding_information.value()));
+            });
     }
 
 
-    Expected<std::string> read_xml(const std::filesystem::path& path)
+    Expected<std::optional<std::string>> read_xml(const std::filesystem::path& path)
     {
         std::filesystem::path bdo_path = path;
         bdo_path += ".bdo";
-        if (!std::filesystem::exists(path) || !std::filesystem::exists(bdo_path)) [[unlikely]]
+        if (!std::filesystem::exists(path)) [[unlikely]]
         {
             return std::unexpected(Error::file_not_found());
+        }
+        if (!std::filesystem::exists(bdo_path))
+        {
+            return std::nullopt;;
         }
 
         if (std::ifstream bdo_file(bdo_path); bdo_file.is_open())
@@ -85,6 +103,19 @@ namespace nmbs::binding::sidecar
             return buffer.str();
         }
         return std::unexpected(Error::unexpected());
+    }
+
+
+    Expected<void> remove(const std::filesystem::path& path)
+    {
+        std::filesystem::path bdo_path = path;
+        bdo_path += ".bdo";
+        if (!std::filesystem::exists(path) || !std::filesystem::exists(bdo_path)) [[unlikely]]
+        {
+            return std::unexpected(Error::file_not_found());
+        }
+        std::filesystem::remove(bdo_path);
+        return {};
     }
 
 

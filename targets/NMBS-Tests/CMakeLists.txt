@@ -4,10 +4,13 @@ configure_file(resources/test-public-unmarked.jpg resources/test-public-unmarked
 configure_file(resources/spif/NATO.spif resources/spif/NATO.spif COPYONLY)
 configure_file(resources/spif/PUBLIC.spif resources/spif/PUBLIC.spif COPYONLY)
 configure_file(resources/xml/test.1.bdo resources/xml/test.1.bdo COPYONLY)
+configure_file(resources/xml/test.1 resources/xml/test.1 COPYONLY)
 
 add_executable(NMBS-Tests
         src/nmbs/binding/access_mode.tests.cpp
+        src/nmbs/binding/remove_binding.tests.cpp
         src/nmbs/binding/support.tests.cpp
+        src/nmbs/c/binding_c.tests.cpp
         src/nmbs/confidentiality_label/confidentiality_label_c.tests.cpp
         src/nmbs/basic.tests.cpp
         src/nmbs/http.tests.cpp
@@ -31,9 +34,7 @@ target_link_libraries(NMBS-Tests
         GTest::gtest_main
 )
 
-gtest_discover_tests(NMBS-Tests
-        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-)
+gtest_discover_tests(NMBS-Tests)
 
 #
 #

@@ -1,3 +1,4 @@
+add_subdirectory(NMBS-Examples)
 add_subdirectory(NMBS-Library)
 add_subdirectory(NMBS-Verify)
 add_subdirectory(NMBS-Set)
@@ -7,6 +8,7 @@ add_subdirectory(NMBS-Tests)
 
 add_dependencies(NMBS-Library doxygen)
 add_dependencies(NMBS-Library NMBS-i18n)
+add_dependencies(NMBS-Tests NMBS-Example1)
 
 #
 # *Targets.cmake and *Config.cmake

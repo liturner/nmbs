@@ -29,6 +29,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <string.h>
 #include <string>
 
 #include "nmbs/exit_code.h"
@@ -37,17 +38,29 @@
 
 namespace
 {
+    [[nodiscard]] nmbs::binding::BindingInformation* to_cpp_binding_information(
+        nmbs_binding_information_ptr in) noexcept
+    {
+        return reinterpret_cast<nmbs::binding::BindingInformation*>(in);
+    }
 
-    [[nodiscard]] std::vector<nmbs::spif::SecurityClassification>* to_cpp_classifications(nmbs_security_classifications_ptr in) noexcept
+    [[nodiscard]] nmbs::binding::BindingInformation const* to_cpp_binding_information(
+        nmbs_binding_information_const_ptr in) noexcept
+    {
+        return reinterpret_cast<nmbs::binding::BindingInformation const*>(in);
+    }
+
+    [[nodiscard]] std::vector<nmbs::spif::SecurityClassification>* to_cpp_classifications(
+        nmbs_security_classifications_ptr in) noexcept
     {
         return reinterpret_cast<std::vector<nmbs::spif::SecurityClassification>*>(in);
     }
 
-    [[nodiscard]] nmbs::spif::SecurityClassification* to_cpp_classification(nmbs_security_classification_ptr in) noexcept
+    [[nodiscard]] nmbs::spif::SecurityClassification* to_cpp_classification(
+        nmbs_security_classification_ptr in) noexcept
     {
         return reinterpret_cast<nmbs::spif::SecurityClassification*>(in);
     }
-
 
     [[nodiscard]] std::vector<nmbs::ConfidentialityLabel>* to_cpp_labels(nmbs_confidentiality_labels_ptr in) noexcept
     {
@@ -74,7 +87,13 @@ namespace
         return static_cast<nmbs::binding::ProfileSupport>(in);
     }
 
-    [[nodiscard]] nmbs_security_classifications_ptr to_c_classifications(std::vector<nmbs::spif::SecurityClassification>* in) noexcept
+    [[nodiscard]] nmbs_binding_information_ptr to_c_binding_information(nmbs::binding::BindingInformation* in) noexcept
+    {
+        return reinterpret_cast<nmbs_binding_information_ptr>(in);
+    }
+
+    [[nodiscard]] nmbs_security_classifications_ptr to_c_classifications(
+        std::vector<nmbs::spif::SecurityClassification>* in) noexcept
     {
         return reinterpret_cast<nmbs_security_classifications_ptr>(in);
     }
@@ -103,40 +122,125 @@ namespace
     {
         return reinterpret_cast<nmbs_security_policy_ptr>(in);
     }
-
 }
 
-void nmbs_confidentiality_labels_read_labels(nmbs_confidentiality_labels_ptr labels_out, const char* file) noexcept
+int nmbs_remove_binding(const char* file) noexcept
 {
     try
     {
-        auto const cpp_labels = to_cpp_labels(labels_out);
-        cpp_labels->clear();
-        if (auto const labels = nmbs::read_labels(std::filesystem::path(std::string(file)), std::nullopt); labels.has_value())
+        if (!file)
         {
-            cpp_labels->insert(cpp_labels->begin(), labels.value().begin(), labels.value().end());
+            return nmbs::ExitCode::file_not_found;
         }
+        auto return_value = nmbs::remove_binding(file);
+        if (return_value.has_value())
+        {
+            return {};
+        }
+        return return_value.error().code();
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in nmbs_confidentiality_labels_read_labels" << std::endl;
+        std::cerr << "C++ Exception caught in nmbs_remove_binding" << std::endl;
+        return false;
     }
 }
 
-void nmbs_confidentiality_labels_read_labels_with_known_binding(nmbs_confidentiality_labels_ptr labels_out, const char* file, uint32_t binding_support) noexcept
+nmbs_binding_information_ptr nmbs_binding_information_new() noexcept
+{
+    return to_c_binding_information(new nmbs::binding::BindingInformation());
+}
+
+void nmbs_binding_information_delete(nmbs_binding_information_ptr binding_information) noexcept
+{
+    delete to_cpp_binding_information(binding_information);
+}
+
+void nmbs_binding_information_read(nmbs_binding_information_ptr binding_out, const char* file) noexcept
 {
     try
     {
-        auto const cpp_labels = to_cpp_labels(labels_out);
-        cpp_labels->clear();
-        if (auto const labels = nmbs::read_labels(std::filesystem::path(std::string(file)), to_cpp_binding_flags(binding_support)); labels.has_value())
+        if (!binding_out || !file)
         {
-            cpp_labels->insert(cpp_labels->begin(), labels.value().begin(), labels.value().end());
+            std::cerr << "Null Pointers passed to nmbs_binding_information_read" << std::endl;
+            return;
         }
+
+        auto cpp_binding_out = to_cpp_binding_information(binding_out);
+        auto binding_information = nmbs::read_binding(file);
+        // TODO: Consider actually checking value here instead of letting it except....
+        *cpp_binding_out = binding_information.value().value();
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in nmbs_confidentiality_labels_read_labels" << std::endl;
+        std::cerr << "C++ Exception caught in nmbs_binding_information_read" << std::endl;
+    }
+}
+
+uint32_t nmbs_binding_information_read_with_known_binding(nmbs_binding_information_ptr binding_out, const char* file,
+                                                      uint32_t binding_support) noexcept
+{
+    try
+    {
+        if (!binding_out || !file)
+        {
+            std::cerr << "Null Pointers passed to nmbs_binding_information_read" << std::endl;
+            return nmbs::invalid_arguments;
+        }
+
+        auto const cpp_binding_out = to_cpp_binding_information(binding_out);
+        auto binding_information = nmbs::read_binding(file, binding_support);
+        if (binding_information.has_value() && binding_information.value().has_value())
+        {
+            *cpp_binding_out = binding_information.value().value();
+            return nmbs::success;
+        }
+        return nmbs::no_label_present;
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_binding_information_read_with_known_binding" << std::endl;
+        return nmbs::unknown_error;
+    }
+}
+
+const char* nmbs_binding_information_get_binding_profile(const nmbs_binding_information_const_ptr binding) noexcept
+{
+    try
+    {
+        if (!binding)
+        {
+            std::cerr << "Null Pointer passed to nmbs_binding_information_get_binding_profile" << std::endl;
+            return nullptr;
+        }
+        const auto cpp_binding = to_cpp_binding_information(binding);
+        return cpp_binding->internal_metadata.binding_profile
+                          .transform([](const auto& str) { return str.c_str(); })
+                          .value_or(nullptr);
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_binding_information_read" << std::endl;
+        return nullptr;
+    }
+}
+
+nmbs_confidentiality_labels_ptr nmbs_binding_information_get_labels(nmbs_binding_information_ptr binding) noexcept
+{
+    try
+    {
+        if (!binding)
+        {
+            std::cerr << "Null Pointer passed to nmbs_binding_information_get_labels" << std::endl;
+            return nullptr;
+        }
+        const auto cpp_binding = to_cpp_binding_information(binding);
+        return to_c_labels(&cpp_binding->labels);
+    }
+    catch (...)
+    {
+        std::cerr << "C++ Exception caught in nmbs_binding_information_get_labels" << std::endl;
+        return nullptr;
     }
 }
 
@@ -168,7 +272,8 @@ nmbs_confidentiality_label_ptr nmbs_confidentiality_labels_emplace_back(nmbs_con
     }
 }
 
-nmbs_confidentiality_label_ptr nmbs_confidentiality_labels_get(nmbs_confidentiality_labels_ptr labels, const unsigned long i) noexcept
+nmbs_confidentiality_label_ptr nmbs_confidentiality_labels_get(nmbs_confidentiality_labels_ptr labels,
+                                                               const unsigned long i) noexcept
 {
     try
     {
@@ -258,28 +363,32 @@ const char* nmbs_confidentiality_label_get_classification(nmbs_confidentiality_l
     }
 }
 
-const char* nmbs_confidentiality_label_get_creation_date_time(nmbs_confidentiality_label_ptr label) noexcept
+unsigned int nmbs_confidentiality_label_get_creation_date_time(nmbs_confidentiality_label_ptr label, char* out_buffer,
+                                                               const unsigned int out_buffer_size) noexcept
 {
     try
     {
-        auto cpp_label = to_cpp_label(label);
+        auto const cpp_label = to_cpp_label(label);
         if (cpp_label == nullptr)
         {
-            return nullptr;
+            return 0;
         }
-        auto timepoint = cpp_label->creation_date_time;
-        // TODO: This is slightly dangerous. I think in reality it is fine for this use case, but academically
-        // speaking its possible to get failures caused here.
-        thread_local auto timepoint_string = std::format(std::locale(""), "{:L%c}", timepoint);
-        return  timepoint_string.c_str();
+        auto const timepoint = cpp_label->creation_date_time;
+        auto timepoint_string = std::format(std::locale(""), "{:L%c}", timepoint);
+
+        if (out_buffer_size > timepoint_string.size())
+        {
+            strcpy(out_buffer, timepoint_string.c_str());
+            return timepoint_string.size();
+        }
+        return 0;
     }
     catch (...)
     {
         std::cerr << "C++ Exception caught in nmbs_confidentiality_label_get_creation_date_time" << std::endl;
-        return nullptr;
+        return 0;
     }
 }
-
 
 
 void nmbs_confidentiality_label_set_policy(nmbs_confidentiality_label_ptr label, const char* string) noexcept
@@ -310,7 +419,8 @@ void nmbs_confidentiality_label_set_classification(nmbs_confidentiality_label_pt
     }
 }
 
-int nmbs_confidentiality_label_set_originator_id(nmbs_confidentiality_label_ptr label, const char* id_type, const char* id) noexcept
+int nmbs_confidentiality_label_set_originator_id(nmbs_confidentiality_label_ptr label, const char* id_type,
+                                                 const char* id) noexcept
 {
     try
     {
@@ -345,7 +455,8 @@ int nmbs_confidentiality_labels_write_labels(const char* file, const nmbs_confid
         }
         return result.error().code();
     }
-    catch (const std::exception& e) {
+    catch (const std::exception& e)
+    {
         std::cerr << "C++ Exception caught in nmbs_write_labels: " << e.what() << std::endl;
         return nmbs::unknown_error;
     }
@@ -358,7 +469,8 @@ int nmbs_confidentiality_labels_write_labels(const char* file, const nmbs_confid
 
 [[nodiscard]] uint32_t nmbs_binding_flags_read_support(const char* file) noexcept
 {
-    if (!file) {
+    if (!file)
+    {
         return 0;
     }
     try
@@ -367,7 +479,8 @@ int nmbs_confidentiality_labels_write_labels(const char* file, const nmbs_confid
         nmbs::binding::ProfileSupport cpp_flags = nmbs::binding::support(target_path);
         return static_cast<uint32_t>(cpp_flags);
     }
-    catch (const std::exception& e) {
+    catch (const std::exception& e)
+    {
         std::cerr << "C++ Exception caught in nmbs_binding_support: " << e.what() << std::endl;
         return 0;
     }
@@ -380,7 +493,6 @@ int nmbs_confidentiality_labels_write_labels(const char* file, const nmbs_confid
 
 [[nodiscard]] nmbs_confidentiality_labels_ptr nmbs_confidentiality_labels_new() noexcept
 {
-
     return to_c_labels(new std::vector<nmbs::ConfidentialityLabel>());
 }
 
@@ -392,11 +504,13 @@ void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels_ptr labels) 
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in during nmbs_confidentiality_labels_delete. High chance of memory leaks!" << std::endl;
+        std::cerr << "C++ Exception caught in during nmbs_confidentiality_labels_delete. High chance of memory leaks!"
+            << std::endl;
     }
 }
 
-[[nodiscard]] unsigned long nmbs_security_classifications_size(nmbs_security_classifications_ptr classifications) noexcept
+[[nodiscard]] unsigned long nmbs_security_classifications_size(
+    nmbs_security_classifications_ptr classifications) noexcept
 {
     try
     {
@@ -411,7 +525,8 @@ void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels_ptr labels) 
     }
 }
 
-[[nodiscard]] nmbs_security_classification_ptr nmbs_security_classifications_get(nmbs_security_classifications_ptr classifications, unsigned long i) noexcept
+[[nodiscard]] nmbs_security_classification_ptr nmbs_security_classifications_get(
+    nmbs_security_classifications_ptr classifications, unsigned long i) noexcept
 {
     try
     {
@@ -426,7 +541,8 @@ void nmbs_confidentiality_labels_delete(nmbs_confidentiality_labels_ptr labels) 
     }
 }
 
-[[nodiscard]] const char* nmbs_security_classification_get_name(nmbs_security_classification_ptr classification) noexcept
+[[nodiscard]] const char* nmbs_security_classification_get_name(
+    nmbs_security_classification_ptr classification) noexcept
 {
     try
     {
@@ -469,11 +585,13 @@ void nmbs_security_policies_delete(nmbs_security_policies_ptr policies) noexcept
     }
     catch (...)
     {
-        std::cerr << "C++ Exception caught in during nmbs_security_policies_delete. High chance of memory leaks!" << std::endl;
+        std::cerr << "C++ Exception caught in during nmbs_security_policies_delete. High chance of memory leaks!" <<
+            std::endl;
     }
 }
 
-[[nodiscard]] nmbs_security_policy_ptr nmbs_security_policies_get(nmbs_security_policies_ptr policies, const unsigned long i) noexcept
+[[nodiscard]] nmbs_security_policy_ptr nmbs_security_policies_get(nmbs_security_policies_ptr policies,
+                                                                  const unsigned long i) noexcept
 {
     try
     {
@@ -520,7 +638,8 @@ void nmbs_security_policies_delete(nmbs_security_policies_ptr policies) noexcept
     }
 }
 
-[[nodiscard]] nmbs_security_classifications_ptr nmbs_security_policy_get_security_classifications(nmbs_security_policy_ptr policy) noexcept
+[[nodiscard]] nmbs_security_classifications_ptr nmbs_security_policy_get_security_classifications(
+    nmbs_security_policy_ptr policy) noexcept
 {
     try
     {

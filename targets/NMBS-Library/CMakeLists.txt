@@ -9,14 +9,15 @@ target_sources(NMBS-Library
         BASE_DIRS include/public
         FILES
         include/public/nmbs/binding.h
+        include/public/nmbs/binding_information.h
         include/public/nmbs/confidentiality_label.h
         include/public/nmbs/exit_code.h
         include/public/nmbs/expected.h
         include/public/nmbs/nmbs.h
-        include/public/nmbs/nmbs_c.h
         PRIVATE
         include/private/nmbs/nmbs_private.h
         include/private/nmbs/spif.h
+        include/private/nmbs/nmbs_c.h
         src/binding/binding.cpp
         src/binding/http.cpp
         src/binding/sidecar.cpp

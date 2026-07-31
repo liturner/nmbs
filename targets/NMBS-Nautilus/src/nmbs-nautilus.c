@@ -56,11 +56,16 @@ G_DEFINE_DYNAMIC_TYPE_EXTENDED(
  *
  */
 
+const char* nmbs_binding_xmp_profile_version_identifier = "urn:nato:stanag:4778:profile:xmp:1:1";
+const char* nmbs_binding_sidecar_profile_version_identifier = "urn:nato:stanag:4778:profile:sidecar:1:2";
+
 const char* const nmbs_column_classification_key = "nmbs::marking";
 const char* const nmbs_property_policy_key = "nmbs::policy";
+const char* const nmbs_property_binding_profile_key = "nmbs::binding-profile";
 const char* const nmbs_property_classification_key = "nmbs::classification";
 const char* const nmbs_property_originator_key = "nmbs::originator";
 const char* const nmbs_property_time_key = "nmbs::time";
+const char* const nmbs_property_can_delete_key = "nmbs::can-delete-binding";
 const char* const nmbs_file_has_label = "nmbs::file-has-label";
 const char* const nmbs_file_supports_label = "nmbs::file-supports-label";
 const char* const nmbs_settings_originator_key = "originator-id";
@@ -76,6 +81,11 @@ bool nmbs_get_file_info_bool_attribute(NautilusFileInfo* file, const char* const
     }
     g_free(attribute_string);
     return false;
+}
+
+void nmbs_add_file_info_bool_attribute(NautilusFileInfo* file, const char* const attribute, const bool value)
+{
+    nautilus_file_info_add_string_attribute(file, attribute, value ? "TRUE" : "FALSE");
 }
 
 // NautilusInfoProvider Implementation
@@ -109,21 +119,37 @@ static NautilusOperationResult nmbs_properties_update_file_info(
             nautilus_file_info_add_string_attribute(file, nmbs_file_supports_label, "TRUE");
         }
 
-        g_log("NMBS", G_LOG_LEVEL_DEBUG, "Reading Labels for %s", path_str);
-        auto const labels = nmbs_confidentiality_labels_new();
-        nmbs_confidentiality_labels_read_labels_with_known_binding(labels, path_str, flags);
+        g_log("NMBS", G_LOG_LEVEL_DEBUG, "Reading Binding for %s", path_str);
+        auto const binding = nmbs_binding_information_new();
+        nmbs_binding_information_read_with_known_binding(binding, path_str, flags);
         g_free(path_str);
 
+        auto const binding_profile = nmbs_binding_information_get_binding_profile(binding);
+        if (binding_profile)
+        {
+            nautilus_file_info_add_string_attribute(file, nmbs_property_binding_profile_key, binding_profile);
+        }
+
+        if (binding_profile &&
+            (strcmp(binding_profile, nmbs_binding_sidecar_profile_version_identifier) == 0 ||
+                strcmp(binding_profile, nmbs_binding_xmp_profile_version_identifier) == 0))
+        {
+            nmbs_add_file_info_bool_attribute(file, nmbs_property_can_delete_key, true);
+        }
+
+        const auto labels = nmbs_binding_information_get_labels(binding);
         for (unsigned long i = 0; i < nmbs_confidentiality_labels_size(labels); ++i)
         {
             auto const label = nmbs_confidentiality_labels_get(labels, i);
             auto const label_policy = nmbs_confidentiality_label_get_policy(label);
             auto const label_classification = nmbs_confidentiality_label_get_classification(label);
             auto const label_originator = nmbs_confidentiality_label_get_originator_id(label);
-            auto const label_time = nmbs_confidentiality_label_get_creation_date_time(label);
+            char label_time[100];
+            auto const label_time_size = nmbs_confidentiality_label_get_creation_date_time(
+                label, label_time, sizeof(label_time));
 
             // These are mandatory fields for a label.
-            if (!label || !label_policy || !label_classification || !label_time)
+            if (!label || !label_policy || !label_classification || label_time_size == 0)
             {
                 continue;
             }
@@ -138,12 +164,14 @@ static NautilusOperationResult nmbs_properties_update_file_info(
             nautilus_file_info_add_string_attribute(file, nmbs_property_policy_key, label_policy);
             nautilus_file_info_add_string_attribute(file, nmbs_property_classification_key, label_classification);
             nautilus_file_info_add_string_attribute(file, nmbs_property_time_key, label_time);
-            if (label_originator) nautilus_file_info_add_string_attribute(file, nmbs_property_originator_key, label_originator);
+            if (label_originator)
+                nautilus_file_info_add_string_attribute(
+                    file, nmbs_property_originator_key, label_originator);
             nautilus_file_info_add_string_attribute(file, nmbs_file_has_label, "TRUE");
 
             g_free(classification);
         }
-        nmbs_confidentiality_labels_delete(labels);
+        nmbs_binding_information_delete(binding);
     }
     return NAUTILUS_OPERATION_COMPLETE;
 }
@@ -170,7 +198,7 @@ static void on_classify_item_activated(NautilusMenuItem* menu_item, gpointer use
 
     char* item_name = nullptr;
     g_object_get(G_OBJECT(menu_item), "name", &item_name, NULL);
-    char **tokens = g_strsplit(item_name, ":", 4);
+    char** tokens = g_strsplit(item_name, ":", 4);
 
     nmbs_confidentiality_labels_ptr labels = nmbs_confidentiality_labels_new();
     nmbs_confidentiality_label_ptr label = nmbs_confidentiality_labels_emplace_back(labels);
@@ -184,7 +212,6 @@ static void on_classify_item_activated(NautilusMenuItem* menu_item, gpointer use
     {
         nmbs_confidentiality_label_set_originator_id(label, "rfc822Name", originator_id);
         g_free(originator_id);
-
     }
 
     for (GList* l = files; l != NULL; l = l->next)
@@ -205,7 +232,8 @@ static void on_classify_item_activated(NautilusMenuItem* menu_item, gpointer use
         }
         else
         {
-            g_log("NMBS", G_LOG_LEVEL_CRITICAL, "Failed to classify %s as %s:%s. Error code: %d", path_str, label_policy, label_classification, return_code);
+            g_log("NMBS", G_LOG_LEVEL_CRITICAL, "Failed to classify %s as %s:%s. Error code: %d", path_str,
+                  label_policy, label_classification, return_code);
         }
 
         g_free(path_str);
@@ -230,14 +258,15 @@ static void on_clear_classification_item_activated(NautilusMenuItem*, gpointer u
         char* path_str = g_file_get_path(location);
         g_object_unref(location);
 
-        const int return_code = -1;//nmbs_confidentiality_labels_clear_labels(path_str);
+        const int return_code = nmbs_remove_binding(path_str);
         if (return_code == 0)
         {
             g_log("NMBS", G_LOG_LEVEL_MESSAGE, "Cleared Classification from %s", path_str);
         }
         else
         {
-            g_log("NMBS", G_LOG_LEVEL_CRITICAL, "Failed to clear Classification on %s. Error code: %d", path_str, return_code);
+            g_log("NMBS", G_LOG_LEVEL_CRITICAL, "Failed to clear Classification on %s. Error code: %d", path_str,
+                  return_code);
         }
 
         g_free(path_str);
@@ -282,68 +311,75 @@ static GList* nmbs_properties_get_file_items(
 
     GList* items = nullptr;
 
-    NautilusMenuItem* menu_root_item = nautilus_menu_item_new(
-        "NMBS:Menu:Root",
-        gettext("Classify"),
-        "Tag this file with ADatP-4774 classification metadata",
-        nullptr
-    );
-
-    auto const policies = nmbs_security_policies_new();
-    nmbs_security_policies_read_installed(policies);
-    NautilusMenu* policy_submenu = nautilus_menu_new();
-
-    for (unsigned long i = 0; i < nmbs_security_policies_size(policies); ++i)
+    // If there is an existing label we cannot delete (e.g. embedded XML) then do not offer
+    // to classify the file. We do not want to result in duplicate classification.
+    if (!(nmbs_get_file_info_bool_attribute(file, nmbs_file_has_label) &&
+        !nmbs_get_file_info_bool_attribute(file, nmbs_property_can_delete_key)))
     {
-        auto const policy = nmbs_security_policies_get(policies, i);
-        auto const policy_name = nmbs_security_policy_get_name(policy);
-        auto const policy_classifications = nmbs_security_policy_get_security_classifications(policy);
-
-        char menu_name[128] = "NMBS:Menu:Policy:";
-        NautilusMenuItem* policy_submenu_item = nautilus_menu_item_new(
-            strncat(menu_name, policy_name, sizeof(menu_name) - strlen(menu_name) - 1),
-            policy_name,
+        NautilusMenuItem* menu_root_item = nautilus_menu_item_new(
+            "NMBS:Menu:Root",
+            gettext("Classify"),
             "Tag this file with ADatP-4774 classification metadata",
             nullptr
         );
-        nautilus_menu_append_item(policy_submenu, policy_submenu_item);
-        NautilusMenu* classification_submenu = nautilus_menu_new();
-        nautilus_menu_item_set_submenu(policy_submenu_item, classification_submenu);
 
-        for (unsigned long j = 0; j < nmbs_security_classifications_size(policy_classifications); ++j)
+        auto const policies = nmbs_security_policies_new();
+        nmbs_security_policies_read_installed(policies);
+        NautilusMenu* policy_submenu = nautilus_menu_new();
+
+        for (unsigned long i = 0; i < nmbs_security_policies_size(policies); ++i)
         {
-            auto const policy_classification = nmbs_security_classifications_get(policy_classifications, j);
-            auto const policy_classification_name = nmbs_security_classification_get_name(policy_classification);
+            auto const policy = nmbs_security_policies_get(policies, i);
+            auto const policy_name = nmbs_security_policy_get_name(policy);
+            auto const policy_classifications = nmbs_security_policy_get_security_classifications(policy);
 
-            char classification_name[128] = "NMBS:Classification:";
-            strcat(classification_name, policy_name);
-            strcat(classification_name, ":");
-            strcat(classification_name, policy_classification_name);
-            NautilusMenuItem* classification_submenu_item = nautilus_menu_item_new(
-                classification_name,
-                policy_classification_name,
+            char menu_name[128] = "NMBS:Menu:Policy:";
+            NautilusMenuItem* policy_submenu_item = nautilus_menu_item_new(
+                strncat(menu_name, policy_name, sizeof(menu_name) - strlen(menu_name) - 1),
+                policy_name,
                 "Tag this file with ADatP-4774 classification metadata",
                 nullptr
             );
-            nautilus_menu_append_item(classification_submenu, classification_submenu_item);
-            g_signal_connect_data(
-                classification_submenu_item,
-                "activate",
-                G_CALLBACK(on_classify_item_activated),
-                g_list_copy_deep(files, ref_count_increment, NULL),
-                ref_count_decrement,
-                G_CONNECT_DEFAULT
-            );
+            nautilus_menu_append_item(policy_submenu, policy_submenu_item);
+            NautilusMenu* classification_submenu = nautilus_menu_new();
+            nautilus_menu_item_set_submenu(policy_submenu_item, classification_submenu);
+
+            for (unsigned long j = 0; j < nmbs_security_classifications_size(policy_classifications); ++j)
+            {
+                auto const policy_classification = nmbs_security_classifications_get(policy_classifications, j);
+                auto const policy_classification_name = nmbs_security_classification_get_name(policy_classification);
+
+                char classification_name[128] = "NMBS:Classification:";
+                strcat(classification_name, policy_name);
+                strcat(classification_name, ":");
+                strcat(classification_name, policy_classification_name);
+                NautilusMenuItem* classification_submenu_item = nautilus_menu_item_new(
+                    classification_name,
+                    policy_classification_name,
+                    "Tag this file with ADatP-4774 classification metadata",
+                    nullptr
+                );
+                nautilus_menu_append_item(classification_submenu, classification_submenu_item);
+                g_signal_connect_data(
+                    classification_submenu_item,
+                    "activate",
+                    G_CALLBACK(on_classify_item_activated),
+                    g_list_copy_deep(files, ref_count_increment, NULL),
+                    ref_count_decrement,
+                    G_CONNECT_DEFAULT
+                );
+            }
         }
+        nautilus_menu_item_set_submenu(menu_root_item, policy_submenu);
+        nmbs_security_policies_delete(policies);
+        items = g_list_append(items, menu_root_item);
     }
-    nautilus_menu_item_set_submenu(menu_root_item, policy_submenu);
-    nmbs_security_policies_delete(policies);
-    items = g_list_append(items, menu_root_item);
 
     //
     // Clear Classification Button
     //
-    if (nmbs_get_file_info_bool_attribute(file, nmbs_file_has_label))
+    if (nmbs_get_file_info_bool_attribute(file, nmbs_file_has_label) &&
+        nmbs_get_file_info_bool_attribute(file, nmbs_property_can_delete_key))
     {
         NautilusMenuItem* clear_classification_button = nautilus_menu_item_new(
             "NMBS:Menu:Policy",
@@ -387,6 +423,7 @@ static GList* nmbs_properties_get_models(NautilusPropertiesModelProvider*, GList
     char* classification = nautilus_file_info_get_string_attribute(file, nmbs_property_classification_key);
     char* classification_time = nautilus_file_info_get_string_attribute(file, nmbs_property_time_key);
     char* originator_id = nautilus_file_info_get_string_attribute(file, nmbs_property_originator_key);
+    char* binding_profile = nautilus_file_info_get_string_attribute(file, nmbs_property_binding_profile_key);
 
     // Mandatory Properties
     if (!policy_identifier || !classification || !classification_time)
@@ -395,26 +432,39 @@ static GList* nmbs_properties_get_models(NautilusPropertiesModelProvider*, GList
     }
 
     GListStore* model_properties = g_list_store_new(NAUTILUS_TYPE_PROPERTIES_ITEM);
-    NautilusPropertiesItem* policy_property = nautilus_properties_item_new(gettext("Policy Identifier"), policy_identifier);
+    NautilusPropertiesItem* policy_property = nautilus_properties_item_new(
+        gettext("Policy Identifier"), policy_identifier);
     g_list_store_append(model_properties, policy_property);
     g_object_unref(policy_property);
 
-    NautilusPropertiesItem* classification_property = nautilus_properties_item_new(gettext("Classification"), classification);
+    NautilusPropertiesItem* classification_property = nautilus_properties_item_new(
+        gettext("Classification"), classification);
     g_list_store_append(model_properties, classification_property);
     g_object_unref(classification_property);
 
-    NautilusPropertiesItem* creation_time_property = nautilus_properties_item_new(gettext("Classified On"), classification_time);
+    NautilusPropertiesItem* creation_time_property = nautilus_properties_item_new(
+        gettext("Classified On"), classification_time);
     g_list_store_append(model_properties, creation_time_property);
     g_object_unref(creation_time_property);
 
     if (originator_id)
     {
-        NautilusPropertiesItem* originator_property = nautilus_properties_item_new(gettext("Classified By"), originator_id);
+        NautilusPropertiesItem* originator_property = nautilus_properties_item_new(
+            gettext("Classified By"), originator_id);
         g_list_store_append(model_properties, originator_property);
         g_object_unref(originator_property);
     }
 
-    NautilusPropertiesModel* classification_model = nautilus_properties_model_new(gettext("Classification"), G_LIST_MODEL(model_properties));
+    if (binding_profile)
+    {
+        NautilusPropertiesItem* property = nautilus_properties_item_new(
+            gettext("Binding Profile"), binding_profile);
+        g_list_store_append(model_properties, property);
+        g_object_unref(property);
+    }
+
+    NautilusPropertiesModel* classification_model = nautilus_properties_model_new(
+        gettext("Classification"), G_LIST_MODEL(model_properties));
     g_object_unref(model_properties);
 
     items = g_list_append(items, classification_model);
@@ -464,7 +514,8 @@ static void nmbs_properties_menu_provider_iface_init(NautilusMenuProviderInterfa
     iface->get_file_items = nmbs_properties_get_file_items;
 }
 
-static void nmbs_properties_model_provider_iface_init(NautilusPropertiesModelProviderInterface* iface) {
+static void nmbs_properties_model_provider_iface_init(NautilusPropertiesModelProviderInterface* iface)
+{
     g_log("NMBS", G_LOG_LEVEL_DEBUG, "nmbs_properties_model_provider_iface_init");
     iface->get_models = nmbs_properties_get_models;
 }

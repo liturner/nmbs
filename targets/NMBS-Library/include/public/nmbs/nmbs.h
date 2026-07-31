@@ -32,6 +32,7 @@
 
 #include "binding.h"
 #include "confidentiality_label.h"
+#include "binding_information.h"
 #include "expected.h"
 
 /// @brief Lightweight helpers for generating NATO confidentiality metadata.
@@ -77,17 +78,15 @@ namespace nmbs
         const std::vector<ConfidentialityLabel>& confidentiality_labels,
         std::optional<binding::ProfileSupport> binding_support = std::nullopt);
 
-    /// @brief Reads the ADatP-4774 labels from the file
-    /// @details and returns them in a deserialised form. The deserialization is quite tolerant, and will favour
-    /// returning incomplete data, rather than erroring out. This design choice is to ensure interoperability with other
-    /// less strict implementations.
+    /// @brief Reads the full ADatP-4778 binding from the file.
+    /// @details Returns the full deserialised object. Note that if multiple bindings are present, only one will be
+    /// returned and the precedence is not defined.
     /// @param path to the file
     /// @param binding_support flags if already known. The presence of this parameter will save CPU cycles in
     /// determining the available binding method for the file. Use manually, or via nmbs::binding::support.
-    /// @return a collection of all labels applied to the file
-    /// @see nmbs::write_labels
+    /// @return the raw XML of the stored binding.
     /// @since 1.0.0
-    [[nodiscard]] Expected<std::vector<ConfidentialityLabel>> read_labels(
+    [[nodiscard]] Expected<std::optional<binding::BindingInformation>> read_binding(
         const std::filesystem::path& path,
         std::optional<binding::ProfileSupport> binding_support = std::nullopt);
 
@@ -98,7 +97,16 @@ namespace nmbs
     /// determining the available binding method for the file. Use manually, or via nmbs::binding::support.
     /// @return the raw XML of the stored binding.
     /// @since 1.0.0
-    [[nodiscard]] Expected<std::string> read_binding_xml(
+    [[nodiscard]] Expected<std::optional<std::string>> read_binding_xml(
+        const std::filesystem::path& path,
+        std::optional<binding::ProfileSupport> binding_support = std::nullopt);
+
+    /// @brief Removes the ADatP-4778 binding from the file.
+    /// @param path to the file
+    /// @param binding_support flags if already known. The presence of this parameter will save CPU cycles in
+    /// determining the available binding method for the file. Use manually, or via nmbs::binding::support.
+    /// @since 1.0.0
+    Expected<void> remove_binding(
         const std::filesystem::path& path,
         std::optional<binding::ProfileSupport> binding_support = std::nullopt);
 

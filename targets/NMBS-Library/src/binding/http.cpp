@@ -64,6 +64,9 @@ namespace nmbs::binding::http
         const std::string_view base64_xml = binding_data.substr(start_pos, end_pos - start_pos);
         const std::string xml = nmbs::serialisation::decode_base64(base64_xml);
 
-        return nmbs::serialisation::deserialise_binding_information(xml);
+        return serialisation::deserialise_binding_information(xml).transform([](auto info) {
+                    info.internal_metadata.binding_profile = profile_version_identifier;
+                    return info;
+                });
     }
 }

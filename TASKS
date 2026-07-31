@@ -1,7 +1,9 @@
 v1.0.1
+TODO: Remove nmbs_confidentiality_labels_new and similar. Should only provide for reading binding objects.
 TODO: Refactor constants into respective namespaces
 TODO: Remove presence checks from binding::supports
 TODO: .gschema.xml i18n
+TODO: Bubble up errors in nmbs::remove_binding
 
 Debian 14
 TODO: Add Doxygen requirements traceability

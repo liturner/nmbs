@@ -42,15 +42,29 @@ namespace nmbs::binding::xml
     }
 
 
-    std::expected<BindingInformation, Error> read(const std::filesystem::path& path)
+    Expected<std::optional<BindingInformation>> read(const std::filesystem::path& path)
     {
-        return read_xml(path).and_then(nmbs::serialisation::deserialise_binding_information);
+        return read_xml(path)
+            .and_then([](auto optional_xml) -> Expected<std::optional<BindingInformation>>
+            {
+                if (!optional_xml.has_value())
+                {
+                    return std::nullopt;
+                }
+                auto binding_information = serialisation::deserialise_binding_information(optional_xml.value());
+                if (!binding_information.has_value())
+                {
+                    return std::unexpected(binding_information.error());
+                }
+                binding_information->internal_metadata.binding_profile = profile_version_identifier;
+                return std::optional<BindingInformation>(std::move(binding_information.value()));
+            });
     }
 
 
-    Expected<std::string> read_xml(const std::filesystem::path& path)
+    Expected<std::optional<std::string>> read_xml(const std::filesystem::path& path)
     {
-        if (auto xml_string = nmbs::serialisation::read_binding_information_xml_from_file(path);
+        if (auto xml_string = serialisation::read_binding_information_xml_from_file(path);
             xml_string.has_value() &&
             xml_string.value().has_value())
         {
