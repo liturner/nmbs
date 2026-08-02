@@ -111,6 +111,11 @@ nautilus -q
 # Check d/watch is working
 uscan -v --no-download
 
+# chroot cheat sheet
+sudo mount --rbind --make-rslave /home/<user>/Source /home/<user>/chroot/unstable/home/<user>/Source
+
+# git cheat sheet
+git branch -f upstream/latest upstream/latest~1
 ```
 
 ## Nautilus Development
