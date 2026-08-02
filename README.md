@@ -38,10 +38,10 @@ man nmbs-verify
 xdg-open /usr/share/doc/libnmbs-dev/html/index.html
 ```
 
-# Versioning
+# Versioning Tags
 
-Versions are built using semver. Any kind of "pre-release" like beta or alpha is simply suffixed with a "~x", where 
-x is an integer.
+Pre-Release: v1.0.0-betaX (automatically 1.0.0~betaX in Debian Tooling)
+Release: v1.0.0 (automatically 1.0.0 in Debian Tooling)
 
 # Building
 
@@ -115,7 +115,7 @@ uscan -v --no-download
 sudo mount --rbind --make-rslave /home/<user>/Source /home/<user>/chroot/unstable/home/<user>/Source
 
 # git cheat sheet
-git branch -f upstream/latest upstream/latest~1
+git branch -f upstream/latest upstream/latest~1 # Reset branches without checkout
 ```
 
 ## Nautilus Development

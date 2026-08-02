@@ -34,9 +34,7 @@ target_link_libraries(NMBS-Tests
         GTest::gtest_main
 )
 
-gtest_discover_tests(NMBS-Tests
-        WORKING_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}"
-)
+gtest_discover_tests(NMBS-Tests)
 
 #
 #
