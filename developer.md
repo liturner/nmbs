@@ -4,7 +4,9 @@ title: Developer
 permalink: /developer/
 ---
 
-Resources, build hints, and links for working with the project.
+nmbs is a CMake project, developed using CLion, targeted at Debian. CLion is relied on heavily for numerous project settings such as code style and linting. CMake can of course be used in isolation to build and test the project.
+
+Development dependencies are all apt based.
 
 ## Links & Resources
 
