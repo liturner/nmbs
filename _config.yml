@@ -28,6 +28,11 @@ baseurl: "/nmbs" # the subpath of your site, e.g. /blog
 url: "https://liturner.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: liturner
 
+header_pages:
+  - index.md
+  - how-to.md
+  - developer.md
+
 # Build settings
 theme: minima
 plugins:
