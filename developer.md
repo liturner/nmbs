@@ -29,6 +29,8 @@ Development dependencies are all apt based.
 ### Debian
 
 * [Source Code (Debian Package)](https://salsa.debian.org/turnertech/nmbs)
-* [Issue Tracker]()
+* [Issue Tracker](https://bugs.debian.org/cgi-bin/pkgreport.cgi?package=nmbs)
+* [QA Page](https://qa.debian.org/developer.php?login=turnertech@outlook.de)
 * [WNPP Ticket](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1141958)
+* [Mentors](https://mentors.debian.net/package/nmbs/)
 

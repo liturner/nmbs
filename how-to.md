@@ -15,6 +15,25 @@ permalink: /how-to/
 ---
 ---
 
+## Install nmbs
+
+At the time of writing, nmbs is not yet in the Debian APT repository. Once it is:
+
+```shell
+# Get the CLI
+sudo apt install nmbs
+
+# Get the GNOME Files integration
+sudo apt install nautilus-nmbs
+```
+
+Until then, you can [download releases from GitHub](https://github.com/liturner/nmbs/releases).
+
+&nbsp;
+
+---
+---
+
 ## GNOME
 
 nmbs may be used from within the GNOME Files (Nautilus) application. It integrates seamlessly with the UI.
