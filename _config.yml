@@ -23,9 +23,8 @@ email: turnertech@outlook.de
 description: >- # this means to ignore newlines until "baseurl:"
   A native C++ library providing confidentiality labeling and metadata handling
   as defined in the NATO ADatP-4774 and ADatP-4778 standards.
-domain: liturner.github.io 
-baseurl: "/nmbs" # the subpath of your site, e.g. /blog
-url: "https://liturner.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+domain: nmbs.turnertech.de
+url: "https://nmbs.turnertech.de" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: liturner
 
 header_pages:
