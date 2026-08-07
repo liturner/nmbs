@@ -1,8 +1,7 @@
 /// @file binding_information.h
-/// @brief binding_information.h brief
-/// @details binding_information.h details
+/// @brief Object representation of the ADatP-4778 BindingInformation element
 ///
-/// @author luke
+/// @author Luke Ian Turner
 /// @date 2026-08-01
 /// @copyright Copyright (c) 2026 Luke Ian Turner
 /// @copyright
@@ -34,14 +33,15 @@
 
 namespace nmbs::binding
 {
-    /// @brief The structure representing the XML Binding structure.
-    /// @details This is not a pure representation, the deserialization will also
-    /// store some metadata.
+    /// @brief Holds information about both the labels, and the file the labels are bound to.
+    /// @details The type representing the XML <s4778:%BindingInformation> element.
+    /// This is not a pure representation, the deserialization will also
+    /// store some internal metadata. It is the outermost data structure in nmbs.
     /// @since 1.0.0
     struct BindingInformation
     {
-        /// Holder for nmbs internal metadata. This data is not part of the ADatP-4778
-        /// standard.
+        /// @brief Holder for nmbs internal metadata.
+        /// @details This data is not part of the ADatP-4778 standard.
         /// @since 1.0.0
         struct InternalMetadata
         {
@@ -50,7 +50,8 @@ namespace nmbs::binding
             std::optional<std::string> binding_profile;
         };
 
-        ///
+        /// @brief Holds a reference to the file to which the accompanying labels reference.
+        /// @details The type representing the XML <s4778:%DataReference> element.
         /// @since 1.0.0
         struct DataReference
         {

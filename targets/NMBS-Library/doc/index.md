@@ -28,7 +28,7 @@ Ensure that the core header is included in your code.
 ```
 
 The following is a minimal example for writing and reading the XMP metadata on an image. Note that the error handling
-for the library is using nmbs::Expected, which is simply a std::Expected<T, nmbs::Error> typedef. The majority of errors
+for the library is using nmbs::Expected, which is simply a std::expected<T, nmbs::Error> typedef. The majority of errors
 will be reported in this manner. The nmbs::Error contains a human-readable message, and a machine-readable code.
 
 Further examples can be found in the targets/NMBS-Examples folder of the source code.

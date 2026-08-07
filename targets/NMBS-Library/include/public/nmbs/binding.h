@@ -28,6 +28,10 @@
 
 #include <filesystem>
 
+/// @brief Functionality for the numerous binding profiles of ADatP-4778.
+/// @details This namespace holds a number if sub namespaces relevant to each binding profile. The sub namespaces
+/// each contain a similar set of functions, such as for reading and writing labels using specifically that
+/// binding profile.
 namespace nmbs::binding
 {
     typedef std::uint32_t AccessMode;
