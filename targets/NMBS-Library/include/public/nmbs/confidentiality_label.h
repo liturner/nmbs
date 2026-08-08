@@ -1,4 +1,4 @@
-/// @file confidentiality_label.h
+/// @file nmbs/confidentiality_label.h
 /// @brief Object representation of a Confidentiality Label as per ADatP-4774
 ///
 /// @author Luke Ian Turner
@@ -40,11 +40,12 @@ namespace nmbs
     /// Noteworthy is that the label couples "confidentiality information" with a timestamp and
     /// additional metadata such as the user and review dates.
     /// @since 1.0.0
-    /// @see nmbs::confidentiality_information_type
+    /// @see nmbs::ConfidentialityLabel::ConfidentialityInformation
+    /// @see nmbs::ConfidentialityLabel::ConfidentialityLabelType
     struct ConfidentialityLabel
     {
-        /// @brief identifier for the specialisation of the label.
-        /// @details There is no <s4774::ConfidentialityLabel> in the standard, but all specialisations
+        /// @brief Identifier for the specialisation of the label.
+        /// @details There is no <s4774:ConfidentialityLabel> in the standard, but all specialisations
         /// share the exact same values. The specialisation is used in validation steps with logic for
         /// deciding which classification applies.
         /// @since 1.0.0
@@ -80,52 +81,95 @@ namespace nmbs
             /// @since 1.0.0
             std::optional<std::string> privacy_mark;
 
+            /// @brief Default equality operator.
+            /// @since 1.0.0
             bool operator==(const ConfidentialityInformation&) const = default;
         };
 
+        /// @brief Identifier for the entity that created or applied the label.
+        /// @details Represents <s4774:OriginatorID>. String constants are provided for standard formats.
+        /// @since 1.0.0
         struct OriginatorId
         {
+            /// @brief RFC 822 (email) address format.
+            /// @since 1.0.0
             inline static const std::string rfc822_name = "rfc822Name";
+
+            /// @brief DNS name format.
+            /// @since 1.0.0
             inline static const std::string dns_name = "dNSName";
+
+            /// @brief Directory name format.
+            /// @since 1.0.0
             inline static const std::string directory_name = "directoryName";
+
+            /// @brief URI format.
+            /// @since 1.0.0
             inline static const std::string uniform_resource_identifier = "uniformResourceIdentifier";
+
+            /// @brief IP address format.
+            /// @since 1.0.0
             inline static const std::string ip_address = "iPAddress";
+
+            /// @brief X.400 address format.
+            /// @since 1.0.0
             inline static const std::string x400_address = "x400Address";
+
+            /// @brief Jabber ID format.
+            /// @since 1.0.0
             inline static const std::string jid = "jID";
+
+            /// @brief User Principal Name format.
+            /// @since 1.0.0
             inline static const std::string user_principal_name = "userPrincipalName";
 
+            /// @brief The format type of the identifier (e.g., rfc822Name).
+            /// @since 1.0.0
             std::string id_type;
 
+            /// @brief The actual identifier value.
+            /// @since 1.0.0
             std::string value;
 
+            /// @brief Default equality operator.
+            /// @since 1.0.0
             bool operator==(const OriginatorId&) const = default;
         };
 
-        /// Overloaded constructor taking the label type as a parameter.
-        /// The label type can be changed later.
-        /// @param label_type the type of label this instance will represent
+        /// @brief Overloaded constructor taking the label type as a parameter.
+        /// @details The label type can be changed later. Initializes creation date to the current UTC time.
+        /// @param label_type The type of label this instance will represent.
+        /// @since 1.0.0
         explicit ConfidentialityLabel(const ConfidentialityLabelType label_type = originator) :
             label_type(label_type),
             creation_date_time(std::chrono::floor<std::chrono::seconds>(std::chrono::utc_clock::now())) {}
 
+        /// @brief Default copy constructor.
+        /// @since 1.0.0
         ConfidentialityLabel(const ConfidentialityLabel&) = default;
+
+        /// @brief Default copy assignment operator.
+        /// @since 1.0.0
         ConfidentialityLabel& operator=(const ConfidentialityLabel& rhs) = default;
+
+        /// @brief Default equality operator.
+        /// @since 1.0.0
         bool operator==(const ConfidentialityLabel&) const = default;
 
-        ///
-        /// @brief Field to save having to implement the type inheritance here
+        /// @brief Field to save having to implement type inheritance.
+        /// @since 1.0.0
         ConfidentialityLabelType label_type;
 
-        ///
-        /// @brief <s4774::ConfidentialityInformation>
+        /// @brief <s4774:ConfidentialityInformation>
+        /// @since 1.0.0
         ConfidentialityInformation confidentiality_information;
 
-        ///
         /// @brief <s4774:OriginatorID>
+        /// @since 1.0.0
         std::optional<OriginatorId> originator_id;
 
-        ///
-        /// @brief <s4774::CreationDateTime>
+        /// @brief <s4774:CreationDateTime>
+        /// @since 1.0.0
         std::chrono::time_point<std::chrono::utc_clock, std::chrono::seconds> creation_date_time;
     };
 

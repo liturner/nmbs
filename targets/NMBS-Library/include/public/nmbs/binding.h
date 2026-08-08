@@ -1,8 +1,9 @@
-/// @file binding.h
-/// @brief binding.h brief
-/// @details binding.h details
+/// @file nmbs/binding.h
+/// @brief Core binding profile support flags and analysis functions.
+/// @details Defines bitmask types for evaluating file access modes and ADatP-4778
+/// binding profile capabilities.
 ///
-/// @author luke
+/// @author Luke Ian Turner
 /// @date 2026-07-17
 /// @copyright Copyright (c) 2026 Luke Ian Turner
 /// @copyright
@@ -29,27 +30,43 @@
 #include <filesystem>
 
 /// @brief Functionality for the numerous binding profiles of ADatP-4778.
-/// @details This namespace holds a number if sub namespaces relevant to each binding profile. The sub namespaces
+/// @details This namespace holds a number of sub-namespaces relevant to each binding profile. The sub-namespaces
 /// each contain a similar set of functions, such as for reading and writing labels using specifically that
 /// binding profile.
+/// @since 1.0.0
 namespace nmbs::binding
 {
+    /// @brief Bitmask type for evaluating file access modes.
+    /// @since 1.0.0
     typedef std::uint32_t AccessMode;
+
+    /// @brief Flags representing read/write access capabilities.
+    /// @since 1.0.0
     enum AccessModeFlags : AccessMode
     {
+        /// @brief No access.
+        /// @since 1.0.0
         am_none = 0,
 
+        /// @brief Read access.
+        /// @since 1.0.0
         am_read = 1 << 0,
 
+        /// @brief Write access.
+        /// @since 1.0.0
         am_write = 1 << 1
     };
 
-
+    /// @brief Bitmask type for indicating supported ADatP-4778 binding profiles.
+    /// @since 1.0.0
     typedef std::uint32_t ProfileSupport;
+
+    /// @brief Flags representing supported binding profiles for a specific file.
+    /// @since 1.0.0
     enum ProfileSupportFlags : ProfileSupport
     {
 
-        /// @brief The file does not support ADatP-4774 labels (at least in this implementation...)
+        /// @brief The file does not support ADatP-4774 labels.
         /// @since 1.0.0
         ps_none = 0,
 
@@ -73,18 +90,17 @@ namespace nmbs::binding
 
 
     /// @brief File analysis to check the binding capabilities of the path.
-    /// @details Using nmbs::binding::ProfileSupportFlags you can then use classic binary logic
+    /// @details Using nmbs::binding::ProfileSupportFlags you can use classic binary logic
     /// to see which binding profiles could potentially be supported by this file. Note that this
     /// ignores rights! For example, sidecar will be reported as supported for files in /etc/...
     /// as it is entirely possible that a readonly file can have a sidecar. Users should use the
-    /// relevant "access_mode" function checks to verify if a binding profile has e.g. read or
-    /// write access.
+    /// relevant access mode checks to verify if a binding profile has read or write access.
     ///
-    /// This function is written for speed, but it does necessarily perform several IO operations.
+    /// This function is written for speed, but it does perform several IO operations.
     /// Care should be taken to cache the result if possible.
+    /// @param path The filesystem path to analyse.
+    /// @return nmbs::binding::ProfileSupport bitmask containing all supported binding profiles.
     /// @since 1.0.0
-    /// @param path to analyse
-    /// @return nmbs::binding::flags containing all information about the path parameter
     [[nodiscard]] ProfileSupport support(const std::filesystem::path& path);
 
 }

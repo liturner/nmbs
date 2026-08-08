@@ -1,0 +1,27 @@
+#!/bin/bash -eu
+
+DEPS=(
+  build-essential           # Build
+  cmake                     # Build
+  doxygen                   # Build:   Baked into the NMBS-Library cmake
+  exiv2                     # Opt:     Useful for debugging and inspecting XMP
+  gettext                   # Build:   Baked into the cmake for i18n
+  help2man                  # Build:   Baked into the NMBS binary targets to generate man pages from "--help"
+  libexiv2-dev              # Build:   C++ library for writing metadata to numerous formats (images, etc.)
+  libgtest-dev              # Build
+  libglib2.0-dev            # Build:   Needed for Nautilus and GNOME dev
+  libnautilus-extension-dev # Build:   Needed for Nautilus and GNOME dev
+  libargparse-dev           # Build:   Lightweight C++ header only argument parser library
+  libxml2                   # Runtime
+  libxml2-dev               # Build:   C XML library. Most "native" and maintained lib possible in Debian
+  libxml2-doc               # Opt
+  ninja-build               # Opt:     I use this in my tooling
+  pkg-config                # Build:   Needed for Nautilus and GNOME dev
+  valgrind                  # Opt:     Enables easy CLion memory checking
+)
+
+echo "==> Updating package lists..."
+sudo apt-get update
+
+echo "==> Installing dependencies..."
+sudo apt-get install --no-install-recommends --yes "${DEPS[@]}"

@@ -8,115 +8,34 @@ directly on a system. A Library containing the core functionality will also be p
 integrate much of the core functionality with ease. Furthermore, a GNOME Files (Nautilus) extension is provided as the
 primary GUI for the functionality.
 
-# Example Screenshots
+Please look at the public documentation for end user help. This README is aimed at software engineers.
 
-![Example Column Integration](https://raw.githubusercontent.com/liturner/nmbs/main/.github/example-column.png)
-![Example Properties Menu](https://raw.githubusercontent.com/liturner/nmbs/main/.github/example-properties.png)
-
-# Usage
-
-Install the package to your system using apt.
-
-```shell
-# For users
-apt install nmbs
-
-# For developers
-apt install libnmbs-dev
-```
-
-The documentation for the CLI is packaged with the tool itself. Doxygen is otherwise available for the code in the 
-libnmbs-dev package.
-
-```shell
-# For the CLI, use the supplied man page, or the --help argument
-man nmbs-get
-man nmbs-set
-man nmbs-verify
-
-# For development documentation, the doxygen can be accessed using a doc-base tool or by e.g.
-xdg-open /usr/share/doc/libnmbs-dev/html/index.html
-```
+[https://nmbs.turnertech.de/](https://nmbs.turnertech.de/)
 
 # Versioning Tags
 
-Pre-Release: v1.0.0-betaX (automatically 1.0.0~betaX in Debian Tooling)
-Release: v1.0.0 (automatically 1.0.0 in Debian Tooling)
+This is primarily aimed at being consumed by a Debian package. As such, the version tags schema used is `uscan` 
+friendly. 
+
+Pre-Release: v1.0.0-betaX (`uscan` automatically mangles to 1.0.0~betaX in Debian Tooling)
+Release: v1.0.0 (`uscan` automatically mangles to 1.0.0 in Debian Tooling)
 
 # Building
 
-There are a few methods for building this project. The primary focus is ensuring that the debian package is clean and
-stable. We use CMake as the primary build tool in the upstream repository, and a mix of git-buildpackage and debhelper
-in the downstream debian packageing repository. Here are a few common commands used.
+Look at the CI tooling provided for the most accurate build example. If you are doing more than installing some APT
+dependencies and running some CMake commands, something is wrong...
 
-Some Docs: 
-https://dep-team.pages.debian.net/deps/dep14/
-https://wiki.debian.org/PackagingWithGit
-https://wiki.debian.org/debian/watch
+- [The GitHub ci](.github/workflows/ci.yml)
+- [The docker build](docker/build.dockerfile)
 
-```shell
+This is a CLion project. The project settings include docker and cpack targets, just using the GUI will work for the 
+CMake Targets. Investigate the [.idea](.idea) folder
 
-# Update source if a new release has been tagged upstream
-gbp import-orig --uscan
-
-# Update the build log using dch. Make sure source version is correct
-dch -m
-
-# Build the debian package
-dpkg-buildpackage
-lintian ../nmbs*.changes
-
-# To update the changelog use dch. In particular, the commands --append, --increment, --edit, --release and --newversion
-# Note that debhelper decides e.g. if to sign the build based on the status in the changelog. Its an important file!!!
-dch -m
-
-# Finalise the current version in the log
-dch -mr
-
-# Verify using lintian. mentors will use pedantic settings!
-lintian --info --pedantic --display-info nmbs_*_amd64.changes
-
-# After finalisation, increment the build version automatically and start the next section
-dch -mi
-
-# To tidy up after, use
-dh clean
-```
-
-Finally, this is a CLion project. The project settings include "dpkg" and "cpack" targets, just using the GUI will work 
-for the CMake Targets.
+A `prepare` script is included in the source root to install the build dependencies for this project.
 
 # Testing
 
-The following steps are mandatory for a release. They provide a pretty high level of confidence and should be executed 
-from the [downstream debian source](https://salsa.debian.org/turnertech/nmbs) before publishing:
-
-```shell
-# Build must succeed with a simple dpkg build call. (as a regular user)
-dpkg-buildpackage -k<key>
-
-# lintian must return no errors or warnings. Specific Info may be ignored depending on content.
-lintian --info --pedantic --display-info ../nmbs_*_amd64.changes
-
-# pbuilder must succeed in building in an isolated environment
-sudo pbuilder create --distribution sid
-origtargz
-pdebuild --auto-debsign --buildresult ..
-lintian --info --pedantic --display-info ../nmbs_*_amd64.changes
-
-# Basic install and check
-sudo apt install ./nmbs_*_amd64.deb ./libnmbs1_*_amd64.deb
-nautilus -q
-
-# Check d/watch is working
-uscan -v --no-download
-
-# chroot cheat sheet
-sudo mount --rbind --make-rslave /home/<user>/Source /home/<user>/chroot/unstable/home/<user>/Source
-
-# git cheat sheet
-git branch -f upstream/latest upstream/latest~1 # Reset branches without checkout
-```
+CTest is the root of our unit testing. It triggers GTest too. See the [The docker build](docker/build.dockerfile).
 
 ## Nautilus Development
 
@@ -126,6 +45,7 @@ will not reload.
 
 Check the run configurations of NMBS-Nautilus to see how to Debug. In CLion this is stored in git, so just debug
 the target to start Nautilus with gdb.
+
 ```shell
 nautilus -q
 ```
@@ -138,20 +58,12 @@ sudo rm /usr/lib/x86_64-linux-gnu/nautilus/extensions-4/libnmbs-nautilus.so
 
 # Runtime Environment Variables
 
-
+In addition to anything documented in the [end user documentation](https://nmbs.turnertech.de/), the following 
+environment variables are useful for developers: 
 
 | Variable        |                                                                                                      | Example                  |
 |-----------------|------------------------------------------------------------------------------------------------------|--------------------------| 
 | NMBS_LOCPATH    | An override path to localisation files. No trailing slash.                                           | /usr/share/locale        |
-
-# DConf Variables
-
-/org/gnome/nautilus-nmbs/
-    originator - Used in nautilus-nmbs. This will take precedence over the env var in Nautilus and counts as user input (its passed by parameter to the lib, so technically it is...)
-    binding-profiles/ - Profiles used for writing. 
-        sidecar
-        ext4
-        xmp
 
 # Localising
 
@@ -176,28 +88,7 @@ Dependencies are kept to a minimum. Particular focus is paid to ensuring License
 packages, and trustworthiness. Ideally, this project will be developed on a Debian distro, with simple calls to install
 the libs via APT on a Developer Machine, and APT Dependencies in release.
 
-| Name     | Type        | APT                       | Description                                                            |
-|----------|-------------|---------------------------|------------------------------------------------------------------------|
-| Exiv2    | Product     | libexiv2-dev              | C++ Lib for writing metadata to numerous formats, in particular images |
-| argparse | Product     | libargparse-dev           | C++17 Headers for parsing CLI options                                  |
-|          | Product     | libxml2                   | C XML library. Most "native" and maintained lib possible in Debian     |
-|          | Build       | libxml2-dev               |                                                                        |
-|          | Build       | build-essential           |                                                                        |
-|          | Build       | cmake                     |                                                                        |
-|          | Build       | libgtest-dev              |                                                                        |
-|          | Build       | doxygen                   |                                                                        |
-|          | Build       | ninja-build               |                                                                        |
-|          | Build       | help2man                  |                                                                        |
-|          | Build       | debhelper                 | Toolset for building .deb files                                        |
-|          | Build       | pkg-config                | NMBS-Nautilus Toolset for building GNOME projects                      |
-|          | Product     | libglib2.0-dev            | NMBS-Nautilus                                                          |
-|          | Product     | libnautilus-extension-dev | NMBS-Nautilus                                                          |
-|          | Development | lintian                   | Tool for verifying quality of .deb packages                            |
-|          | Development | devscripts                | Scripts containing dch used for the debian changelog                   |
-|          | Development | libxml2-doc               |                                                                        |
-|          | Development | valgrind                  | Runs in CLion directly to check memory leaks                           |
-|          | Development | git                       |                                                                        |
-|          | Recomended  | exiv2                     | CLI tools for Exiv2. Usefull for debugging                             |
+Check out the [prepare](prepare) script to see all the dependencies.
 
 ## External Resources
 

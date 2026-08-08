@@ -1,16 +1,22 @@
+# nmbs (Normalised Metadata Binding Service)
+
+**nmbs** is a lightweight C++ library for generating and parsing NATO confidentiality metadata. It implements core 
+components of the ADatP-4774 and ADatP-4778 specifications, enabling developers to consistently attach 
+standards-compliant labels to files.
+
 # Getting Started
 
-This documentation is installed locally under /usr/share/doc/libnmbs-dev/html/index.html. You can open this in a web
-browser directly, or utilise a package such as _dochelp_ to browse for it.
+If installed via Debian packages (e.g., `libnmbs-dev`), this documentation is available locally at 
+`/usr/share/doc/libnmbs-dev/html/index.html`. You can open this directly in a web browser or utilize a package such as 
+`dochelp`.
 
-The library contains the root namespace ```nmbs``` in C++. The API is primarily based
-around [functions](namespacemembers_func.html), minimising the use of data structures to simple structs for holding
-data. The structs themselves have very little, if any, functionality.
+The API is rooted in the `nmbs` namespace and is highly functional. Data structures are kept as simple, immutable 
+structs with minimal internal logic. Most operations are performed via top-level functions (see the 
+[nmbs namespace](namespacenmbs.html) reference).
 
-# Examples
+## Integration
 
-Once you have installed the development files (e.g. _libnmbs-dev_ on Debian), you will be able to integrate libnmbs1
-into your project as follows:
+Integrate `libnmbs1` into your CMake project:
 
 ```cmake
 find_package(NMBS REQUIRED CONFIG)
@@ -21,17 +27,19 @@ target_link_libraries(Your-Target
 )
 ```
 
-Ensure that the core header is included in your code.
+Ensure the core header is included in your source files:
 
 ```cpp
 #include <nmbs/nmbs.h>
 ```
 
-The following is a minimal example for writing and reading the XMP metadata on an image. Note that the error handling
-for the library is using nmbs::Expected, which is simply a std::expected<T, nmbs::Error> typedef. The majority of errors
-will be reported in this manner. The nmbs::Error contains a human-readable message, and a machine-readable code.
+# Example Usage
 
-Further examples can be found in the targets/NMBS-Examples folder of the source code.
+The following minimal example demonstrates writing and reading XMP metadata on an image.
+
+Error handling is managed via nmbs::Expected (an alias for std::expected<T, nmbs::Error>), providing both human-readable 
+messages and programmatic exit codes. Further examples can be found in the targets/NMBS-Examples directory of the source 
+tree.
 
 ```cpp
 #include <iostream>

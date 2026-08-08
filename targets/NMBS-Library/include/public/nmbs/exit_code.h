@@ -1,5 +1,5 @@
-/// @file exit_code.h
-/// @brief Basic enum containing a list of integer exit codes which the application may use
+/// @file nmbs/exit_code.h
+/// @brief Standardized integer exit codes for the nmbs application and library.
 ///
 /// @author Luke Ian Turner
 /// @date 2026-06-11
@@ -27,49 +27,49 @@
 
 namespace nmbs
 {
-    /// The possible exit codes which any of the nmbs tools may produce. These may be used in library functions, and as
-    /// return values for executables.
+    /// @brief Standard exit codes produced by nmbs tools.
+    /// @details Suitable for use as executable return values or library error indicators.
     /// @since 1.0.0
     enum ExitCode {
 
-        ///
-        /// No errors occurred. The operation completed successfully.
+        /// @brief No errors occurred; operation completed successfully.
+        /// @since 1.0.0
         success = 0,
 
-        ///
-        /// One or more of the mandatory or provided arguments was invalid.
+        /// @brief One or more provided arguments were invalid.
+        /// @since 1.0.0
         invalid_arguments = 1,
 
-        ///
-        /// The specified file could not be found.
+        /// @brief The specified file could not be found.
+        /// @since 1.0.0
         file_not_found = 10,
 
-        ///
-        /// There was no XMP packet attached to a file.
+        /// @brief No XMP packet was attached to the file.
+        /// @since 1.0.0
         xmp_not_found = 11,
 
-        ///
-        /// Although the file contained XMP, the desired key was not found.
+        /// @brief The file contained XMP, but the desired key was missing.
+        /// @since 1.0.0
         xmp_key_not_found = 12,
 
-        ///
-        /// The XML parser was unable to read the provided XML.
+        /// @brief The XML parser was unable to read the provided XML.
+        /// @since 1.0.0
         xml_could_not_parse = 13,
 
-        ///
-        /// The XML parser was unable to read create an XPath context.
+        /// @brief The XML parser was unable to create an XPath context.
+        /// @since 1.0.0
         xml_could_not_create_xpath_context = 14,
 
-        ///
-        /// There was no label attached to the file.
+        /// @brief No label was attached to the file.
+        /// @since 1.0.0
         no_label_present = 15,
 
-        ///
-        /// There was no binding profile available for the selected file.
+        /// @brief No binding profile is available for the selected file type.
+        /// @since 1.0.0
         no_binding_support = 16,
 
-        ///
-        /// An unspecified error occurred.
+        /// @brief An unspecified or unknown error occurred.
+        /// @since 1.0.0
         unknown_error = 99
     };
 }

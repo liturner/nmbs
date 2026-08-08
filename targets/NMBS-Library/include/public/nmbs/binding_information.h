@@ -1,4 +1,4 @@
-/// @file binding_information.h
+/// @file nmbs/binding_information.h
 /// @brief Object representation of the ADatP-4778 BindingInformation element
 ///
 /// @author Luke Ian Turner
@@ -45,34 +45,34 @@ namespace nmbs::binding
         /// @since 1.0.0
         struct InternalMetadata
         {
-            /// @brief Set when reading bindings.
+            /// @brief The identified binding profile, populated during reading.
             /// @since 1.0.0
             std::optional<std::string> binding_profile;
         };
 
         /// @brief Holds a reference to the file to which the accompanying labels reference.
-        /// @details The type representing the XML <s4778:%DataReference> element.
+        /// @details The type representing the XML <s4778:DataReference> element.
         /// @since 1.0.0
         struct DataReference
         {
-            ///
+            /// @brief The URI identifying the target data file.
             /// @since 1.0.0
             std::string uri;
 
-            ///
+            /// @brief The optional type of the uri.
             /// @since 1.0.0
             std::optional<std::string> content_type;
         };
 
-        ///
+        /// @brief The collection of confidentiality labels bound to the referenced data.
         /// @since 1.0.0
         std::vector<ConfidentialityLabel> labels;
 
-        ///
+        /// @brief The reference to the data file being labeled.
         /// @since 1.0.0
         DataReference reference;
 
-        ///
+        /// @brief Internal library tracking data.
         /// @since 1.0.0
         InternalMetadata internal_metadata;
     };

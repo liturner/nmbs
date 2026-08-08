@@ -1,7 +1,6 @@
-/// @file nmbs.h
-/// @brief The intended "include all" header file for libnmbs
-/// @details This file will include all the available nmbs namespace. Use it as
-/// single import to work with the nmbs namespace.
+/// @file nmbs/nmbs.h
+/// @brief Main include header for the libnmbs library.
+/// @details Provides a single import for the entire nmbs namespace.
 ///
 /// @author Luke Ian Turner
 /// @date 2026-06-06
@@ -35,79 +34,66 @@
 #include "binding_information.h"
 #include "expected.h"
 
-/// @brief Lightweight helpers for generating NATO confidentiality metadata.
-/// @details This namespace contains a compact set of utilities implementing the essential parts of the ADatP‑4774, ADatP‑4778,
-/// and STANAG 5636 specifications. The functions focus on producing valid confidentiality labels and binding
-/// information for files that are known to be *not* highly sensitive, enabling consistent tagging without the overhead
-/// of a full‑scale DLP or metadata processing framework.
-///
-/// The goal of this library is to provide a minimal, dependency‑free toolkit that makes it easy to attach correct,
-/// standards‑compliant metadata to low‑sensitivity artifacts—an important step in reducing the scope of data requiring
-/// strict handling in cybersecurity workflows.
+/// @brief Lightweight utilities for NATO confidentiality metadata.
+/// @details Implements core components of ADatP-4774, ADatP-4778, and STANAG 5636.
+/// Provides a dependency-free toolkit to attach standards-compliant labels to low-sensitivity artifacts.
+/// @since 1.0.0
 namespace nmbs
 {
-
-    /// @brief Returns the semantic version of the library.
-    /// @details Using standard semantic‑versioning format (`MAJOR.MINOR.PATCH`), for example `1.0.0`. This value is
-    /// embedded during the build, and will match the CMake version of the source code. This function will return a
-    /// complete version, and never any suffix like "~beta". This is important to consider if you are working with beta
-    /// and pre-release builds, as during beta phases any new API changes will be unstable and may change without the
-    /// version changing.
-    /// @return The semantic version string for the current build.
+    /// @brief Retrieves the semantic version of the library.
+    /// @details Returns the version in `MAJOR.MINOR.PATCH` format, matching the build configuration.
+    /// Pre-release suffixes are not appended.
+    /// @return The semantic version string.
     /// @since 1.0.0
     [[nodiscard]] std::string_view version() noexcept;
 
-    /// @brief Free up any allocated memory and state to keep tools like Valgrind clean.
-    /// @details This should be safe to call in the middle of an application, it will just delete caches and unregister
-    /// namespaces etc. This may lead to increased function times in subsequent calls.
+    /// @brief Releases globally allocated memory and resets library state.
+    /// @details Safe to call at any time to assist memory profilers (e.g., Valgrind).
+    /// Subsequent library calls may incur performance penalties as caches are rebuilt.
     /// @since 1.0.0
     void cleanup();
 
-    /// @brief Writes ADatP‑4778 binding information using the best possible binding profile.
-    /// @details Embedded is preferred over Sidecar, and the presence of a Sidecar is ignored if embedding is possible.
-    /// Furthermore, existing data will be overridden. You can attempt to force a specific profile by passing the flag
-    /// in to the binding_support parameter. Check the return parameter for errors to see if it succeeded.
-    /// @param path to the image file to label.
-    /// @param confidentiality_labels collection of labels to write to the file.
-    /// @param binding_support flags if already known. The presence of this parameter will save CPU cycles in
-    /// determining the available binding method for the file. Use manually, or via nmbs::binding::support.
-    /// @return The labels written to the file in XML form. If the nmbs::Expected does not have a value, then there was an error.
+    /// @brief Writes ADatP-4778 binding information using the optimal binding profile.
+    /// @details Embedded profiles take precedence over sidecar profiles. Existing binding data will be overwritten.
+    /// @param path Path to the target file.
+    /// @param confidentiality_labels Collection of labels to apply.
+    /// @param binding_support Optional pre-calculated binding profile capabilities.
+    /// @return The written XML string on success, or an nmbs::Error on failure.
+    /// @see nmbs::binding::support
     /// @since 1.0.0
     [[nodiscard]] Expected<std::string> write_labels(
         const std::filesystem::path& path,
         const std::vector<ConfidentialityLabel>& confidentiality_labels,
         std::optional<binding::ProfileSupport> binding_support = std::nullopt);
 
-    /// @brief Reads the full ADatP-4778 binding from the file.
-    /// @details Returns the full deserialised object. Note that if multiple bindings are present, only one will be
-    /// returned and the precedence is not defined.
-    /// @param path to the file
-    /// @param binding_support flags if already known. The presence of this parameter will save CPU cycles in
-    /// determining the available binding method for the file. Use manually, or via nmbs::binding::support.
-    /// @return the raw XML of the stored binding.
+    /// @brief Reads and deserializes the ADatP-4778 binding from the specified file.
+    /// @details If multiple bindings exist, precedence is undefined and only one is returned.
+    /// @param path Path to the target file.
+    /// @param binding_support Optional pre-calculated binding profile capabilities.
+    /// @return The parsed BindingInformation, std::nullopt if none exists, or an error.
+    /// @see nmbs::binding::support
     /// @since 1.0.0
     [[nodiscard]] Expected<std::optional<binding::BindingInformation>> read_binding(
         const std::filesystem::path& path,
         std::optional<binding::ProfileSupport> binding_support = std::nullopt);
 
-    /// @brief Reads the full ADatP-4778 binding from the file.
-    /// @details Returns the full XML packet in its raw XML form.
-    /// @param path to the file
-    /// @param binding_support flags if already known. The presence of this parameter will save CPU cycles in
-    /// determining the available binding method for the file. Use manually, or via nmbs::binding::support.
-    /// @return the raw XML of the stored binding.
+    /// @brief Reads the raw XML of the ADatP-4778 binding from the specified file.
+    /// @param path Path to the target file.
+    /// @param binding_support Optional pre-calculated binding profile capabilities.
+    /// @return The raw XML string, std::nullopt if none exists, or an error.
+    /// @see nmbs::binding::support
     /// @since 1.0.0
     [[nodiscard]] Expected<std::optional<std::string>> read_binding_xml(
         const std::filesystem::path& path,
         std::optional<binding::ProfileSupport> binding_support = std::nullopt);
 
-    /// @brief Removes the ADatP-4778 binding from the file.
-    /// @param path to the file
-    /// @param binding_support flags if already known. The presence of this parameter will save CPU cycles in
-    /// determining the available binding method for the file. Use manually, or via nmbs::binding::support.
+    /// @brief Removes the ADatP-4778 binding from the specified file.
+    /// @param path Path to the target file.
+    /// @param binding_support Optional pre-calculated binding profile capabilities.
+    /// @return Void on success, or an error on failure.
+    /// @see nmbs::binding::support
     /// @since 1.0.0
     Expected<void> remove_binding(
         const std::filesystem::path& path,
         std::optional<binding::ProfileSupport> binding_support = std::nullopt);
-
 }
