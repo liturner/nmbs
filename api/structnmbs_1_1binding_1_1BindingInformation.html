@@ -92,7 +92,7 @@ $(function(){initNavTree('structnmbs_1_1binding_1_1BindingInformation.html','','
 </div><!--header-->
 <div class="contents">
 
-<p>The structure representing the XML Binding structure.  
+<p>Holds information about both the labels, and the file the labels are bound to.  
  <a href="#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="binding__information_8h_source.html">nmbs/binding_information.h</a>&gt;</code></p>
@@ -100,17 +100,22 @@ $(function(){initNavTree('structnmbs_1_1binding_1_1BindingInformation.html','','
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:InternalMetadata" id="r_InternalMetadata"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1binding_1_1BindingInformation_1_1InternalMetadata.html">InternalMetadata</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holder for nmbs internal metadata.  <a href="structnmbs_1_1binding_1_1BindingInformation_1_1InternalMetadata.html#details">More...</a><br /></td></tr>
 <tr class="memitem:DataReference" id="r_DataReference"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1binding_1_1BindingInformation_1_1DataReference.html">DataReference</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds a reference to the file to which the accompanying labels reference.  <a href="structnmbs_1_1binding_1_1BindingInformation_1_1DataReference.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a63b7dc1ca04ca3adccf416023f64082f" id="r_a63b7dc1ca04ca3adccf416023f64082f"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="structnmbs_1_1ConfidentialityLabel.html">ConfidentialityLabel</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a63b7dc1ca04ca3adccf416023f64082f">labels</a></td></tr>
+<tr class="memdesc:a63b7dc1ca04ca3adccf416023f64082f"><td class="mdescLeft">&#160;</td><td class="mdescRight">The collection of confidentiality labels bound to the referenced data.  <br /></td></tr>
 <tr class="memitem:a328e8889809d4d2fe25131b4624f0e1a" id="r_a328e8889809d4d2fe25131b4624f0e1a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structnmbs_1_1binding_1_1BindingInformation_1_1DataReference.html">DataReference</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a328e8889809d4d2fe25131b4624f0e1a">reference</a></td></tr>
+<tr class="memdesc:a328e8889809d4d2fe25131b4624f0e1a"><td class="mdescLeft">&#160;</td><td class="mdescRight">The reference to the data file being labeled.  <br /></td></tr>
 <tr class="memitem:a4ad21f6e5614bf6aa61726e127114a38" id="r_a4ad21f6e5614bf6aa61726e127114a38"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structnmbs_1_1binding_1_1BindingInformation_1_1InternalMetadata.html">InternalMetadata</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4ad21f6e5614bf6aa61726e127114a38">internal_metadata</a></td></tr>
+<tr class="memdesc:a4ad21f6e5614bf6aa61726e127114a38"><td class="mdescLeft">&#160;</td><td class="mdescRight">Internal library tracking data.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The structure representing the XML Binding structure. </p>
-<p>This is not a pure representation, the deserialization will also store some metadata. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+<div class="textblock"><p>Holds information about both the labels, and the file the labels are bound to. </p>
+<p>The type representing the XML &lt;s4778:BindingInformation&gt; element. This is not a pure representation, the deserialization will also store some internal metadata. It is the outermost data structure in nmbs. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 </div><a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
 <a id="a4ad21f6e5614bf6aa61726e127114a38" name="a4ad21f6e5614bf6aa61726e127114a38"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a4ad21f6e5614bf6aa61726e127114a38">&#9670;&#160;</a></span>internal_metadata</h2>
@@ -123,6 +128,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Internal library tracking data. </p>
 <dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
@@ -138,6 +145,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The collection of confidentiality labels bound to the referenced data. </p>
 <dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
@@ -153,6 +162,8 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>The reference to the data file being labeled. </p>
 <dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>

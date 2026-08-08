@@ -34,3 +34,11 @@ Development dependencies are all apt based.
 * [WNPP Ticket](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1141958)
 * [Mentors](https://mentors.debian.net/package/nmbs/)
 
+## Hints
+
+If you have installed libnmbs-doc, the doxygen can be accessed using a doc-base tool like `dochelp` or by e.g.
+
+```shell
+xdg-open /usr/share/doc/libnmbs-dev/html/index.html
+```
+

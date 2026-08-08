@@ -102,6 +102,7 @@ Classes</h2></td></tr>
 <tr class="memitem:ConfidentialityInformation" id="r_ConfidentialityInformation"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1ConfidentialityLabel_1_1ConfidentialityInformation.html">ConfidentialityInformation</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">A core element of the nmbs::confidentiality_label containing the classification (e.g. PUBLIC UNMARKED).  <a href="structnmbs_1_1ConfidentialityLabel_1_1ConfidentialityInformation.html#details">More...</a><br /></td></tr>
 <tr class="memitem:OriginatorId" id="r_OriginatorId"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html">OriginatorId</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identifier for the entity that created or applied the label.  <a href="structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
 Public Types</h2></td></tr>
@@ -109,31 +110,37 @@ Public Types</h2></td></tr>
 , <a class="el" href="#a8181599a04ce1ebb86917b588822974aa9cae2bb299f7f0f02846477311ea1ed1">alternative</a>
 , <a class="el" href="#a8181599a04ce1ebb86917b588822974aa34410a8af022d78b0fea409a255aee4b">successor</a>
  }</td></tr>
-<tr class="memdesc:a8181599a04ce1ebb86917b588822974a"><td class="mdescLeft">&#160;</td><td class="mdescRight">identifier for the specialisation of the label.  <a href="#a8181599a04ce1ebb86917b588822974a">More...</a><br /></td></tr>
+<tr class="memdesc:a8181599a04ce1ebb86917b588822974a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Identifier for the specialisation of the label.  <a href="#a8181599a04ce1ebb86917b588822974a">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a7e8b10d1c28c0cb1e9a322d06cf4ceac" id="r_a7e8b10d1c28c0cb1e9a322d06cf4ceac"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7e8b10d1c28c0cb1e9a322d06cf4ceac">ConfidentialityLabel</a> (const <a class="el" href="#a8181599a04ce1ebb86917b588822974a">ConfidentialityLabelType</a> <a class="el" href="#a8290b5ae9e5e9d924c9ed9ad7976e0eb">label_type</a>=<a class="el" href="#a8181599a04ce1ebb86917b588822974aa9860fb7e1164c8eab4a32082e0d464dc">originator</a>)</td></tr>
+<tr class="memdesc:a7e8b10d1c28c0cb1e9a322d06cf4ceac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Overloaded constructor taking the label type as a parameter.  <br /></td></tr>
 <tr class="memitem:a06cc118af92d2487272ce609411bd150" id="r_a06cc118af92d2487272ce609411bd150"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a06cc118af92d2487272ce609411bd150">ConfidentialityLabel</a> (const ConfidentialityLabel &amp;)=default</td></tr>
+<tr class="memdesc:a06cc118af92d2487272ce609411bd150"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default copy constructor.  <br /></td></tr>
 <tr class="memitem:a52d41eabdc1e2f4f30eb93579d267cea" id="r_a52d41eabdc1e2f4f30eb93579d267cea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a7e8b10d1c28c0cb1e9a322d06cf4ceac">ConfidentialityLabel</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a52d41eabdc1e2f4f30eb93579d267cea">operator=</a> (const <a class="el" href="#a7e8b10d1c28c0cb1e9a322d06cf4ceac">ConfidentialityLabel</a> &amp;rhs)=default</td></tr>
+<tr class="memdesc:a52d41eabdc1e2f4f30eb93579d267cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default copy assignment operator.  <br /></td></tr>
 <tr class="memitem:a2949ee75e29ed1482cac6721e9e62f75" id="r_a2949ee75e29ed1482cac6721e9e62f75"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2949ee75e29ed1482cac6721e9e62f75">operator==</a> (const <a class="el" href="#a7e8b10d1c28c0cb1e9a322d06cf4ceac">ConfidentialityLabel</a> &amp;) const =default</td></tr>
+<tr class="memdesc:a2949ee75e29ed1482cac6721e9e62f75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default equality operator.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-attribs" class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a8290b5ae9e5e9d924c9ed9ad7976e0eb" id="r_a8290b5ae9e5e9d924c9ed9ad7976e0eb"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8181599a04ce1ebb86917b588822974a">ConfidentialityLabelType</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8290b5ae9e5e9d924c9ed9ad7976e0eb">label_type</a></td></tr>
-<tr class="memdesc:a8290b5ae9e5e9d924c9ed9ad7976e0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Field to save having to implement the type inheritance here.  <br /></td></tr>
+<tr class="memdesc:a8290b5ae9e5e9d924c9ed9ad7976e0eb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Field to save having to implement type inheritance.  <br /></td></tr>
 <tr class="memitem:ac0c88da7e75645df03434966fcf591ea" id="r_ac0c88da7e75645df03434966fcf591ea"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structnmbs_1_1ConfidentialityLabel_1_1ConfidentialityInformation.html">ConfidentialityInformation</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac0c88da7e75645df03434966fcf591ea">confidentiality_information</a></td></tr>
-<tr class="memdesc:ac0c88da7e75645df03434966fcf591ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt;s4774::ConfidentialityInformation&gt;  <br /></td></tr>
+<tr class="memdesc:ac0c88da7e75645df03434966fcf591ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt;s4774:<a class="el" href="structnmbs_1_1ConfidentialityLabel_1_1ConfidentialityInformation.html" title="A core element of the nmbs::confidentiality_label containing the classification (e....">ConfidentialityInformation</a>&gt;  <br /></td></tr>
 <tr class="memitem:a8e33719cfe4f320d92e5a26c92c8798e" id="r_a8e33719cfe4f320d92e5a26c92c8798e"><td class="memItemLeft" align="right" valign="top">std::optional&lt; <a class="el" href="structnmbs_1_1ConfidentialityLabel_1_1OriginatorId.html">OriginatorId</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8e33719cfe4f320d92e5a26c92c8798e">originator_id</a></td></tr>
 <tr class="memdesc:a8e33719cfe4f320d92e5a26c92c8798e"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt;s4774:OriginatorID&gt;  <br /></td></tr>
 <tr class="memitem:ac9c64be02a00d21cd7a063605f412e06" id="r_ac9c64be02a00d21cd7a063605f412e06"><td class="memItemLeft" align="right" valign="top">std::chrono::time_point&lt; std::chrono::utc_clock, std::chrono::seconds &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9c64be02a00d21cd7a063605f412e06">creation_date_time</a></td></tr>
-<tr class="memdesc:ac9c64be02a00d21cd7a063605f412e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt;s4774::CreationDateTime&gt;  <br /></td></tr>
+<tr class="memdesc:ac9c64be02a00d21cd7a063605f412e06"><td class="mdescLeft">&#160;</td><td class="mdescRight">&lt;s4774:CreationDateTime&gt;  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Struct representation of the ADatP-4774 "Confidentiality Label". </p>
 <p>More information can be found on this in section 2.4 of ADatP-4774.1 Ed. A V. 1. The standard specifies three types of label containing identical data. This struct represents all three originatorConfidentialityLabel, alternativeConfidentialityLabel and successorConfidentialityLabel. See nmbs::confidentiality_label::confidentiality_label_type and the nmbs::confidentiality_label::label_type field.</p>
 <p>Noteworthy is that the label couples "confidentiality information" with a timestamp and additional metadata such as the user and review dates. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
-<dl class="section see"><dt>See also</dt><dd>nmbs::confidentiality_information_type </dd></dl>
+<dl class="section see"><dt>See also</dt><dd><a class="el" href="structnmbs_1_1ConfidentialityLabel_1_1ConfidentialityInformation.html" title="A core element of the nmbs::confidentiality_label containing the classification (e....">nmbs::ConfidentialityLabel::ConfidentialityInformation</a> </dd>
+<dd>
+<a class="el" href="#a8181599a04ce1ebb86917b588822974a" title="Identifier for the specialisation of the label.">nmbs::ConfidentialityLabel::ConfidentialityLabelType</a> </dd></dl>
 </div><a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
 <a id="a8181599a04ce1ebb86917b588822974a" name="a8181599a04ce1ebb86917b588822974a"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8181599a04ce1ebb86917b588822974a">&#9670;&#160;</a></span>ConfidentialityLabelType</h2>
@@ -147,8 +154,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>identifier for the specialisation of the label. </p>
-<p>There is no &lt;s4774::ConfidentialityLabel&gt; in the standard, but all specialisations share the exact same values. The specialisation is used in validation steps with logic for deciding which classification applies. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+<p>Identifier for the specialisation of the label. </p>
+<p>There is no &lt;s4774:<a class="el" href="structnmbs_1_1ConfidentialityLabel.html" title="Struct representation of the ADatP-4774 &quot;Confidentiality Label&quot;.">ConfidentialityLabel</a>&gt; in the standard, but all specialisations share the exact same values. The specialisation is used in validation steps with logic for deciding which classification applies. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8181599a04ce1ebb86917b588822974aa9860fb7e1164c8eab4a32082e0d464dc" name="a8181599a04ce1ebb86917b588822974aa9860fb7e1164c8eab4a32082e0d464dc"></a>originator&#160;</td><td class="fielddoc"><p>&lt;s4774::originatorConfidentialityLabel&gt; </p>
 <dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
@@ -186,12 +193,15 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Overloaded constructor taking the label type as a parameter. The label type can be changed later. </p><dl class="params"><dt>Parameters</dt><dd>
+
+<p>Overloaded constructor taking the label type as a parameter. </p>
+<p>The label type can be changed later. Initializes creation date to the current UTC time. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">label_type</td><td>the type of label this instance will represent </td></tr>
+    <tr><td class="paramname">label_type</td><td>The type of label this instance will represent. </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
@@ -217,6 +227,9 @@ Public Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Default copy constructor. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
@@ -244,6 +257,9 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Default copy assignment operator. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+
 </div>
 </div>
 <a id="a2949ee75e29ed1482cac6721e9e62f75" name="a2949ee75e29ed1482cac6721e9e62f75"></a>
@@ -269,6 +285,9 @@ Public Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
+<p>Default equality operator. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+
 </div>
 </div>
 <a name="doc-variable-members" id="doc-variable-members"></a><h2 id="header-doc-variable-members" class="groupheader">Member Data Documentation</h2>
@@ -284,7 +303,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>&lt;s4774::ConfidentialityInformation&gt; </p>
+<p>&lt;s4774:<a class="el" href="structnmbs_1_1ConfidentialityLabel_1_1ConfidentialityInformation.html" title="A core element of the nmbs::confidentiality_label containing the classification (e....">ConfidentialityInformation</a>&gt; </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
@@ -300,7 +320,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>&lt;s4774::CreationDateTime&gt; </p>
+<p>&lt;s4774:CreationDateTime&gt; </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
@@ -316,7 +337,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Field to save having to implement the type inheritance here. </p>
+<p>Field to save having to implement type inheritance. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
@@ -333,6 +355,7 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>&lt;s4774:OriginatorID&gt; </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>

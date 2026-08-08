@@ -1,0 +1,11 @@
+#!/bin/bash -eu
+
+DEPS=(
+  bundler
+)
+
+echo "==> Updating package lists..."
+sudo apt-get update
+
+echo "==> Installing dependencies..."
+sudo apt-get install --no-install-recommends --yes "${DEPS[@]}"

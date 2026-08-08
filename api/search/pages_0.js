@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['examples_0',['Examples',['../index.html#autotoc_md1',1,'']]]
+  ['binding_20service_0',['nmbs (Normalised Metadata Binding Service)',['../index.html',1,'']]]
 ];

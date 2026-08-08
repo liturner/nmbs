@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.15.0"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>libnmbs: Getting Started</title>
+<title>libnmbs: nmbs (Normalised Metadata Binding Service)</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -88,26 +88,31 @@ $(function(){initNavTree('index.html','',''); });
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">Getting Started </div></div>
+  <div class="headertitle"><div class="title">nmbs (Normalised Metadata Binding Service) </div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="md_index"></a></p>
-<p>This documentation is installed locally under /usr/share/doc/libnmbs-dev/html/index.html. You can open this in a web browser directly, or utilise a package such as <em>dochelp</em> to browse for it.</p>
-<p>The library contains the root namespace <span class="tt"><a class="el" href="namespacenmbs.html" title="Lightweight helpers for generating NATO confidentiality metadata.">nmbs</a></span> in C++. The API is primarily based around <a href="namespacemembers_func.html">functions</a>, minimising the use of data structures to simple structs for holding data. The structs themselves have very little, if any, functionality.</p>
+<p><b>nmbs</b> is a lightweight C++ library for generating and parsing NATO confidentiality metadata. It implements core components of the ADatP-4774 and ADatP-4778 specifications, enabling developers to consistently attach standards-compliant labels to files.</p>
 <h1 class="doxsection"><a class="anchor" id="autotoc_md1"></a>
-Examples</h1>
-<p>Once you have installed the development files (e.g. <em>libnmbs-dev</em> on Debian), you will be able to integrate libnmbs1 into your project as follows:</p>
+Getting Started</h1>
+<p>If installed via Debian packages (e.g., <span class="tt">libnmbs-dev</span>), this documentation is available locally at <span class="tt">/usr/share/doc/libnmbs-dev/html/index.html</span>. You can open this directly in a web browser or utilize a package such as <span class="tt">dochelp</span>.</p>
+<p>The API is rooted in the <span class="tt"><a class="el" href="namespacenmbs.html" title="Lightweight utilities for NATO confidentiality metadata.">nmbs</a></span> namespace and is highly functional. Data structures are kept as simple, immutable structs with minimal internal logic. Most operations are performed via top-level functions (see the <a href="namespacenmbs.html">nmbs namespace</a> reference).</p>
+<h2 class="doxsection"><a class="anchor" id="autotoc_md2"></a>
+Integration</h2>
+<p>Integrate <span class="tt">libnmbs1</span> into your CMake project:</p>
 <div class="fragment"><div class="line">find_package(NMBS REQUIRED CONFIG)</div>
 <div class="line"> </div>
 <div class="line">target_link_libraries(Your-Target</div>
 <div class="line">        PRIVATE</div>
 <div class="line">        NMBS::NMBS-Library</div>
 <div class="line">)</div>
-</div><!-- fragment --><p>Ensure that the core header is included in your code.</p>
+</div><!-- fragment --><p>Ensure the core header is included in your source files:</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="nmbs_8h.html">nmbs/nmbs.h</a>&gt;</span></div>
-<div class="ttc" id="anmbs_8h_html"><div class="ttname"><a href="nmbs_8h.html">nmbs.h</a></div><div class="ttdoc">The intended &quot;include all&quot; header file for libnmbs.</div></div>
-</div><!-- fragment --><p>The following is a minimal example for writing and reading the XMP metadata on an image. Note that the error handling for the library is using <a class="el" href="namespacenmbs.html#a4a97079205b2f1cb16d21be79ef6159e" title="Convenience typedef to standardise usage of nmbs::error in all std::expected usages.">nmbs::Expected</a>, which is simply a std::Expected&lt;T, nmbs::Error&gt; typedef. The majority of errors will be reported in this manner. The <a class="el" href="classnmbs_1_1Error.html" title="A simple error container to use with nmbs::expected for communicating domain issues to function calle...">nmbs::Error</a> contains a human-readable message, and a machine-readable code.</p>
-<p>Further examples can be found in the targets/NMBS-Examples folder of the source code.</p>
+<div class="ttc" id="anmbs_8h_html"><div class="ttname"><a href="nmbs_8h.html">nmbs.h</a></div><div class="ttdoc">Main include header for the libnmbs library.</div></div>
+</div><!-- fragment --><h1 class="doxsection"><a class="anchor" id="autotoc_md3"></a>
+Example Usage</h1>
+<p>The following minimal example demonstrates writing and reading XMP metadata on an image.</p>
+<p>Error handling is managed via <a class="el" href="namespacenmbs.html#a4a97079205b2f1cb16d21be79ef6159e" title="Alias for std::expected standardized with nmbs::Error.">nmbs::Expected</a> (an alias for std::expected&lt;T, nmbs::Error&gt;), providing both human-readable messages and programmatic exit codes. Further examples can be found in the targets/NMBS-Examples directory of the source tree.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &lt;<a class="code" href="nmbs_8h.html">nmbs/nmbs.h</a>&gt;</span></div>
 <div class="line"> </div>
@@ -141,12 +146,12 @@ Examples</h1>
 <div class="line">    }</div>
 <div class="line">    <span class="keywordflow">return</span> <a class="code hl_enumvalue" href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01">nmbs::ExitCode::no_label_present</a>;</div>
 <div class="line">}</div>
-<div class="ttc" id="anamespacenmbs_html_a9526966593b7e881fa4af447550e6268"><div class="ttname"><a href="namespacenmbs.html#a9526966593b7e881fa4af447550e6268">nmbs::read_binding</a></div><div class="ttdeci">Expected&lt; std::optional&lt; binding::BindingInformation &gt; &gt; read_binding(const std::filesystem::path &amp;path, std::optional&lt; binding::ProfileSupport &gt; binding_support=std::nullopt)</div><div class="ttdoc">Reads the full ADatP-4778 binding from the file.</div></div>
-<div class="ttc" id="anamespacenmbs_html_aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01"><div class="ttname"><a href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01">nmbs::no_label_present</a></div><div class="ttdeci">@ no_label_present</div><div class="ttdoc">There was no label attached to the file.</div><div class="ttdef"><b>Definition</b> exit_code.h:65</div></div>
-<div class="ttc" id="anamespacenmbs_html_aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e"><div class="ttname"><a href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e">nmbs::success</a></div><div class="ttdeci">@ success</div><div class="ttdoc">No errors occurred. The operation completed successfully.</div><div class="ttdef"><b>Definition</b> exit_code.h:37</div></div>
-<div class="ttc" id="anamespacenmbs_html_ac4941f61ba58b1705f5a1082bc858e7b"><div class="ttname"><a href="namespacenmbs.html#ac4941f61ba58b1705f5a1082bc858e7b">nmbs::write_labels</a></div><div class="ttdeci">Expected&lt; std::string &gt; write_labels(const std::filesystem::path &amp;path, const std::vector&lt; ConfidentialityLabel &gt; &amp;confidentiality_labels, std::optional&lt; binding::ProfileSupport &gt; binding_support=std::nullopt)</div><div class="ttdoc">Writes ADatP‑4778 binding information using the best possible binding profile.</div></div>
-<div class="ttc" id="astructnmbs_1_1binding_1_1BindingInformation_html"><div class="ttname"><a href="structnmbs_1_1binding_1_1BindingInformation.html">nmbs::binding::BindingInformation</a></div><div class="ttdoc">The structure representing the XML Binding structure.</div><div class="ttdef"><b>Definition</b> binding_information.h:42</div></div>
-<div class="ttc" id="astructnmbs_1_1binding_1_1BindingInformation_html_a63b7dc1ca04ca3adccf416023f64082f"><div class="ttname"><a href="structnmbs_1_1binding_1_1BindingInformation.html#a63b7dc1ca04ca3adccf416023f64082f">nmbs::binding::BindingInformation::labels</a></div><div class="ttdeci">std::vector&lt; ConfidentialityLabel &gt; labels</div><div class="ttdef"><b>Definition</b> binding_information.h:68</div></div>
+<div class="ttc" id="anamespacenmbs_html_a9526966593b7e881fa4af447550e6268"><div class="ttname"><a href="namespacenmbs.html#a9526966593b7e881fa4af447550e6268">nmbs::read_binding</a></div><div class="ttdeci">Expected&lt; std::optional&lt; binding::BindingInformation &gt; &gt; read_binding(const std::filesystem::path &amp;path, std::optional&lt; binding::ProfileSupport &gt; binding_support=std::nullopt)</div><div class="ttdoc">Reads and deserializes the ADatP-4778 binding from the specified file.</div></div>
+<div class="ttc" id="anamespacenmbs_html_aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01"><div class="ttname"><a href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa330361a8781281964074838818889c01">nmbs::no_label_present</a></div><div class="ttdeci">@ no_label_present</div><div class="ttdoc">No label was attached to the file.</div><div class="ttdef"><b>Definition</b> exit_code.h:65</div></div>
+<div class="ttc" id="anamespacenmbs_html_aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e"><div class="ttname"><a href="namespacenmbs.html#aa2c1b0b4712e286d44c55da3d7e2b36aa8705e8f9efcd319de1a4ab0cc991e07e">nmbs::success</a></div><div class="ttdeci">@ success</div><div class="ttdoc">No errors occurred; operation completed successfully.</div><div class="ttdef"><b>Definition</b> exit_code.h:37</div></div>
+<div class="ttc" id="anamespacenmbs_html_ac4941f61ba58b1705f5a1082bc858e7b"><div class="ttname"><a href="namespacenmbs.html#ac4941f61ba58b1705f5a1082bc858e7b">nmbs::write_labels</a></div><div class="ttdeci">Expected&lt; std::string &gt; write_labels(const std::filesystem::path &amp;path, const std::vector&lt; ConfidentialityLabel &gt; &amp;confidentiality_labels, std::optional&lt; binding::ProfileSupport &gt; binding_support=std::nullopt)</div><div class="ttdoc">Writes ADatP-4778 binding information using the optimal binding profile.</div></div>
+<div class="ttc" id="astructnmbs_1_1binding_1_1BindingInformation_html"><div class="ttname"><a href="structnmbs_1_1binding_1_1BindingInformation.html">nmbs::binding::BindingInformation</a></div><div class="ttdoc">Holds information about both the labels, and the file the labels are bound to.</div><div class="ttdef"><b>Definition</b> binding_information.h:42</div></div>
+<div class="ttc" id="astructnmbs_1_1binding_1_1BindingInformation_html_a63b7dc1ca04ca3adccf416023f64082f"><div class="ttname"><a href="structnmbs_1_1binding_1_1BindingInformation.html#a63b7dc1ca04ca3adccf416023f64082f">nmbs::binding::BindingInformation::labels</a></div><div class="ttdeci">std::vector&lt; ConfidentialityLabel &gt; labels</div><div class="ttdoc">The collection of confidentiality labels bound to the referenced data.</div><div class="ttdef"><b>Definition</b> binding_information.h:69</div></div>
 </div><!-- fragment --> </div></div><!-- PageDoc -->
 <a href="doxygen_crawl.html"></a>
 </div><!-- contents -->

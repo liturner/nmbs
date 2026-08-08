@@ -92,7 +92,7 @@ $(function(){initNavTree('nmbs_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p>The intended "include all" header file for libnmbs.  
+<p>Main include header for the libnmbs library.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;string&gt;</code><br />
 <code>#include &lt;filesystem&gt;</code><br />
@@ -106,26 +106,26 @@ $(function(){initNavTree('nmbs_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:nmbs" id="r_nmbs"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html">nmbs</a></td></tr>
-<tr class="memdesc:namespacenmbs"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight helpers for generating NATO confidentiality metadata. <br /></td></tr>
+<tr class="memdesc:namespacenmbs"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight utilities for NATO confidentiality metadata. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ad3dc9a31562bcc51bb4202b45747804b" id="r_ad3dc9a31562bcc51bb4202b45747804b"><td class="memItemLeft" align="right" valign="top">std::string_view&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#ad3dc9a31562bcc51bb4202b45747804b">nmbs::version</a> () noexcept</td></tr>
-<tr class="memdesc:ad3dc9a31562bcc51bb4202b45747804b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the semantic version of the library.  <br /></td></tr>
+<tr class="memdesc:ad3dc9a31562bcc51bb4202b45747804b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Retrieves the semantic version of the library.  <br /></td></tr>
 <tr class="memitem:a8e48307b2c63da07b22472bdbedddd3a" id="r_a8e48307b2c63da07b22472bdbedddd3a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a8e48307b2c63da07b22472bdbedddd3a">nmbs::cleanup</a> ()</td></tr>
-<tr class="memdesc:a8e48307b2c63da07b22472bdbedddd3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Free up any allocated memory and state to keep tools like Valgrind clean.  <br /></td></tr>
+<tr class="memdesc:a8e48307b2c63da07b22472bdbedddd3a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Releases globally allocated memory and resets library state.  <br /></td></tr>
 <tr class="memitem:ac4941f61ba58b1705f5a1082bc858e7b" id="r_ac4941f61ba58b1705f5a1082bc858e7b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacenmbs.html#a4a97079205b2f1cb16d21be79ef6159e">Expected</a>&lt; std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#ac4941f61ba58b1705f5a1082bc858e7b">nmbs::write_labels</a> (const std::filesystem::path &amp;path, const std::vector&lt; <a class="el" href="structnmbs_1_1ConfidentialityLabel.html">ConfidentialityLabel</a> &gt; &amp;confidentiality_labels, std::optional&lt; <a class="el" href="namespacenmbs_1_1binding.html#ac38f07e1ae0d7e7beb56ed6c146846e1">binding::ProfileSupport</a> &gt; binding_support=std::nullopt)</td></tr>
-<tr class="memdesc:ac4941f61ba58b1705f5a1082bc858e7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes ADatP‑4778 binding information using the best possible binding profile.  <br /></td></tr>
+<tr class="memdesc:ac4941f61ba58b1705f5a1082bc858e7b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes ADatP-4778 binding information using the optimal binding profile.  <br /></td></tr>
 <tr class="memitem:a9526966593b7e881fa4af447550e6268" id="r_a9526966593b7e881fa4af447550e6268"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacenmbs.html#a4a97079205b2f1cb16d21be79ef6159e">Expected</a>&lt; std::optional&lt; <a class="el" href="structnmbs_1_1binding_1_1BindingInformation.html">binding::BindingInformation</a> &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#a9526966593b7e881fa4af447550e6268">nmbs::read_binding</a> (const std::filesystem::path &amp;path, std::optional&lt; <a class="el" href="namespacenmbs_1_1binding.html#ac38f07e1ae0d7e7beb56ed6c146846e1">binding::ProfileSupport</a> &gt; binding_support=std::nullopt)</td></tr>
-<tr class="memdesc:a9526966593b7e881fa4af447550e6268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the full ADatP-4778 binding from the file.  <br /></td></tr>
+<tr class="memdesc:a9526966593b7e881fa4af447550e6268"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads and deserializes the ADatP-4778 binding from the specified file.  <br /></td></tr>
 <tr class="memitem:abbf0577083870dcd0df116dd54253df6" id="r_abbf0577083870dcd0df116dd54253df6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacenmbs.html#a4a97079205b2f1cb16d21be79ef6159e">Expected</a>&lt; std::optional&lt; std::string &gt; &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#abbf0577083870dcd0df116dd54253df6">nmbs::read_binding_xml</a> (const std::filesystem::path &amp;path, std::optional&lt; <a class="el" href="namespacenmbs_1_1binding.html#ac38f07e1ae0d7e7beb56ed6c146846e1">binding::ProfileSupport</a> &gt; binding_support=std::nullopt)</td></tr>
-<tr class="memdesc:abbf0577083870dcd0df116dd54253df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the full ADatP-4778 binding from the file.  <br /></td></tr>
+<tr class="memdesc:abbf0577083870dcd0df116dd54253df6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the raw XML of the ADatP-4778 binding from the specified file.  <br /></td></tr>
 <tr class="memitem:abee0b374b35e67212dbbc9e8e2de5d8e" id="r_abee0b374b35e67212dbbc9e8e2de5d8e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacenmbs.html#a4a97079205b2f1cb16d21be79ef6159e">Expected</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html#abee0b374b35e67212dbbc9e8e2de5d8e">nmbs::remove_binding</a> (const std::filesystem::path &amp;path, std::optional&lt; <a class="el" href="namespacenmbs_1_1binding.html#ac38f07e1ae0d7e7beb56ed6c146846e1">binding::ProfileSupport</a> &gt; binding_support=std::nullopt)</td></tr>
-<tr class="memdesc:abee0b374b35e67212dbbc9e8e2de5d8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the ADatP-4778 binding from the file.  <br /></td></tr>
+<tr class="memdesc:abee0b374b35e67212dbbc9e8e2de5d8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Removes the ADatP-4778 binding from the specified file.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>The intended "include all" header file for libnmbs. </p>
-<p>This file will include all the available nmbs namespace. Use it as single import to work with the nmbs namespace.</p>
+<div class="textblock"><p>Main include header for the libnmbs library. </p>
+<p>Provides a single import for the entire nmbs namespace.</p>
 <dl class="section author"><dt>Author</dt><dd>Luke Ian Turner </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2026-06-06 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2026 Luke Ian Turner </dd>

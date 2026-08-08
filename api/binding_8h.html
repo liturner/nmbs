@@ -92,7 +92,7 @@ $(function(){initNavTree('binding_8h.html','',''); });
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="binding_8h.html" title="binding.h brief">binding.h</a> brief  
+<p>Core binding profile support flags and analysis functions.  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;filesystem&gt;</code><br />
 </div>
@@ -101,13 +101,16 @@ $(function(){initNavTree('binding_8h.html','',''); });
 <tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
 Namespaces</h2></td></tr>
 <tr class="memitem:nmbs" id="r_nmbs"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs.html">nmbs</a></td></tr>
-<tr class="memdesc:namespacenmbs"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight helpers for generating NATO confidentiality metadata. <br /></td></tr>
+<tr class="memdesc:namespacenmbs"><td class="mdescLeft">&#160;</td><td class="mdescRight">Lightweight utilities for NATO confidentiality metadata. <br /></td></tr>
 <tr class="memitem:nmbs_3A_3Abinding" id="r_nmbs_3A_3Abinding"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1binding.html">nmbs::binding</a></td></tr>
+<tr class="memdesc:namespacenmbs_1_1binding"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functionality for the numerous binding profiles of ADatP-4778. <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:adf46f7dab236058dc95df815e0c69469" id="r_adf46f7dab236058dc95df815e0c69469"><td class="memItemLeft" align="right" valign="top">typedef std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1binding.html#adf46f7dab236058dc95df815e0c69469">nmbs::binding::AccessMode</a></td></tr>
+<tr class="memdesc:adf46f7dab236058dc95df815e0c69469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmask type for evaluating file access modes.  <br /></td></tr>
 <tr class="memitem:ac38f07e1ae0d7e7beb56ed6c146846e1" id="r_ac38f07e1ae0d7e7beb56ed6c146846e1"><td class="memItemLeft" align="right" valign="top">typedef std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1binding.html#ac38f07e1ae0d7e7beb56ed6c146846e1">nmbs::binding::ProfileSupport</a></td></tr>
+<tr class="memdesc:ac38f07e1ae0d7e7beb56ed6c146846e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmask type for indicating supported ADatP-4778 binding profiles.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -115,6 +118,7 @@ Enumerations</h2></td></tr>
 , <a class="el" href="namespacenmbs_1_1binding.html#ac28e9f6efbd17f4fa32d842a5b20686ca26b760cba1c3c7b8c3263275f150d404">nmbs::binding::am_read</a> = 1 &lt;&lt; 0
 , <a class="el" href="namespacenmbs_1_1binding.html#ac28e9f6efbd17f4fa32d842a5b20686ca05ca79647e478507ff642de7d0d19c39">nmbs::binding::am_write</a> = 1 &lt;&lt; 1
  }</td></tr>
+<tr class="memdesc:ac28e9f6efbd17f4fa32d842a5b20686c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags representing read/write access capabilities.  <a href="namespacenmbs_1_1binding.html#ac28e9f6efbd17f4fa32d842a5b20686c">More...</a><br /></td></tr>
 <tr class="memitem:a244ca3b4a30f862f150e005d103f3583" id="r_a244ca3b4a30f862f150e005d103f3583"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespacenmbs_1_1binding.html#a244ca3b4a30f862f150e005d103f3583">nmbs::binding::ProfileSupportFlags</a> : ProfileSupport { <br />
 &#160;&#160;<a class="el" href="namespacenmbs_1_1binding.html#a244ca3b4a30f862f150e005d103f3583adc8b8f3eba050f3821b9f855ecc87d8e">nmbs::binding::ps_none</a> = 0
 , <a class="el" href="namespacenmbs_1_1binding.html#a244ca3b4a30f862f150e005d103f3583a15746a5874f6e68e88a930c0a46fb5ba">nmbs::binding::ps_xmp</a> = 1 &lt;&lt; 0
@@ -124,6 +128,7 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="namespacenmbs_1_1binding.html#a244ca3b4a30f862f150e005d103f3583a2feaa884151310c9b541896b02ace40e">nmbs::binding::ps_ext4</a> = 1 &lt;&lt; 3
 <br />
  }</td></tr>
+<tr class="memdesc:a244ca3b4a30f862f150e005d103f3583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags representing supported binding profiles for a specific file.  <a href="namespacenmbs_1_1binding.html#a244ca3b4a30f862f150e005d103f3583">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
@@ -131,9 +136,9 @@ Functions</h2></td></tr>
 <tr class="memdesc:ac95f203fd72d308dac0a7298557fa388"><td class="mdescLeft">&#160;</td><td class="mdescRight">File analysis to check the binding capabilities of the path.  <br /></td></tr>
 </table>
 <a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="binding_8h.html" title="binding.h brief">binding.h</a> brief </p>
-<p><a class="el" href="binding_8h.html" title="binding.h brief">binding.h</a> details</p>
-<dl class="section author"><dt>Author</dt><dd>luke </dd></dl>
+<div class="textblock"><p>Core binding profile support flags and analysis functions. </p>
+<p>Defines bitmask types for evaluating file access modes and ADatP-4778 binding profile capabilities.</p>
+<dl class="section author"><dt>Author</dt><dd>Luke Ian Turner </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>2026-07-17 </dd></dl>
 <dl class="section copyright"><dt>Copyright</dt><dd>Copyright (c) 2026 Luke Ian Turner </dd>
 <dd>

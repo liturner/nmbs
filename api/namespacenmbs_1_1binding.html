@@ -91,16 +91,21 @@ $(function(){initNavTree('namespacenmbs_1_1binding.html','',''); });
   <div class="headertitle"><div class="title">nmbs::binding Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>Functionality for the numerous binding profiles of ADatP-4778.  
+<a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-nested-classes" class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:BindingInformation" id="r_BindingInformation"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structnmbs_1_1binding_1_1BindingInformation.html">BindingInformation</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The structure representing the XML Binding structure.  <a href="structnmbs_1_1binding_1_1BindingInformation.html#details">More...</a><br /></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds information about both the labels, and the file the labels are bound to.  <a href="structnmbs_1_1binding_1_1BindingInformation.html#details">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-typedef-members" class="groupheader"><a id="typedef-members" name="typedef-members"></a>
 Typedefs</h2></td></tr>
 <tr class="memitem:adf46f7dab236058dc95df815e0c69469" id="r_adf46f7dab236058dc95df815e0c69469"><td class="memItemLeft" align="right" valign="top">typedef std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adf46f7dab236058dc95df815e0c69469">AccessMode</a></td></tr>
+<tr class="memdesc:adf46f7dab236058dc95df815e0c69469"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmask type for evaluating file access modes.  <br /></td></tr>
 <tr class="memitem:ac38f07e1ae0d7e7beb56ed6c146846e1" id="r_ac38f07e1ae0d7e7beb56ed6c146846e1"><td class="memItemLeft" align="right" valign="top">typedef std::uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac38f07e1ae0d7e7beb56ed6c146846e1">ProfileSupport</a></td></tr>
+<tr class="memdesc:ac38f07e1ae0d7e7beb56ed6c146846e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Bitmask type for indicating supported ADatP-4778 binding profiles.  <br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-enum-members" class="groupheader"><a id="enum-members" name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -108,6 +113,7 @@ Enumerations</h2></td></tr>
 , <a class="el" href="#ac28e9f6efbd17f4fa32d842a5b20686ca26b760cba1c3c7b8c3263275f150d404">am_read</a> = 1 &lt;&lt; 0
 , <a class="el" href="#ac28e9f6efbd17f4fa32d842a5b20686ca05ca79647e478507ff642de7d0d19c39">am_write</a> = 1 &lt;&lt; 1
  }</td></tr>
+<tr class="memdesc:ac28e9f6efbd17f4fa32d842a5b20686c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags representing read/write access capabilities.  <a href="#ac28e9f6efbd17f4fa32d842a5b20686c">More...</a><br /></td></tr>
 <tr class="memitem:a244ca3b4a30f862f150e005d103f3583" id="r_a244ca3b4a30f862f150e005d103f3583"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a244ca3b4a30f862f150e005d103f3583">ProfileSupportFlags</a> : ProfileSupport { <br />
 &#160;&#160;<a class="el" href="#a244ca3b4a30f862f150e005d103f3583adc8b8f3eba050f3821b9f855ecc87d8e">ps_none</a> = 0
 , <a class="el" href="#a244ca3b4a30f862f150e005d103f3583a15746a5874f6e68e88a930c0a46fb5ba">ps_xmp</a> = 1 &lt;&lt; 0
@@ -117,13 +123,17 @@ Enumerations</h2></td></tr>
 &#160;&#160;<a class="el" href="#a244ca3b4a30f862f150e005d103f3583a2feaa884151310c9b541896b02ace40e">ps_ext4</a> = 1 &lt;&lt; 3
 <br />
  }</td></tr>
+<tr class="memdesc:a244ca3b4a30f862f150e005d103f3583"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flags representing supported binding profiles for a specific file.  <a href="#a244ca3b4a30f862f150e005d103f3583">More...</a><br /></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-func-members" class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ac95f203fd72d308dac0a7298557fa388" id="r_ac95f203fd72d308dac0a7298557fa388"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#ac38f07e1ae0d7e7beb56ed6c146846e1">ProfileSupport</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac95f203fd72d308dac0a7298557fa388">support</a> (const std::filesystem::path &amp;path)</td></tr>
 <tr class="memdesc:ac95f203fd72d308dac0a7298557fa388"><td class="mdescLeft">&#160;</td><td class="mdescRight">File analysis to check the binding capabilities of the path.  <br /></td></tr>
 </table>
-<a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Functionality for the numerous binding profiles of ADatP-4778. </p>
+<p>This namespace holds a number of sub-namespaces relevant to each binding profile. The sub-namespaces each contain a similar set of functions, such as for reading and writing labels using specifically that binding profile. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+</div><a name="doc-typedef-members" id="doc-typedef-members"></a><h2 id="header-doc-typedef-members" class="groupheader">Typedef Documentation</h2>
 <a id="adf46f7dab236058dc95df815e0c69469" name="adf46f7dab236058dc95df815e0c69469"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adf46f7dab236058dc95df815e0c69469">&#9670;&#160;</a></span>AccessMode</h2>
 
@@ -135,6 +145,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Bitmask type for evaluating file access modes. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>
@@ -150,6 +163,9 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Bitmask type for indicating supported ADatP-4778 binding profiles. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+
 </div>
 </div>
 <a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Enumeration Type Documentation</h2>
@@ -164,10 +180,19 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Flags representing read/write access capabilities. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac28e9f6efbd17f4fa32d842a5b20686caa3eec797c675e392c689a3628c538cdb" name="ac28e9f6efbd17f4fa32d842a5b20686caa3eec797c675e392c689a3628c538cdb"></a>am_none&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac28e9f6efbd17f4fa32d842a5b20686ca26b760cba1c3c7b8c3263275f150d404" name="ac28e9f6efbd17f4fa32d842a5b20686ca26b760cba1c3c7b8c3263275f150d404"></a>am_read&#160;</td><td class="fielddoc"></td></tr>
-<tr><td class="fieldname"><a id="ac28e9f6efbd17f4fa32d842a5b20686ca05ca79647e478507ff642de7d0d19c39" name="ac28e9f6efbd17f4fa32d842a5b20686ca05ca79647e478507ff642de7d0d19c39"></a>am_write&#160;</td><td class="fielddoc"></td></tr>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="ac28e9f6efbd17f4fa32d842a5b20686caa3eec797c675e392c689a3628c538cdb" name="ac28e9f6efbd17f4fa32d842a5b20686caa3eec797c675e392c689a3628c538cdb"></a>am_none&#160;</td><td class="fielddoc"><p>No access. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+</td></tr>
+<tr><td class="fieldname"><a id="ac28e9f6efbd17f4fa32d842a5b20686ca26b760cba1c3c7b8c3263275f150d404" name="ac28e9f6efbd17f4fa32d842a5b20686ca26b760cba1c3c7b8c3263275f150d404"></a>am_read&#160;</td><td class="fielddoc"><p>Read access. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+</td></tr>
+<tr><td class="fieldname"><a id="ac28e9f6efbd17f4fa32d842a5b20686ca05ca79647e478507ff642de7d0d19c39" name="ac28e9f6efbd17f4fa32d842a5b20686ca05ca79647e478507ff642de7d0d19c39"></a>am_write&#160;</td><td class="fielddoc"><p>Write access. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
+</td></tr>
 </table>
 
 </div>
@@ -183,8 +208,11 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Flags representing supported binding profiles for a specific file. </p>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 <table class="fieldtable">
-<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a244ca3b4a30f862f150e005d103f3583adc8b8f3eba050f3821b9f855ecc87d8e" name="a244ca3b4a30f862f150e005d103f3583adc8b8f3eba050f3821b9f855ecc87d8e"></a>ps_none&#160;</td><td class="fielddoc"><p>The file does not support ADatP-4774 labels (at least in this implementation...). </p>
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a244ca3b4a30f862f150e005d103f3583adc8b8f3eba050f3821b9f855ecc87d8e" name="a244ca3b4a30f862f150e005d103f3583adc8b8f3eba050f3821b9f855ecc87d8e"></a>ps_none&#160;</td><td class="fielddoc"><p>The file does not support ADatP-4774 labels. </p>
 <dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 </td></tr>
 <tr><td class="fieldname"><a id="a244ca3b4a30f862f150e005d103f3583a15746a5874f6e68e88a930c0a46fb5ba" name="a244ca3b4a30f862f150e005d103f3583a15746a5874f6e68e88a930c0a46fb5ba"></a>ps_xmp&#160;</td><td class="fielddoc"><p>The file supports the XMP binding profile. </p>
@@ -228,15 +256,15 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>File analysis to check the binding capabilities of the path. </p>
-<p>Using <a class="el" href="#a244ca3b4a30f862f150e005d103f3583">nmbs::binding::ProfileSupportFlags</a> you can then use classic binary logic to see which binding profiles could potentially be supported by this file. Note that this ignores rights! For example, sidecar will be reported as supported for files in /etc/... as it is entirely possible that a readonly file can have a sidecar. Users should use the relevant "access_mode" function checks to verify if a binding profile has e.g. read or write access.</p>
-<p>This function is written for speed, but it does necessarily perform several IO operations. Care should be taken to cache the result if possible. </p><dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
-<dl class="params"><dt>Parameters</dt><dd>
+<p>Using <a class="el" href="#a244ca3b4a30f862f150e005d103f3583" title="Flags representing supported binding profiles for a specific file.">nmbs::binding::ProfileSupportFlags</a> you can use classic binary logic to see which binding profiles could potentially be supported by this file. Note that this ignores rights! For example, sidecar will be reported as supported for files in /etc/... as it is entirely possible that a readonly file can have a sidecar. Users should use the relevant access mode checks to verify if a binding profile has read or write access.</p>
+<p>This function is written for speed, but it does perform several IO operations. Care should be taken to cache the result if possible. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">path</td><td>to analyse </td></tr>
+    <tr><td class="paramname">path</td><td>The filesystem path to analyse. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>nmbs::binding::flags containing all information about the path parameter </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="#ac38f07e1ae0d7e7beb56ed6c146846e1" title="Bitmask type for indicating supported ADatP-4778 binding profiles.">nmbs::binding::ProfileSupport</a> bitmask containing all supported binding profiles. </dd></dl>
+<dl class="section since"><dt>Since</dt><dd>1.0.0 </dd></dl>
 
 </div>
 </div>

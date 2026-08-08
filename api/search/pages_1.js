@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['getting_20started_0',['Getting Started',['../index.html',1,'']]]
+  ['example_20usage_0',['Example Usage',['../index.html#autotoc_md3',1,'']]]
 ];
