@@ -17,7 +17,7 @@ permalink: /how-to/
 
 ## Install nmbs
 
-At the time of writing, nmbs is not yet in the Debian APT repository. Once it is:
+At the time of writing, __nmbs__ is not yet in the Debian APT repository. Once it is:
 
 ```shell
 # Get the CLI
@@ -36,13 +36,13 @@ Until then, you can [download releases from GitHub](https://github.com/liturner/
 
 ## GNOME
 
-nmbs may be used from within the GNOME Files (Nautilus) application. It integrates seamlessly with the UI.
+__nmbs__ may be used from within the GNOME Files (Nautilus) application. It integrates seamlessly with the UI.
 
 &nbsp;
 
 ---
 
-### How to Classify a File
+### How to classify a File
 
 Right Click it in GNOME Files, if it can be classified, the "Classify" option will be in the context menu.
 
@@ -50,7 +50,7 @@ Right Click it in GNOME Files, if it can be classified, the "Classify" option wi
 
 ---
 
-### How to Delete a Classification from a File
+### How to delete a Classification from a File
 
 Right Click it in GNOME Files, if it can be declassified, the "Clear Classification" option will be in the context menu.
 
@@ -60,7 +60,7 @@ Right Click it in GNOME Files, if it can be declassified, the "Clear Classificat
 
 ### How to view Classification Marking in a Column
 
-If you use the list view in GNOME Files, you can add extra columns. nmbs provides a "Classification" column which can be selected. When activated, the Marking of the Classification will be displayed as in the following example:
+If you use the list view in GNOME Files, you can add extra columns. __nmbs__ provides a "Classification" column which can be selected. When activated, the Marking of the Classification will be displayed as in the following example:
 
 ![File Properties]({{ "/assets/images/file-column.png" | relative_url }})
 
@@ -84,13 +84,13 @@ If you click on the Classification section, the details will be opened in a scre
 
 ### How to configure the Originator ID
 
-The Originator ID for any Classifications done by a user in the GNOME Files GUI may be set at the user lever in dconf. Please set an RFC822 (email address) style name, such as "user@organisation". This value will only be used on labels set in GNOME Files, and not by the CLI.
+The Originator ID for any Classifications done by a user in the GNOME Files GUI may be set at the user lever in `dconf`. Please set an RFC822 (email address) style name, such as "user@organisation". This value will only be used on labels set in GNOME Files, and not by the CLI.
 
 ```shell
 dconf write /org/gnome/nautilus-nmbs/originator-id '"user@organisation.org"'
 ```
 
-Alternatively, this may be set in a GUI tool such as __*dconf-editor*__
+Alternatively, this may be set in a GUI tool such as `dconf-editor`
 
 ![dconf-editor]({{ "/assets/images/dconf-editor.png" | relative_url }})
 
@@ -101,6 +101,32 @@ Alternatively, this may be set in a GUI tool such as __*dconf-editor*__
 
 ## CLI
 
+### How to explore available Security Policies and Classifications
+
+```shell
+nmbs-get
+```
+
+&nbsp;
+
+---
+
+### How to label a file with a Classification
+
+```shell
+nmbs-set
+```
+
+&nbsp;
+
+---
+
+### How to check if a file has a Classification
+
+```shell
+nmbs-verify
+```
+
 &nbsp;
 
 ---
@@ -108,19 +134,19 @@ Alternatively, this may be set in a GUI tool such as __*dconf-editor*__
 
 ## Administration
 
-&nbsp;
-
----
-
 ### How to add Company Classifications
 
-__nmbs__ uses [Security Policy Information Files](http://www.xmlspif.org/) (SPIF) to manage and verify policies. If you wish to add extra policies, simply place a valid SPIF file in the */etc/nmbs/spif* directory. e.g.:
+__nmbs__ uses [Security Policy Information Files](http://www.xmlspif.org/) (SPIF) to manage and verify policies. If you wish to add extra policies, simply place a valid SPIF file in the "/etc/nmbs/spif" directory. e.g.:
 
-> /etc/nmbs/spif/organisation.org.spif
+```shell
+/etc/nmbs/spif/organisation.org.spif
+```
 
 Alternatively, you can also use the override environment variable in certain cases. Only use this if you know what you are doing, using the etc folder is a much better method.
 
-> NMBS_SPIF_DIR_OVERRIDE=/home/user/my-spif-folder
+```shell
+NMBS_SPIF_DIR_OVERRIDE=/home/user/my-spif-folder
+```
 
 &nbsp;
 
@@ -130,17 +156,62 @@ Alternatively, you can also use the override environment variable in certain cas
 
 It is possible to override e.g. the NATO policy which is shipped with the package. This may be usefull if e.g. NATO update their policies, and you wish to have the latest version before __nmbs__ is updated.
 
-Simply ensure that your updated SPIF has the same *securityPolicyId* element, and a newer *version* attribute. Place it in the */etc/nmbs/spif* directory as previously mentioned.
+Simply ensure that your updated SPIF has the same "securityPolicyId" element, and a newer "version" attribute. Place it in the "/etc/nmbs/spif" directory as previously mentioned. The snippet below highlights the fields used for this functionality.
+
+```xml
+<!-- The version attribute must be greater than your installed file -->
+<spif:SPIF version="88">
+    <!-- The securityPolicyId element must be equivalent with your installed file -->
+	<securityPolicyId name="NATO" id="1.3.26.1.3.1"/>
+</spif:SPIF>
+```
 
 &nbsp;
 
+---
 ---
 
 ## Find more Help
 
 __nmbs__ ships with:
 
-- man pages
-- --help in the cli
-- [API Docs]({{ "/api/" | relative_url }})
+### CLI Tool --help
+
+Use --help on any of the CLI tools to get the most accurate help for your version. e.g.:
+
+```shell
+nmbs-get --help
+nmbs-set --help
+nmbs-verify --help
+```
+
+&nbsp;
+
+---
+
+### manpages
+
+Specifically, `man 1` pages are installed for the CLI Tools. At time of writing, this will provide a near identical output to --help
+
+```shell
+man 1 nmbs-get
+man 1 nmbs-set
+man 1 nmbs-verify
+```
+
+&nbsp;
+
+---
+
+### API Docs for libnmbs
+
+The API Documentation is available on the [API page]({{ "/api/" | relative_url }}).
+
+Alternatively, if you have installed `libnmbs-doc`, the `doxygen` can be accessed using a `doc-base` tool like `dochelp` or by e.g.
+
+```shell
+xdg-open /usr/share/doc/libnmbs-dev/html/index.html
+```
+
+
 

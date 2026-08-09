@@ -7,9 +7,9 @@ permalink: /developer/
   ⚠️ <strong>Work in Progress:</strong> This project and documentation are currently under active development.
 </div>
 
-nmbs is a CMake project, developed using CLion, targeted at Debian. CLion is relied on heavily for numerous project settings such as code style and linting. CMake can of course be used in isolation to build and test the project.
+**nmbs** is a CMake project, developed using CLion, targeted at Debian. CLion is relied on heavily for numerous project settings such as code style and linting. `cmake` can of course be used in isolation to build and test the project.
 
-Development dependencies are all apt based.
+Development dependencies are all `apt` based. Development takes place in stable Debian, `schroot` is used to build and test for unstable and testing.
 
 &nbsp;
 
@@ -33,12 +33,3 @@ Development dependencies are all apt based.
 * [QA Page](https://qa.debian.org/developer.php?login=turnertech@outlook.de)
 * [WNPP Ticket](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1141958)
 * [Mentors](https://mentors.debian.net/package/nmbs/)
-
-## Hints
-
-If you have installed libnmbs-doc, the doxygen can be accessed using a doc-base tool like `dochelp` or by e.g.
-
-```shell
-xdg-open /usr/share/doc/libnmbs-dev/html/index.html
-```
-

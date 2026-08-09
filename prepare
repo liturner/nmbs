@@ -1,7 +1,10 @@
 #!/bin/bash -eu
 
 DEPS=(
+  build-essential
   bundler
+  jekyll
+  ruby-full
 )
 
 echo "==> Updating package lists..."
@@ -9,3 +12,6 @@ sudo apt-get update
 
 echo "==> Installing dependencies..."
 sudo apt-get install --no-install-recommends --yes "${DEPS[@]}"
+
+echo "==> Installing gems..."
+sudo bundle
