@@ -18,4 +18,4 @@ RUN apt-get update && apt-get install --no-install-recommends --yes \
     ninja-build \
     pkg-config \
     xml-core && \
-    rm -rf /var/lib/apt/lists/* \
+    rm -rf /var/lib/apt/lists/*

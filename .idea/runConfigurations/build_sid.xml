@@ -12,6 +12,7 @@
           </list>
         </option>
         <option name="buildCliOptions" value="--target nmbs-build" />
+        <option name="buildOnly" value="true" />
         <option name="containerName" value="nmbs-sid" />
         <option name="contextFolderPath" value="." />
         <option name="sourceFilePath" value="docker/build.dockerfile" />
