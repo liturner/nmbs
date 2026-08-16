@@ -22,9 +22,9 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v7
 
-      - run: cmake --preset debug
+      - run: cmake --preset debug -D CPACK_SYSTEM_NAME="${{ matrix.release }}"
       - run: cmake --build --preset debug
-      - run: cmake --preset release
+      - run: cmake --preset release -D CPACK_SYSTEM_NAME="${{ matrix.release }}"
       - run: cmake --build --preset release
       - run: cpack -B build
 
@@ -33,3 +33,9 @@ jobs:
 
       - run: ctest
         working-directory: ./build/release
+
+      - name: Upload Built Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nmbs-build-${{ matrix.release }}
+          path: build/NMBS-*.tar.gz
