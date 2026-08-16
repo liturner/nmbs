@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'docker/builder.dockerfile'
+      - '.github/workflows/ci-builder.yml'
 
 jobs:
   build-builders:
