@@ -25,8 +25,8 @@ Release: v1.0.0 (`uscan` automatically mangles to 1.0.0 in Debian Tooling)
 Look at the CI tooling provided for the most accurate build example. If you are doing more than installing some APT
 dependencies and running some CMake commands, something is wrong...
 
-- [The GitHub ci](.github/workflows/ci.yml)
-- [The docker build](docker/build.dockerfile)
+- [The GitHub ci](.github/workflows)
+- [The docker build](docker)
 
 This is a CLion project. The project settings include docker and cpack targets, just using the GUI will work for the 
 CMake Targets. Investigate the [.idea](.idea) folder

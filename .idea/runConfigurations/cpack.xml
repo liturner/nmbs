@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="cpack" type="ShConfigurationType">
-    <option name="SCRIPT_TEXT" value="cmake --preset debug &amp;&amp; cmake --build --preset debug &amp;&amp; cmake --preset release &amp;&amp; cmake --build --preset release &amp;&amp; cpack -B build" />
+    <option name="SCRIPT_TEXT" value="source /etc/os-release &amp;&amp; cmake --preset debug -D CPACK_SYSTEM_NAME=&quot;$VERSION_CODENAME&quot; &amp;&amp; cmake --build --preset debug &amp;&amp; cmake --preset release -D CPACK_SYSTEM_NAME=&quot;$VERSION_CODENAME&quot; &amp;&amp; cmake --build --preset release &amp;&amp; cpack -B build" />
     <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
     <option name="SCRIPT_PATH" value="" />
     <option name="SCRIPT_OPTIONS" value="" />

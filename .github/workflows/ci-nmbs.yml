@@ -1,0 +1,41 @@
+name: Build nmbs
+
+on:
+  push:
+    paths:
+      - 'targets/**'
+      - 'cmake/**'
+      - '.github/workflows/ci-nmbs.yml'
+
+jobs:
+  build-nmbs:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        release: [ trixie, testing, sid ]
+    container:
+      image: turnertech/nmbs-builder:${{ matrix.release }}
+      credentials:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v7
+
+      - run: cmake --preset debug -D CPACK_SYSTEM_NAME="${{ matrix.release }}"
+      - run: cmake --build --preset debug
+      - run: cmake --preset release -D CPACK_SYSTEM_NAME="${{ matrix.release }}"
+      - run: cmake --build --preset release
+      - run: cpack -B build
+
+      - run: ctest
+        working-directory: ./build/debug
+
+      - run: ctest
+        working-directory: ./build/release
+
+      - name: Upload Built Artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: nmbs-build-${{ matrix.release }}
+          path: build/NMBS-*.tar.gz
