@@ -8,11 +8,14 @@ on:
 jobs:
   build-builders:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        release: [ trixie, testing, sid ]
     steps:
       - uses: docker/build-push-action@v7
         with:
           file: docker/builder.dockerfile
           push: false
-          tags: turnertech/nmbs-builder:trixie
+          tags: turnertech/nmbs-builder:${{ matrix.release }}
           build-args: |
-            DEBIAN_RELEASE=trixie
+            DEBIAN_RELEASE=${{ matrix.release }}
