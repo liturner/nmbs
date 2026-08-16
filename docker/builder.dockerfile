@@ -18,7 +18,4 @@ RUN apt-get update && apt-get install --no-install-recommends --yes \
     ninja-build \
     pkg-config \
     xml-core && \
-    useradd -ms /bin/bash nmbs
-
-USER nmbs
-WORKDIR /home/nmbs
+    rm -rf /var/lib/apt/lists/* \
