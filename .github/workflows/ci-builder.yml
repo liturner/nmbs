@@ -7,16 +7,23 @@ on:
       - '.github/workflows/ci-builder.yml'
 
 jobs:
-  build-builders:
+  build-builder:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         release: [ trixie, testing, sid ]
     steps:
-      - uses: docker/build-push-action@v7
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v7
         with:
           file: docker/builder.dockerfile
-          push: false
+          push: true
           tags: turnertech/nmbs-builder:${{ matrix.release }}
           build-args: |
             DEBIAN_RELEASE=${{ matrix.release }}
