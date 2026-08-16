@@ -16,8 +16,8 @@ jobs:
     container:
       image: turnertech/nmbs-builder:${{ matrix.release }}
       credentials:
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
