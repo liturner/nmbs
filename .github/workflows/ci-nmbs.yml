@@ -21,3 +21,9 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v7
+
+      - run: cmake --preset debug
+      - run: cmake --build --preset debug
+      - run: cmake --preset release
+      - run: cmake --build --preset release
+      - run: cpack -B build
