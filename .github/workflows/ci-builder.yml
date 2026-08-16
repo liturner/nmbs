@@ -1,0 +1,19 @@
+name: Build Builder Images
+
+on:
+  push:
+    paths:
+      - 'docker/builder.dockerfile'
+
+jobs:
+  build-builders:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: docker/build-push-action@v7
+        with:
+          file: docker/builder.dockerfile
+          push: false
+          tags: turnertech/nmbs-builder:trixie
+          target: nmbs-build
+          build-args: |
+            DEBIAN_RELEASE=trixie

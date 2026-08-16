@@ -1,9 +1,14 @@
-name: CI
+name: Build nmbs
 
-on: push
+on:
+  push:
+    paths:
+      - '.github/workflows/ci-nmbs.yml'
+      - 'targets/**'
+      - 'cmake/**'
 
 jobs:
-  build:
+  build-nmbs:
     runs-on: ubuntu-latest
     steps:
       - uses: docker/build-push-action@v7

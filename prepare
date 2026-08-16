@@ -17,6 +17,8 @@ DEPS=(
   libxml2-doc               # Opt
   ninja-build               # Opt:     I use this in my tooling
   pkg-config                # Build:   Needed for Nautilus and GNOME dev
+  shellcheck                # Opt:     Enables shell script linting in CLion (together with the CLion Shell Script plugin)
+  shfmt                     # Opt:     Enables shell script formating in CLion (together with the CLion Shell Script plugin)
   valgrind                  # Opt:     Enables easy CLion memory checking
 )
 
