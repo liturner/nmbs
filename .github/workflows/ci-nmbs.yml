@@ -27,3 +27,9 @@ jobs:
       - run: cmake --preset release
       - run: cmake --build --preset release
       - run: cpack -B build
+
+      - run: ctest
+        working-directory: ./build/debug
+
+      - run: ctest
+        working-directory: ./build/release
