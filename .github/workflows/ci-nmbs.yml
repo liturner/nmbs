@@ -3,18 +3,21 @@ name: Build nmbs
 on:
   push:
     paths:
-      - '.github/workflows/ci-nmbs.yml'
       - 'targets/**'
       - 'cmake/**'
+      - '.github/workflows/ci-nmbs.yml'
 
 jobs:
   build-nmbs:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        release: [ trixie, testing, sid ]
+    container:
+      image: turnertech/nmbs-builder:${{ matrix.release }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: docker/build-push-action@v7
-        with:
-          file: docker/build.dockerfile
-          push: false
-          tags: turnertech/nmbs:latest
-          build-args: |
-            DEBIAN_RELEASE=trixie
+      - name: Check out repository code
+        uses: actions/checkout@v4
