@@ -35,7 +35,7 @@ jobs:
         working-directory: ./build/release
 
       - name: Upload Built Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: nmbs-build-${{ matrix.release }}
           path: build/NMBS-*.tar.gz
