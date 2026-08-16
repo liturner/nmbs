@@ -19,3 +19,6 @@ RUN apt-get update && apt-get install --no-install-recommends --yes \
     pkg-config \
     xml-core && \
     useradd -ms /bin/bash nmbs
+
+USER nmbs
+WORKDIR /home/nmbs

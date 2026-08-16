@@ -15,7 +15,6 @@ jobs:
         release: [ trixie, testing, sid ]
     container:
       image: turnertech/nmbs-builder:${{ matrix.release }}
-      options: --user nmbs
       credentials:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_TOKEN }}
